@@ -12,14 +12,44 @@
       </div>
       <div id="navLinks">
         <ul>
-          <a href="">Tiendas</a>
-          <a href="">Comidas</a>
+          <a @mouseover="chooseStoresDropdown()">Tiendas</a>
+          <a @mouseover="chooseProductsDropdown()">Comidas</a>
           <a href="">Ofertas</a>
           <a href="">Mis pedidos</a>
           <a href="">Sugerencias y reclamos</a>
         </ul>
       </div>
     </nav>
+    <div v-show="storesDropdown" class="dropdownContainer">
+      <div class="dropdownContainer--links">
+        <div v-for="(store, i) in stores" :key="i" class="storeLink">
+          <p @click="chooseStore()">{{ store.name }} </p>
+        </div>
+      </div>
+      <img
+        src="../assets/images/closeButton.png"
+        alt="storesDropdown close button"
+        @click="hideStoresDropdown"
+        width="100"
+        height="100"
+      />
+    </div>
+    <!--     <div v-if="productsDropdown" class="dropdownContainer">
+      <div class="dropdownContainer--links">
+        <div v-for="(typeOfProduct, i) in typeOfProducts" :key="i" class="dropdownContainer--storeLink">
+          <p>{{ typeOfProduct }}</p>
+        </div>
+      </div>
+      <div>
+        <img
+          src="../assets/images/closeButton.png"
+          alt="productsDropdown close button"
+          @click="hideProductsDropdown"
+          width="100"
+          height="100"
+        />
+      </div>
+    </div> -->
     <div id="banner">
       <img src="../assets/images/foodBanner.jpg" alt="food banner" />
     </div>
@@ -29,6 +59,39 @@
 <script>
 export default {
   name: "header-component",
+  data() {
+    return {
+      storesDropdown: false,
+      productsDropdown: false,
+    };
+  },
+  props: {
+    typeOfProducts: {
+      type: Array,
+    },
+    stores: {
+      type: Array,
+    },
+  },
+  methods: {
+    chooseStoresDropdown() {
+      this.productsDropdown = false;
+      this.storesDropdown = true;
+    },
+    chooseProductsDropdown() {
+      this.storesDropdown = false;
+      this.productsDropdown = true;
+    },
+    hideStoresDropdown() {
+      this.storesDropdown = false;
+    },
+    hideProductsDropdown() {
+      this.productsDropdown = false;
+    },
+    chooseStore() {
+      this.$emit("choose-store", this.stores);
+    },
+  },
 };
 </script>
 
@@ -80,6 +143,7 @@ export default {
   text-decoration: none;
   margin: 10px;
   color: #ffffff;
+  cursor: pointer;
 }
 
 #app nav #navLinks a:hover {
@@ -91,5 +155,32 @@ export default {
 
 #app #banner img {
   width: 100%;
+}
+#app .dropdownContainer {
+  z-index: 1;
+  width: 100%;
+  background-color: #ffffff;
+  color: #7e0a0a;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+#app .dropdownContainer p {
+  border: 1px solid #7e0a0a;
+  padding: 10px 0;
+  margin-right: 40px;
+  font-weight: 600;
+}
+#app .dropdownContainer p:hover {
+  background-color: #7e0a0a;
+  color: #ffffff;
+  font-weight: 700;
+  cursor: pointer;
+}
+#app .dropdownContainer img {
+  cursor: pointer;
+}
+#app .dropdownContainer- .storeLink {
+  cursor: pointer;
 }
 </style>

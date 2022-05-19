@@ -18,7 +18,7 @@
             {{ product.price }}
           </th>
           <th>
-            <img :src="product.imgSrc" width="100" height="100" />
+            <img :src="getImgUrl(product.imgSrc)" width="100" height="100" />
           </th>
         </tr>
       </tbody>
@@ -42,6 +42,11 @@ export default {
       type: String,
       required: true,
     },
+  },
+  methods: {
+    getImgUrl(imgUrl) {
+      return require(`@/assets/images/products/${imgUrl}`)
+    }
   }
 };
 </script>
