@@ -92,7 +92,12 @@ export default {
   color: #ffffff;
   background-color: #7e0a0a;
   width: 20px;
-  z-index: 10;
+  z-index: 1;
+  position: fixed;
+  top: 44px;
+  right: 0;
+  border: 1px solid #ffffff;
+  text-align: center;
 }
 #CartContainer #SubCartContainer {
   color: #7e0a0a;
