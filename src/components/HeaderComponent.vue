@@ -1,6 +1,6 @@
 <template>
   <header>
-    <nav>
+    <nav v-if="!openForm">
       <div id="siteLogoAndName">
         <img
           src="../assets/images/site-logo.jpg"
@@ -12,18 +12,14 @@
       </div>
       <div id="navLinks">
         <ul>
-          <a @mouseover="chooseStoresDropdown()">Tiendas</a>
-          <a @mouseover="chooseProductsDropdown()">Comidas</a>
-          <a href="">Ofertas</a>
-          <a href="">Mis pedidos</a>
-          <a href="">Sugerencias y reclamos</a>
+          <a @click="toggleForm(true)">Sugerencias y reclamos</a>
         </ul>
       </div>
     </nav>
     <div v-show="storesDropdown" class="dropdownContainer">
       <div class="dropdownContainer--links">
         <div v-for="(store, i) in stores" :key="i" class="storeLink">
-          <p @click="chooseStore()">{{ store.name }} </p>
+          <p @click="chooseStore()">{{ store.name }}</p>
         </div>
       </div>
       <img
@@ -50,8 +46,18 @@
         />
       </div>
     </div> -->
-    <div id="banner">
+    <div v-if="!openForm" id="banner">
       <img src="../assets/images/foodBanner.jpg" alt="food banner" />
+    </div>
+    <div v-if="openForm" id="formContainer">
+      <img
+        id="closeForm"
+        src="../assets/images/closeButton.png"
+        alt="storesDropdown close button"
+        @click="toggleForm(false)"
+        width="100"
+        height="100"
+      />
     </div>
   </header>
 </template>
@@ -63,6 +69,7 @@ export default {
     return {
       storesDropdown: false,
       productsDropdown: false,
+      openForm: false,
     };
   },
   props: {
@@ -90,6 +97,9 @@ export default {
     },
     chooseStore() {
       this.$emit("choose-store", this.stores);
+    },
+    toggleForm(value) {
+      this.openForm = value;
     },
   },
 };
@@ -181,6 +191,13 @@ export default {
   cursor: pointer;
 }
 #app .dropdownContainer- .storeLink {
+  cursor: pointer;
+}
+#formContainer {
+  height: 100vh;
+  z-index: 1;
+}
+#closeForm {
   cursor: pointer;
 }
 </style>
