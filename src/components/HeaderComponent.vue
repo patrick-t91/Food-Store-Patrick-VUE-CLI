@@ -16,48 +16,84 @@
         </ul>
       </div>
     </nav>
-    <div v-show="storesDropdown" class="dropdownContainer">
-      <div class="dropdownContainer--links">
-        <div v-for="(store, i) in stores" :key="i" class="storeLink">
-          <p @click="chooseStore()">{{ store.name }}</p>
-        </div>
-      </div>
-      <img
-        src="../assets/images/closeButton.png"
-        alt="storesDropdown close button"
-        @click="hideStoresDropdown"
-        width="100"
-        height="100"
-      />
-    </div>
-    <!--     <div v-if="productsDropdown" class="dropdownContainer">
-      <div class="dropdownContainer--links">
-        <div v-for="(typeOfProduct, i) in typeOfProducts" :key="i" class="dropdownContainer--storeLink">
-          <p>{{ typeOfProduct }}</p>
-        </div>
-      </div>
-      <div>
-        <img
-          src="../assets/images/closeButton.png"
-          alt="productsDropdown close button"
-          @click="hideProductsDropdown"
-          width="100"
-          height="100"
-        />
-      </div>
-    </div> -->
     <div v-if="!openForm" id="banner">
       <img src="../assets/images/foodBanner.jpg" alt="food banner" />
     </div>
     <div v-if="openForm" id="formContainer">
-      <img
-        id="closeForm"
-        src="../assets/images/closeButton.png"
-        alt="storesDropdown close button"
-        @click="toggleForm(false)"
-        width="100"
-        height="100"
-      />
+      <h4 id="formTitle">FORMULARIO DE SUGERENCIAS Y RECLAMOS</h4>
+      <form id="formMain" @submit.prevent="emitForm">
+        <div id="inputsContainer">
+          <label for="inputNombre">Nombre completo</label>
+          <input
+            type="text"
+            id="inputNombre"
+            placeholder="Ingresa tu nombre completo"
+            v-model="formData.name"
+            @keyup="validateName"
+          />
+          <span v-if="errors.nameError.length > 0" class="error">
+            {{ errors.nameError }}
+          </span>
+          <label for="inputEmail">Ingresa tu email</label>
+          <input
+            type="email"
+            id="inputEmail"
+            placeholder="Ingresa tu email"
+            v-model="formData.email"
+            @keyup="validateEmail"
+          />
+          <span v-if="errors.emailError.length" class="error">
+            {{ errors.emailError }}
+          </span>
+          <label for="inputEdad">Ingresa tu edad</label>
+          <input
+            type="number"
+            id="inputEdad"
+            placeholder="Ingresa tu edad"
+            v-model="formData.age"
+            @keyup="validateAge"
+          />
+          <span v-if="errors.ageError.length" class="error">
+            {{ errors.ageError }}
+          </span>
+          <div id="qualifyOptions">
+            <h4>Califica nuestra aplicacion!</h4>
+            <select
+              name="qualification"
+              id="qualificationSelect"
+              v-model="formData.userQualification"
+            >
+              <option
+                v-for="(qualification, i) in qualifications"
+                :value="qualification"
+                :key="i"
+              >
+                {{ qualification }}
+              </option>
+            </select>
+            <textarea
+              id="inputComentario"
+              placeholder="Dejanos tu sugerencia o reclamo"
+              v-model="userComment"
+            />
+          </div>
+          <button
+            type="submit"
+            id="submitButton"
+            @click="validateName, validateEmail, validateAge"
+          >
+            ENVIAR
+          </button>
+        </div>
+        <img
+          id="closeForm"
+          src="../assets/images/closeButton.png"
+          alt="storesDropdown close button"
+          @click="toggleForm(false)"
+          width="100"
+          height="100"
+        />
+      </form>
     </div>
   </header>
 </template>
@@ -67,39 +103,98 @@ export default {
   name: "header-component",
   data() {
     return {
-      storesDropdown: false,
-      productsDropdown: false,
       openForm: false,
+      formData: {
+        name: "",
+        email: "",
+        age: 0,
+        userQualification: "",
+      },
+      validations: {
+        nameRegex: /^[a-zA-Z\s]+$/,
+        emailRegex: /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i,
+      },
+      errors: {
+        nameError: "",
+        emailError: "",
+        ageError: "",
+      },
+      qualifications: ["Mala", "Regular", "Buena", "Muy buena", "Excelente"],
+      userComment: "",
     };
   },
-  props: {
-    typeOfProducts: {
-      type: Array,
-    },
-    stores: {
-      type: Array,
-    },
-  },
   methods: {
-    chooseStoresDropdown() {
-      this.productsDropdown = false;
-      this.storesDropdown = true;
-    },
-    chooseProductsDropdown() {
-      this.storesDropdown = false;
-      this.productsDropdown = true;
-    },
-    hideStoresDropdown() {
-      this.storesDropdown = false;
-    },
-    hideProductsDropdown() {
-      this.productsDropdown = false;
-    },
-    chooseStore() {
-      this.$emit("choose-store", this.stores);
-    },
     toggleForm(value) {
       this.openForm = value;
+    },
+    validateName() {
+      if (
+        this.formData.name &&
+        this.validations.nameRegex.test(this.formData.name)
+      ) {
+        this.errors.nameError = "";
+        return;
+      }
+      this.errors.nameError = "Ingresa tu nombre completo";
+    },
+    validateEmail() {
+      if (
+        this.formData.email &&
+        this.validations.emailRegex.test(this.formData.email)
+      ) {
+        this.errors.emailError = "";
+        return;
+      }
+      this.errors.emailError = "Ingresa un email valido";
+    },
+    validateAge() {
+      let edadNumber = parseInt(this.formData.age);
+      if (this.formData.age && edadNumber >= 18) {
+        this.errors.ageError = "";
+        return;
+      }
+      this.errors.ageError = "Debes ser mayor de 18";
+    },
+    emitForm() {
+      if (
+        this.formData.name &&
+        this.validations.nameRegex.test(this.formData.name)
+      ) {
+        this.errors.nameError = "";
+      } else {
+        this.errors.nameError = "Ingresa tu nombre completo";
+      }
+
+      if (
+        this.formData.email &&
+        this.validations.emailRegex.test(this.formData.email)
+      ) {
+        this.errors.emailError = "";
+      } else {
+        this.errors.emailError = "Ingresa un email valido";
+      }
+      if (this.formData.age && parseInt(this.formData.age) > 18) {
+        this.errors.ageError = "";
+      } else {
+        this.errors.ageError = "Debes ser mayor de 18";
+      }
+
+      if (
+        this.errors.nameError == "" &&
+        this.errors.emailError == "" &&
+        this.errors.ageError == ""
+      ) {
+        this.$emit("submit-form", this.formData);
+        this.resetFormData();
+        return;
+      }
+    },
+    resetFormData() {
+      this.formData.name = "";
+      this.formData.email = "";
+      this.formData.age = 0;
+      this.formData.comment = "";
+      this.formData.userQualification = "";
     },
   },
 };
@@ -166,38 +261,89 @@ export default {
 #app #banner img {
   width: 100%;
 }
-#app .dropdownContainer {
-  z-index: 1;
-  width: 100%;
-  background-color: #ffffff;
-  color: #7e0a0a;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-#app .dropdownContainer p {
+
+#formContainer {
   border: 1px solid #7e0a0a;
-  padding: 10px 0;
-  margin-right: 40px;
-  font-weight: 600;
+  width: 800px;
+  min-width: 50%;
+  margin: auto;
 }
-#app .dropdownContainer p:hover {
+
+#formTitle {
+  text-align: center;
   background-color: #7e0a0a;
   color: #ffffff;
-  font-weight: 700;
-  cursor: pointer;
+  margin-bottom: 30px;
+  padding: 20px;
 }
-#app .dropdownContainer img {
-  cursor: pointer;
-}
-#app .dropdownContainer- .storeLink {
-  cursor: pointer;
-}
-#formContainer {
+
+#formMain {
   height: 100vh;
   z-index: 1;
 }
+#formMain #inputsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#formMain #inputsContainer input {
+  border: 1px solid #7e0a0a;
+  color: #7e0a0a;
+  margin: 10px;
+  width: 400px;
+  height: 30px;
+}
+#formMain #inputsContainer .error {
+  color: #7e0a0a;
+}
 #closeForm {
   cursor: pointer;
+  position: absolute;
+  right: 0;
+}
+#qualifyOptions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 30px;
+}
+#qualifyOptions h4 {
+  color: #7e0a0a;
+}
+label {
+  color: #7e0a0a;
+  font-weight: 600;
+  margin-top: 15px;
+}
+select {
+  border: 2px solid #7e0a0a;
+  color: #7e0a0a;
+}
+option {
+  color: #7e0a0a;
+  font-size: 18px;
+}
+textarea {
+  color: #7e0a0a;
+  min-height: 200px;
+  min-width: 500px;
+  max-width: 90%;
+  margin: 10px;
+}
+#submitButton {
+  margin-top: 50px;
+  padding: 15px;
+  border: 1px solid #7e0a0a;
+  border-radius: 32px;
+  color: #7e0a0a;
+  background: #ffffff;
+  font-weight: 600;
+  font-size: 20px;
+  cursor: pointer;
+}
+#submitButton:hover {
+  background: #7e0a0a;
+  color: #ffffff;
+  border: 1px solid #7e0a0a;
 }
 </style>

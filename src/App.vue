@@ -1,27 +1,31 @@
 <template>
   <div id="app">
-    <HeaderComponent />
-    <FormComponent />
+    <HeaderComponent @submit-form="addData"/>
+    <TableComponent :usersData="usersData"/>
   </div>
 </template>
 
 <script>
 import HeaderComponent from "./components/HeaderComponent.vue";
-import FormComponent from "./components/FormComponent.vue";
+import TableComponent from "./components/TableComponent.vue";
 
 
 export default {
   name: "App",
   components: {
     HeaderComponent,
-    FormComponent
+    TableComponent
   },
   data() {
     return {
+      usersData: []
     }
   },
   methods: {
-  
+    addData(formData) { 
+      const newData = {...formData};
+      this.usersData.push(newData)
+    }
   },
 };
 </script>
