@@ -14,9 +14,9 @@
         <ul>
           <a @mouseover="chooseStoresDropdown()">Tiendas</a>
           <a @mouseover="chooseProductsDropdown()">Comidas</a>
-          <a href="">Ofertas</a>
-          <a href="">Mis pedidos</a>
-          <a href="">Sugerencias y reclamos</a>
+          <router-link to="">Ofertas</router-link>
+          <router-link to="">Mis pedidos</router-link>
+          <router-link to="/sugerencias-y-reclamos">Sugerencias y reclamos</router-link>
         </ul>
       </div>
     </nav>
