@@ -100,6 +100,7 @@ export default {
   text-align: center;
 }
 #CartContainer #SubCartContainer {
+  z-index: 2;
   color: #7e0a0a;
   font-size: 16px;
   font-weight: 700;

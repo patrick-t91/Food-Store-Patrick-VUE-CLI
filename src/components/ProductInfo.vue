@@ -1,9 +1,9 @@
 <template>
   <div class="productContainer">
-    <img :src="getImgUrl(product.imgSrc)" alt="" height="100" />
+    <img :src=product.imgSrc alt="" height="100" />
     <div class="productInfoContainer">
       <div class="productMainInfoContainer">
-        <p>{{ product.name }}</p>
+        <p>{{ product.productName }}</p>
         <p>$ {{ product.price }}</p>
       </div>
       <div class="quantityContainer">
