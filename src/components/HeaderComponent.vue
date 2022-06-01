@@ -18,7 +18,7 @@
           <router-link to="/sugerencias-y-reclamos"
             >Sugerencias y reclamos</router-link
           >
-          <a @click="toggleLoginModal(true)"
+          <a @click="toggleLoginModal(1)"
             ><img
               src="../assets/images/loginLogo.png"
               alt="login"
@@ -42,59 +42,7 @@
         height="100"
       />
     </div>
-    <div v-if="loginModal" id="loginModal">
-      <div id="loginModal--container">
-        <div id="loginModal--mainContainer">
-          <img
-            id="loginModal--loginLogo"
-            src="../assets/images/loginLogo.png"
-            alt="login"
-            width="60"
-            height="60"
-          />
-          <form @submit.prevent="emitLogin">
-            <label for="inputUsuerName">Nombre de usuario</label>
-            <input
-              type="text"
-              placeholder="Ingresa tu nombre de usuario"
-              v-model="loginData.username"
-              @keyup="validateUsername"
-            />
-            <span v-if="errors.usernameError.length > 0" class="error">
-              {{ errors.usernameError }}
-            </span>
-            <label for="inputPassword">Ingresa tu contraseña</label>
-            <input
-              type="password"
-              placeholder="Ingresa tu contraseña"
-              v-model="loginData.password"
-              @keyup="validatePassword"
-            />
-            <span v-if="errors.passwordError.length" class="error">
-              {{ errors.passwordError }}
-            </span>
-            <button type="submit" id="loginButton" @click="validateLogin">
-              INGRESAR
-            </button>
-            <span
-              v-if="errors.loginError.length"
-              id="loginError"
-              class="error"
-              >{{ errors.loginError }}</span
-            >
-          </form>
-        </div>
-        <div id="closeLoginModal">
-          <img
-            src="../assets/images/closeButton.png"
-            alt="loginModal close button"
-            @click="toggleLoginModal(false)"
-            width="40"
-            height="40"
-          />
-        </div>
-      </div>
-    </div>
+    <LoginModal />
     <div id="banner">
       <img src="../assets/images/foodBanner.jpg" alt="food banner" />
     </div>
@@ -102,76 +50,23 @@
 </template>
 
 <script>
-import apiServices from "../services/api.services.js";
+import LoginModal from "./LoginModal.vue";
+import loginMixin from "../mixins/loginMixin/loginMixin.js"
 
 export default {
-  name: "header-component",
-  created() {},
+  name: "HeaderComponent",
+  mixins: [loginMixin],
+  components: { LoginModal },
   data() {
     return {
       categoriesDropdown: false,
       loginModal: false,
-      loginData: {
-        username: "",
-        password: "",
-      },
-      validations: {
-        loginRegex: /^[a-zA-Z0-9]+$/,
-      },
-      errors: {
-        usernameError: "",
-        passwordError: "",
-        loginError: "",
-      },
-      userLogged: {},
     };
   },
   methods: {
     toggleCategoriesDropdown(value) {
       this.categoriesDropdown = value;
-    },
-    toggleLoginModal(value) {
-      this.loginModal = value;
-    },
-    validateUsername() {
-      if (
-        this.loginData.username &&
-        this.validations.loginRegex.test(this.loginData.username)
-      ) {
-        this.errors.usernameError = "";
-        return;
-      }
-      this.errors.usernameError =
-        "El nombre de usuario solo admite letras y números";
-    },
-    validatePassword() {
-      if (
-        this.loginData.password &&
-        this.validations.loginRegex.test(this.loginData.password)
-      ) {
-        this.errors.passwordError = "";
-        return;
-      }
-      this.errors.passwordError = "La contraseña admite solo letras y números";
-    },
-    async validateLogin() {
-      if (!this.errors.usernameError == "" || !this.errors.passwordError == "")
-        return;
-      const users = await apiServices.getUsers();
-      this.userLogged = users.find(
-        (user) =>
-          user.username === this.loginData.username &&
-          user.password === this.loginData.password
-      );
-      console.log(this.userLogged)
-      if (this.userLogged == undefined) {
-        this.errors.loginError =
-          "La combinación de usuario y contraseña ingresados no es válida";
-      }
-    },
-    emitLogin() {
-      this.$emit("submit-login", this.loginData);
-    },
+    }
   },
 };
 </script>
@@ -270,69 +165,5 @@ export default {
 }
 #app #categoriesDropdown- .storeLink {
   cursor: pointer;
-}
-#app #loginModal {
-  display: flex;
-  justify-content: center;
-}
-#app #loginModal--container {
-  z-index: 2;
-  position: fixed;
-  width: 400px;
-  max-width: 85%;
-  padding: 20px 0;
-  border: 6px solid #7e0a0a;
-  background: #ffffff;
-  text-align: center;
-  border-radius: 20px;
-}
-#app #loginModal--mainContainer form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-#app #loginModal--loginLogo {
-  margin-bottom: 30px;
-}
-#app #loginModal label {
-  color: #7e0a0a;
-  font-weight: 600;
-}
-#app #loginModal input {
-  margin: 10px 0 20px;
-  width: 200px;
-  border: 1px solid #7e0a0a;
-  color: #7e0a0a;
-  text-align: center;
-}
-#app #loginModal #loginButton {
-  border: 1px solid #7e0a0a;
-  border-radius: 32px;
-  color: #7e0a0a;
-  background: #ffffff;
-  font-weight: 600;
-  cursor: pointer;
-}
-#app #loginModal #loginButton:hover {
-  background: #7e0a0a;
-  color: #ffffff;
-  border: 1px solid #7e0a0a;
-}
-#app #loginModal .error {
-  margin-top: 0;
-  margin-bottom: 20px;
-  color: #7e0a0a;
-}
-#app #loginModal #loginError {
-  width: 75%;
-  margin-top: 15px;
-}
-#app #loginModal #closeLoginModal {
-  display: flex;
-  justify-content: flex-end;
-}
-#app #loginModal #closeLoginModal img {
-  cursor: pointer;
-  margin: 10px 10px 0;
 }
 </style>
