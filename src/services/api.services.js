@@ -21,7 +21,6 @@ const apiServices = {
   getProducts: async () => {
     try {
       const res = await axios.get(`${apiUrl}/Products`);
-      console.log(res.data)
       return res.data;
     } catch (err) {
       document.write(err);
@@ -35,9 +34,9 @@ const apiServices = {
           document.write(err)
       }
   },
-  getUserOrders: async (userId, newUser) => {
+  getUserOrders: async (userId) => {
       try {
-          const res = await axios.get(`${apiUrl}/Users/${userId}/Orders`, newUser);
+          const res = await axios.get(`${apiUrl}/Users/${userId}/Orders`);
           return res.data
       } catch (err) {
           document.write(err)

@@ -1,23 +1,17 @@
 <template>
   <div id="homeContainer">
     <router-view />
+    <HeaderComponent />
     <CarritoComponent
-      :productsInCart="productsInCart"
+      :cart="cart"
       :totalCartPrice="totalCartPrice"
-      @remove-product-from-cart="RemoveProductFromCart"
       @clear-cart="clearCart"
     />
     <div>
       <h3>GALERIA DE PRODUCTOS</h3>
       <div class="productsContainer">
         <div v-for="(product, i) in products" :key="i">
-          <ProductInfo
-            :product="product"
-            @add-product="AddProduct"
-            @remove-product="RemoveProduct"
-            @add-to-cart="AddToCart"
-            :quantityInCart="product.quantity"
-          />
+          <ProductInfo :product="product" @add-to-cart="addProductToCart" />
         </div>
       </div>
     </div>
@@ -27,6 +21,7 @@
 
 <script>
 import apiServices from "../../services/api.services.js";
+import HeaderComponent from "../../components/HeaderComponent.vue";
 import ProductInfo from "../../components/ProductInfo.vue";
 import CarritoComponent from "../../components/CarritoComponent.vue";
 import FooterComponent from "../../components/FooterComponent.vue";
@@ -34,57 +29,53 @@ import FooterComponent from "../../components/FooterComponent.vue";
 export default {
   name: "HomeComponent",
   components: {
+    HeaderComponent,
     CarritoComponent,
     ProductInfo,
     FooterComponent,
-  },
-  created() {
-    this.getProducts();
   },
   data() {
     return {
       productsInfo: ["Producto", "Precio", "Imagen del producto"],
       products: [],
-      productsInCart: [],
+      cart: [],
       totalCartPrice: 0,
     };
+  },
+  created() {
+    this.getProducts();
+    if (this.cartFromStorage == null && this.totalCartPriceFromStorage == null)
+      return;
+    this.cart = this.cartFromStorage;
+    this.totalCartPrice = this.totalCartPriceFromStorage;
   },
   methods: {
     async getProducts() {
       this.products = await apiServices.getProducts();
     },
-    AddProduct(product) {
-      product.quantity += 1;
-    },
-    RemoveProduct(product) {
-      if (product.quantity == 0) return;
-      product.quantity -= 1;
-    },
-    AddToCart(product) {
-      let productIsInCart = this.productsInCart.find(
-        (producto) => producto.id == product.id
-      );
+    addProductToCart(product, quantity) {
+      if (quantity == 0) return;
+      let productIsInCart = this.cart.find((item) => item.id == product.id);
       if (productIsInCart) {
-        product.quantityInCart += product.quantity;
+        product.quantity += quantity;
+        this.totalCartPrice += product.price * quantity;
+      } else {
+        product.quantity = quantity;
+        this.cart.push(product);
         this.totalCartPrice += product.price * product.quantity;
-        return;
       }
-      if (product.quantity) {
-        this.productsInCart.push(product);
-      }
-      product.quantityInCart = product.quantity;
-      this.totalCartPrice += product.price * product.quantity;
-    },
-    RemoveProductFromCart(product) {
-      product.quantityInCart -= 1;
+      localStorage.setItem("Carrito Pendiente", JSON.stringify(this.cart));
+      localStorage.setItem(
+        "Precio Total Carrito",
+        JSON.stringify(this.totalCartPrice)
+      );
     },
     clearCart() {
-      let cleanedCart = this.productsInCart.slice(-1, 0);
-      this.productsInCart = cleanedCart;
+      let cleanedCart = this.cart.slice(-1, 0);
+      this.cart = cleanedCart;
       this.totalCartPrice = 0;
-      for (let product of this.productsInCart) {
-        product.quantity = 0;
-      }
+      localStorage.removeItem("Carrito Pendiente");
+      localStorage.removeItem("Precio Total Carrito");
     },
   },
 };

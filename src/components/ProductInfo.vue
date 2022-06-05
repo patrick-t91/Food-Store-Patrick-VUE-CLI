@@ -1,17 +1,19 @@
 <template>
   <div class="productContainer">
-    <img :src=product.imgSrc alt="" height="100" />
+    <img :src="product.imgSrc" alt="" height="100" />
     <div class="productInfoContainer">
       <div class="productMainInfoContainer">
         <p>{{ product.productName }}</p>
         <p>$ {{ product.price }}</p>
       </div>
       <div class="quantityContainer">
-        <button @click="addProduct">+</button>
-        <p>Cantidad: {{ product.quantity }}</p>
-        <button @click="removeProduct">-</button>
+        <button @click="increaseQuantity">+</button>
+        <p>Cantidad: {{ quantity }}</p>
+        <button @click="decreaseQuantity">-</button>
       </div>
-      <button id="addToCart" @click="addToCart">Agregar al carrito</button>
+      <button id="addToCart" @click="addProductToCart">
+        Agregar al carrito
+      </button>
     </div>
   </div>
 </template>
@@ -19,6 +21,11 @@
 <script>
 export default {
   name: "ProductInfo",
+  data() {
+    return {
+      quantity: 0,
+    };
+  },
   props: {
     product: {
       type: Object,
@@ -26,20 +33,15 @@ export default {
     },
   },
   methods: {
-    getImgUrl(imgUrl) {
-      return require(`@/assets/images/products/${imgUrl}`);
+    increaseQuantity() {
+      this.quantity += 1;
     },
-    addProduct() {
-      this.$emit("add-product", this.product);
+    decreaseQuantity() {
+      if (this.quantity == 0) return;
+      this.quantity -= 1;
     },
-    removeProduct() {
-      this.$emit("remove-product", this.product);
-    },
-    addToCart() {
-      this.$emit("add-to-cart", this.product);
-    },
-    removeProductFromCart() {
-      this.$emit("remove-product-from-cart", this.product)
+    addProductToCart() {
+      this.$emit("add-to-cart", this.product, this.quantity)
     }
   },
 };

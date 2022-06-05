@@ -1,61 +1,18 @@
 <template>
   <div id="app">
-    <HeaderComponent />
     <router-view />
   </div>
 </template>
 
 <script>
-import HeaderComponent from "./components/HeaderComponent.vue";
 
 export default {
   name: "App",
-  components: {
-    HeaderComponent,
-  },
   data() {
     return {
-      productsInfo: ["Producto", "Precio", "Imagen del producto"],
-      products: [],
-      productsInCart: [],
-      totalCartPrice: 0,
+      productsInfo: ["Producto", "Precio", "Imagen del producto"]
     };
-  },
-  methods: {
-    AddProduct(product) {
-      product.quantity += 1;
-    },
-    RemoveProduct(product) {
-      if (product.quantity == 0) return;
-      product.quantity -= 1;
-    },
-    AddToCart(product) {
-      let productIsInCart = this.productsInCart.find(
-        (producto) => producto.id == product.id
-      );
-      if (productIsInCart) {
-        product.quantityInCart += product.quantity;
-        this.totalCartPrice += product.price * product.quantity;
-        return;
-      }
-      if (product.quantity) {
-        this.productsInCart.push(product);
-      }
-      product.quantityInCart = product.quantity;
-      this.totalCartPrice += product.price * product.quantity;
-    },
-    RemoveProductFromCart(product) {
-      product.quantityInCart -= 1;
-    },
-    clearCart() {
-      let cleanedCart = this.productsInCart.slice(-1, 0);
-      this.productsInCart = cleanedCart;
-      this.totalCartPrice = 0;
-      for (let product of this.productsInCart) {
-        product.quantity = 0;
-      }
-    },
-  },
+  }
 };
 </script>
 
