@@ -55,6 +55,10 @@ export default {
     },
     addProductToCart(product, quantity) {
       if (quantity == 0) return;
+      if (this.userLogged.isAdmin) {
+        alert("No puedes agregar productos en el modo administrador")
+        return
+      }
       let productIsInCart = this.cart.find((item) => item.id == product.id);
       if (productIsInCart) {
         product.quantity += quantity;

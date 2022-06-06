@@ -5,12 +5,9 @@ export default {
       lsUserKey: "Usuario Loggeado",
     };
   },
-  created() {
-    this.userLogged = this.getUserLoggedFromStorage();
+  async created() {
+    this.userLogged = await this.getUserLoggedFromStorage();
     if (this.userLogged == null) return
-    if (this.userLogged.isAdmin) {
-      this.$router.push("/admin")
-    }
   },
   methods: {
     getUserLoggedFromStorage () {

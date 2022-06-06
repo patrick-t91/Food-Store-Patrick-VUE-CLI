@@ -20,16 +20,23 @@
           <router-link to="/sugerencias-y-reclamos"
             >Sugerencias y reclamos</router-link
           >
-          <a
+          <div
+            id="loginLogoContainer"
             @click="
-              userLogged == null ? toggleLoginModal(1) : toggleLoginModal(3)
+              userLogged == null
+                ? toggleLoginModal(1)
+                : !userLogged.isAdmin
+                ? toggleLoginModal(3)
+                : toggleLoginModal(4)
             "
-            ><img
+          >
+            <img
               src="../assets/images/loginLogo.png"
               alt="login"
               width="40"
               height="40"
-          /></a>
+            />
+          </div>
         </ul>
       </div>
     </nav>
@@ -179,6 +186,30 @@
         </div>
       </div>
     </div>
+    <div v-if="loginModal == 4">
+      <div class="loginModal">
+        <div class="loginModal--container">
+          <div class="loginModal--mainContainer">
+            <h4>{{ `!Hola, ${userLogged.username}!` }}</h4>
+            <router-link to="/admin">
+              Ir a la sesión de administrador
+            </router-link>
+          </div>
+          <button id="closeAdminSessionButton" @click="closeUserSession">
+            Cerrar sesión
+          </button>
+          <div id="closeLoginModal">
+            <img
+              src="../assets/images/closeButton.png"
+              alt="loginModal close button"
+              @click="toggleLoginModal(0)"
+              width="40"
+              height="40"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
     <div id="banner">
       <img src="../assets/images/foodBanner.jpg" alt="food banner" />
     </div>
@@ -192,6 +223,7 @@ export default {
   name: "HeaderComponent",
   data() {
     return {
+      loginModal: Number(0),
       categoriesDropdown: false,
       loginData: {
         username: "",
@@ -211,6 +243,9 @@ export default {
     };
   },
   methods: {
+    toggleLoginModal(value) {
+      this.loginModal = value;
+    },
     toggleCategoriesDropdown(value) {
       this.categoriesDropdown = value;
     },
@@ -251,11 +286,12 @@ export default {
         return;
       }
       localStorage.setItem("Usuario Loggeado", JSON.stringify(this.userLogged));
-      this.toggleLoginModal(3);
-      this.errors.loginError = "";
       if (this.userLogged.isAdmin) {
-        this.$router.push("/admin");
+        this.toggleLoginModal(4);
+      } else {
+        this.toggleLoginModal(3);
       }
+      this.errors.loginError = "";
     },
     async registerUser() {
       if (
@@ -278,7 +314,11 @@ export default {
       }
       this.userLogged = await apiServices.postUser(this.loginData);
       localStorage.setItem("Usuario Loggeado", JSON.stringify(this.userLogged));
-      this.toggleLoginModal(3);
+      if (this.userLogged.isAdmin) {
+        this.toggleLoginModal(4);
+      } else {
+        this.toggleLoginModal(3);
+      }
       this.errors.registerError = "";
       this.errors.confirmPasswordError = "";
     },
@@ -390,6 +430,15 @@ export default {
   display: flex;
   justify-content: center;
 }
+#app #navLinks #loginLogoContainer {
+  cursor: pointer;
+}
+#app #navLinks #loginLogoContainer:hover {
+  background-color: #ffffff;
+  color: #7e0a0a;
+  font-weight: 700;
+  transform: scale(1.1);
+}
 #app .loginModal--container {
   z-index: 2;
   position: fixed;
@@ -454,6 +503,20 @@ export default {
   color: #ffffff;
   border: 1px solid #7e0a0a;
 }
+#app .loginModal #closeAdminSessionButton {
+  border: 1px solid #7e0a0a;
+  border-radius: 32px;
+  color: #7e0a0a;
+  background: #ffffff;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 30px;
+}
+#app .loginModal #closeAdminSessionButton:hover {
+  background: #7e0a0a;
+  color: #ffffff;
+  border: 1px solid #7e0a0a;
+}
 #app .loginModal .error {
   margin-top: 10px;
   margin-bottom: 15px;
@@ -465,6 +528,23 @@ export default {
 }
 #app .loginModal #confirmPasswordError {
   margin-top: -10px;
+}
+#adminLogin {
+  margin-top: 40px;
+}
+#app .loginModal a {
+  border: 1px solid #7e0a0a;
+  border-radius: 6px;
+  color: #7e0a0a;
+  background: #ffffff;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  padding: 10px 5px;
+}
+#app .loginModal a:hover {
+  color: #ffffff;
+  background: #7e0a0a;
 }
 #app .loginModal #closeLoginModal {
   display: flex;

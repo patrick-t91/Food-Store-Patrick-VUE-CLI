@@ -2,9 +2,11 @@
   <div id="adminContainer">
     <header>
       <h2>Sesión de Administrador</h2>
-      <button @click="closeAdminSession">Cerrar Sesión</button>
+      <div id="backToHome">
+        <router-link to="/">Volver a la home</router-link>
+      </div>
     </header>
-    <div id="adminTable">
+    <div v-if="userLogged != null && userLogged.isAdmin" id="adminTable">
       <table>
         <thead>
           <tr>
@@ -25,7 +27,10 @@
             <td>{{ product.discountAmount }}</td>
             <td>
               <router-link
-                :to="{ name: 'UpdateProduct', params: { id: product.id, product } }"
+                :to="{
+                  name: 'UpdateProduct',
+                  params: { id: product.id, product },
+                }"
               >
                 <img
                   id="editIcon"
@@ -74,13 +79,9 @@ export default {
   },
   created() {
     this.getProducts();
+    console.log(this.userLogged);
   },
   methods: {
-    closeAdminSession() {
-      this.userLogged = null;
-      localStorage.removeItem("Usuario Loggeado");
-      this.$router.push("/");
-    },
     async getProducts() {
       this.products = await apiServices.getProducts();
     },
@@ -102,18 +103,21 @@ export default {
 header {
   display: flex;
   justify-content: space-around;
+  align-items: center;
   background: #7e0a0a;
   color: #ffffff;
 }
-header button {
-  border: 1px solid #7e0a0a;
-  border-radius: 12px;
+header #backToHome a {
+  border: 1px solid #ffffff;
+  border-radius: 6px;
   background: #7e0a0a;
   color: #ffffff;
   font-weight: 600;
   cursor: pointer;
+  padding: 10px 5px;
+  text-decoration: none;
 }
-header button:hover {
+header #backToHome a:hover {
   color: #7e0a0a;
   background: #ffffff;
   border: 1px solid #7e0a0a;

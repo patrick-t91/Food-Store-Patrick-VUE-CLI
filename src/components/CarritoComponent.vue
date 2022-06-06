@@ -106,13 +106,17 @@ export default {
         this.userNotLogged = true;
         return;
       }
+      if (this.userLogged.isAdmin) {
+        alert("No puedes comprar productos como administrador");
+        return;
+      }
       if (this.cart.length == 0) {
         this.emptyCart = true;
         return;
       } else {
         this.emptyCart = false;
       }
-      this.userOrder.totalCartPrice = this.totalCartPrice
+      this.userOrder.totalCartPrice = this.totalCartPrice;
       apiServices.postUserOrder(this.userLogged.id, this.userOrder);
       this.toggleBuyAlert();
       localStorage.removeItem("Carrito Pendiente");
