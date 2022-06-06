@@ -27,8 +27,6 @@ export default {
   },
   created() {
     this.getOrders();
-    console.log(this.userOrders);
-    console.log(this.userLogged);
   },
   data() {
     return {
@@ -38,6 +36,7 @@ export default {
   methods: {
     async getOrders() {
       this.userOrders = await apiServices.getUserOrders(this.userLogged.id);
+      this.userOrders.reverse()
     },
   },
 };

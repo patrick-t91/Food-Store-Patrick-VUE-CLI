@@ -37,7 +37,6 @@ const apiServices = {
   getUserOrders: async (userId) => {
       try {
           const res = await axios.get(`${apiUrl}/Users/${userId}/Orders`);
-          console.log(res)
           return res.data
       } catch (err) {
           document.write(err)

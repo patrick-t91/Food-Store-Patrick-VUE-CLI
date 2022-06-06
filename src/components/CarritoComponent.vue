@@ -1,6 +1,10 @@
 <template>
   <div id="CartContainer">
-    <div v-if="cart.length > 0" @click="toggleCartDropdown" id="CartImgContainer">
+    <div
+      v-if="cart.length > 0"
+      @click="toggleCartDropdown"
+      id="CartImgContainer"
+    >
       <img src="../assets/images/cart.jpg" alt="" />
       <p>{{ cart.length }}</p>
     </div>
@@ -38,11 +42,17 @@
       </div>
       <div v-if="buyAlert" id="buyFinished">
         <h4>Gracias por tu compra!</h4>
+        <button @click="toggleBuyAlert">Volver a comprar</button>
       </div>
       <div v-if="userNotLogged" id="userNotLoggedContainer">
         <button @click="toggleCartDropdown">
           Debés estar loggeado para confirmar tu compra. Loggeate o registrate,
           y volvé que tu carrito estará esperando!
+        </button>
+      </div>
+      <div v-if="emptyCart" id="emptyCart">
+        <button>
+          El carrito está vacío, agrega productos para realizar tu compra!
         </button>
       </div>
       <div id="closeCartDropdownContainer">
@@ -72,6 +82,7 @@ export default {
         date: new Date(),
       },
       userNotLogged: false,
+      emptyCart: false,
     };
   },
   props: {
@@ -95,17 +106,23 @@ export default {
         this.userNotLogged = true;
         return;
       }
-      apiServices.postUserOrder(this.userLogged.id, this.userOrder); 
+      if (this.cart.length == 0) {
+        this.emptyCart = true;
+        return;
+      } else {
+        this.emptyCart = false;
+      }
+      this.userOrder.totalCartPrice = this.totalCartPrice
+      apiServices.postUserOrder(this.userLogged.id, this.userOrder);
       this.toggleBuyAlert();
       localStorage.removeItem("Carrito Pendiente");
       localStorage.removeItem("Precio Total Carrito");
       this.clearCart();
-      this.toggleCartDropdown
+      this.toggleCartDropdown;
       console.log(this.userOrder);
     },
     toggleBuyAlert() {
       this.buyAlert = !this.buyAlert;
-
     },
   },
 };
@@ -215,6 +232,13 @@ export default {
   color: #7e0a0a;
   cursor: pointer;
 }
+#emptyCart button {
+  margin-top: 10px;
+  background: #fff;
+  border: none;
+  color: #7e0a0a;
+  cursor: pointer;
+}
 #buyFinished {
   text-align: center;
 }
@@ -225,6 +249,19 @@ export default {
   font-weight: 600;
   text-decoration: underline;
   transition: width 3.5s;
+}
+#buyFinished button {
+  border: 1px solid #7e0a0a;
+  border-radius: 32px;
+  color: #7e0a0a;
+  background: #ffffff;
+  font-weight: 600;
+  cursor: pointer;
+}
+#buyFinished button:hover {
+  background: #7e0a0a;
+  color: #ffffff;
+  border: 1px solid #7e0a0a;
 }
 #closeCartDropdownContainer {
   display: flex;
