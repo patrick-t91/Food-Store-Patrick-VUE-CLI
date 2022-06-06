@@ -6,18 +6,33 @@ Vue.use(VueRouter)
 const routes = [
     {
         path: "/",
-        name: "HomeComponent",
-        component: () => import('./views/home/HomeComponent.vue')
+        name: "HomeView",
+        component: () => import('./views/home/HomeView.vue'),
+        props: true
     },
     {
         path: "/sugerencias-y-reclamos",
         name: "SuggestionsForm",
-        component: () => import('./views/suggestionsForm/SuggestionsForm.vue')
+        component: () => import('./views/suggestionsForm/SuggestionsForm.vue'),
+        props: true
     },
     {
         path: "/mis-pedidos",
         name: "UserOrders",
-        component: () => import('./views/userOrders/UserOrders.vue')
+        component: () => import('./views/userOrders/UserOrders.vue'),
+        props: true
+    },
+    {
+        path: "/admin",
+        name: "AdminView",
+        component: () => import('./views/admin/AdminView.vue'),
+        props: true
+    },
+    {
+        path: "/admin/update/:id",
+        name: "UpdateProduct",
+        component: () => import('./views/updateProduct/updateProduct.vue'),
+        props: true
     }
 ]
 

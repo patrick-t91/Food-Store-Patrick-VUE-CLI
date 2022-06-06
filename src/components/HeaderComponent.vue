@@ -253,6 +253,9 @@ export default {
       localStorage.setItem("Usuario Loggeado", JSON.stringify(this.userLogged));
       this.toggleLoginModal(3);
       this.errors.loginError = "";
+      if (this.userLogged.isAdmin) {
+        this.$router.push("/admin");
+      }
     },
     async registerUser() {
       if (

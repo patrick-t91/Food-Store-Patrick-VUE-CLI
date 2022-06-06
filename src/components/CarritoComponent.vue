@@ -29,7 +29,7 @@
         </div>
         <div>
           <img
-            src="../assets/images/removeProductFromCart.png"
+            src="../assets/images/removeIcon.png"
             alt="ClearCart"
             height="30"
             width="30"
