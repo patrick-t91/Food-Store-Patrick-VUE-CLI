@@ -2,12 +2,14 @@
   <header>
     <nav>
       <div id="siteLogoAndName">
-        <img
-          src="../assets/images/site-logo.jpg"
-          alt="site logo"
-          width="90"
-          height="90"
-        />
+        <router-link to="/">
+          <img
+            src="../assets/images/site-logo.jpg"
+            alt="site logo"
+            width="90"
+            height="90"
+          />
+        </router-link>
         <h1>TIENDA DE COMIDAS PATRICK</h1>
       </div>
       <div id="navLinks">

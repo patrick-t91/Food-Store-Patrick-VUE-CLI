@@ -5,7 +5,7 @@ export default {
       lsUserKey: "Usuario Loggeado",
     };
   },
-  mounted() {
+  created() {
     this.userLogged = this.getUserLoggedFromStorage();
     if (this.userLogged == null) return
   },

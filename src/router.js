@@ -5,14 +5,14 @@ Vue.use(VueRouter)
 
 const routes = [
     {
-        path: "/sugerencias-y-reclamos",
-        name: "SuggestionsForm",
-        component: () => import('./views/suggestionsForm/SuggestionsForm.vue')
-    },
-    {
         path: "/",
         name: "HomeComponent",
         component: () => import('./views/home/HomeComponent.vue')
+    },
+    {
+        path: "/sugerencias-y-reclamos",
+        name: "SuggestionsForm",
+        component: () => import('./views/suggestionsForm/SuggestionsForm.vue')
     },
     {
         path: "/mis-pedidos",
