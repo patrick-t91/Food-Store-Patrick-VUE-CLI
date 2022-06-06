@@ -34,6 +34,14 @@ const apiServices = {
           document.write(err)
       }
   },
+  updateProduct: async (productId, newProduct) => {
+    try {
+      const res = await axios.put(`${apiUrl}/Products/${productId}`, newProduct)
+      return res.data
+    } catch (err) {
+      console.log(err)
+    }
+  },
   getUserOrders: async (userId) => {
       try {
           const res = await axios.get(`${apiUrl}/Users/${userId}/Orders`);

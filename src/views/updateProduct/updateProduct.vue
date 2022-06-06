@@ -7,17 +7,34 @@
       <h4>Edita el producto</h4>
       <div id="inputsContainer">
         <label for="productName">Nombre del producto</label>
-        <input id="productName" type="text" v-model="product.productName"/>
+        <input id="productName" type="text" v-model="productData.productName" />
         <label for="productPrice">Precio del producto</label>
-        <input id="productPrice" type="number" v-model="product.price"/>
+        <input id="productPrice" type="number" v-model="productData.price" />
         <label for="productCategory">Categoría del producto</label>
-        <input id="productCategory" type="text" v-model="product.category"/>
+        <input id="productCategory" type="text" v-model="productData.category" />
         <label for="imgSrc">Fuente de la imagen del producto</label>
-        <input id="imgSrc" type="text" v-model="product.imgSrc"/>
+        <input id="imgSrc" type="text" v-model="productData.imgSrc" />
         <label for="productDiscount">Descuento del producto</label>
-        <input id="productDiscount" type="text" v-model="product.hasDiscount"/>
+        <input id="productDiscount" type="text" v-model="productData.hasDiscount" />
+        <select
+          name="hasDiscount"
+          id="hasDiscount"
+          v-model="productData.hasDiscount"
+        >
+          <option
+            v-for="(boolean, i) in discountBooleans"
+            :value="boolean"
+            :key="i"
+          >
+            {{ boolean }}
+          </option>
+        </select>
         <label for="productDiscountAmount">Monto del descuento</label>
-        <input id="productDiscountAmount" type="text" />
+        <input
+          id="productDiscountAmount"
+          type="number"
+          v-model="productData.discount"
+        />
       </div>
     </form>
   </div>
@@ -34,6 +51,12 @@ export default {
     product: {
       type: Object,
     },
+  },
+  data() {
+    return {
+      discountBooleans: [true, false],
+      productData: this.product
+    };
   },
 };
 </script>

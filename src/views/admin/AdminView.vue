@@ -26,20 +26,14 @@
             <td>{{ product.hasDiscount }}</td>
             <td>{{ product.discountAmount }}</td>
             <td>
-              <router-link
-                :to="{
-                  name: 'UpdateProduct',
-                  params: { id: product.id, product },
-                }"
-              >
-                <img
-                  id="editIcon"
-                  src="../../assets/images/editIcon.jpg"
-                  alt="edit product icon"
-                  width="25"
-                  height="25"
-                />
-              </router-link>
+              <img
+                id="editIcon"
+                src="../../assets/images/editIcon.jpg"
+                alt="edit product icon"
+                width="25"
+                height="25"
+                @click="toggleEditProduct(product.id)"
+              />
             </td>
             <td>
               <img
@@ -54,6 +48,154 @@
           </tr>
         </tbody>
       </table>
+    </div>
+    <!-- Edit product section -->
+    <div v-if="productToEdit >= 0" id="updateCreateProductContainer">
+      <form @submit.prevent>
+        <h4>Edita el producto</h4>
+        <div id="inputsContainer">
+          <label for="productName">Nombre del producto</label>
+          <input
+            id="productName"
+            type="text"
+            v-model="products[productToEdit].productName"
+          />
+          <label for="productPrice">Precio del producto</label>
+          <input
+            id="productPrice"
+            type="number"
+            v-model="products[productToEdit].price"
+          />
+          <label for="productCategory">Categoría del producto</label>
+          <input
+            id="productCategory"
+            type="text"
+            v-model="products[productToEdit].category"
+          />
+          <label for="imgSrc">Fuente de la imagen del producto</label>
+          <input
+            id="imgSrc"
+            type="text"
+            v-model="products[productToEdit].imgSrc"
+          />
+          <label for="productDiscount">Descuento del producto</label>
+          <input
+            id="productDiscount"
+            type="text"
+            v-model="products[productToEdit].hasDiscount"
+          />
+          <select
+            name="hasDiscount"
+            id="hasDiscount"
+            v-model="products[productToEdit].hasDiscount"
+          >
+            <option
+              v-for="(boolean, i) in discountBooleans"
+              :value="boolean"
+              :key="i"
+            >
+              {{ boolean }}
+            </option>
+          </select>
+          <label for="productDiscountAmount">Porcentaje del descuento</label>
+          <input
+            id="productDiscountAmount"
+            type="number"
+            v-model="products[productToEdit].discountAmount"
+          />
+        </div>
+        <button
+          id="updateProductButton"
+          type="submit"
+          @click="updateProduct(productToEdit + 1, products[productToEdit])"
+        >
+          Actualizar producto
+        </button>
+      </form>
+      <div id="closeButtonContainer">
+        <img
+          src="../../assets/images/closeButton.png"
+          alt="Cart dropdown close button"
+          width="40"
+          height="40"
+          @click="toggleEditProduct(0)"
+        />
+      </div>
+    </div>
+    <!--     Create product section
+ -->
+    <button @click="toggleNewProductForm(true)">Crea un nuevo producto</button>
+    <div v-if="newProductForm" id="updateCreateProductContainer">
+      <form @submit.prevent>
+        <h4>Crea el producto</h4>
+        <div id="inputsContainer">
+          <label for="productName">Nombre del producto</label>
+          <input
+            id="productName"
+            type="text"
+            v-model="products[productToEdit].productName"
+          />
+          <label for="productPrice">Precio del producto</label>
+          <input
+            id="productPrice"
+            type="number"
+            v-model="products[productToEdit].price"
+          />
+          <label for="productCategory">Categoría del producto</label>
+          <input
+            id="productCategory"
+            type="text"
+            v-model="products[productToEdit].category"
+          />
+          <label for="imgSrc">Fuente de la imagen del producto</label>
+          <input
+            id="imgSrc"
+            type="text"
+            v-model="products[productToEdit].imgSrc"
+          />
+          <label for="productDiscount">Descuento del producto</label>
+          <input
+            id="productDiscount"
+            type="text"
+            v-model="products[productToEdit].hasDiscount"
+          />
+          <select
+            name="hasDiscount"
+            id="hasDiscount"
+            v-model="products[productToEdit].hasDiscount"
+          >
+            <option
+              v-for="(boolean, i) in discountBooleans"
+              :value="boolean"
+              :key="i"
+            >
+              {{ boolean }}
+            </option>
+          </select>
+          <label for="productDiscountAmount">Porcentaje del descuento</label>
+          <input
+            id="productDiscountAmount"
+            type="number"
+            v-model="products[productToEdit].discountAmount"
+          />
+        </div>
+        <button
+          id="updateProductButton"
+          type="submit"
+          @click="updateProduct(productToEdit + 1, products[productToEdit])"
+        >
+          Actualizar producto
+        </button>
+      </form>
+      <div id="closeButtonContainer">
+        <img
+          src="../../assets/images/closeButton.png"
+          alt="Cart dropdown close button"
+          width="40"
+          height="40"
+          @click="toggleNewProductForm(false)"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -75,13 +217,22 @@ export default {
         "Cantidad del descuento",
       ],
       products: [],
+      discountBooleans: [true, false],
+      productToEdit: -1,
+      newProductForm: false,
+      newProduct: {},
     };
   },
   created() {
     this.getProducts();
-    console.log(this.userLogged);
   },
   methods: {
+    toggleEditProduct(id) {
+      this.productToEdit = id - 1;
+    },
+    toggleNewProductForm(value) {
+      this.newProductForm = value;
+    },
     async getProducts() {
       this.products = await apiServices.getProducts();
     },
@@ -94,6 +245,9 @@ export default {
       } catch (err) {
         console.log(err);
       }
+    },
+    async updateProduct(id) {
+      await apiServices.updateProduct(id, this.products[this.productToEdit]);
     },
   },
 };
@@ -144,6 +298,65 @@ table tbody td #editIcon {
   cursor: pointer;
 }
 table tbody td #removeIcon {
+  cursor: pointer;
+}
+#updateCreateProductContainer {
+  margin: 30px 0;
+}
+#updateCreateProductContainer a {
+  border: 1px solid #7e0a0a;
+  border-radius: 6px;
+  color: #7e0a0a;
+  background: #ffffff;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  padding: 10px 5px;
+}
+#updateCreateProductContainer a:hover {
+  color: #ffffff;
+  background: #7e0a0a;
+}
+#updateCreateProductContainer form {
+  text-align: center;
+}
+#updateCreateProductContainer h4 {
+  background-color: #7e0a0a;
+  color: #ffffff;
+  padding: 10px 0;
+}
+#inputsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#inputsContainer input {
+  margin-bottom: 20px;
+  width: 350px;
+  max-width: 90%;
+}
+#inputsContainer select {
+  margin-bottom: 20px;
+}
+#adminContainer form #updateProductButton {
+  border: 1px solid #7e0a0a;
+  border-radius: 32px;
+  color: #7e0a0a;
+  background: #ffffff;
+  font-weight: 600;
+  cursor: pointer;
+}
+#adminContainer form #updateProductButton:hover {
+  background: #7e0a0a;
+  color: #ffffff;
+  border: 1px solid #7e0a0a;
+}
+#closeButtonContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+#closeButtonContainer img {
   cursor: pointer;
 }
 </style>
