@@ -124,7 +124,11 @@
     </div>
     <!--     Create product section
  -->
-    <button @click="toggleNewProductForm(true)">Crea un nuevo producto</button>
+    <div id="createButtonContainer">
+      <button @click="toggleNewProductForm(true)">
+        Crea un nuevo producto
+      </button>
+    </div>
     <div v-if="newProductForm" class="updateCreateProductContainer">
       <form @submit.prevent>
         <h4>Crea el producto</h4>
@@ -235,7 +239,7 @@ export default {
     async deleteProduct(id) {
       try {
         const res = await axios.delete(`${apiUrl}/Products/${id}`);
-        alert("Producto")
+        alert("Producto");
         console.log(res.data);
         this.getProducts();
         console.log(this.products);
@@ -245,23 +249,23 @@ export default {
     },
     async updateProduct(id) {
       await apiServices.updateProduct(id, this.products[this.productToEdit]);
-      alert("Producto actualizado!")
+      alert("Producto actualizado!");
     },
     async createProduct() {
       await apiServices.postProduct(this.newProduct);
-      alert("Producto creado!")
-      this.clearNewProductForm()
+      alert("Producto creado!");
+      this.clearNewProductForm();
     },
-    clearNewProductForm () {
-        this.newProduct = {
+    clearNewProductForm() {
+      this.newProduct = {
         productName: "",
         price: 0,
         category: "",
         imgSrc: "",
         hasDiscount: false,
         discountAmount: 0,
-      }
-    }
+      };
+    },
   },
 };
 </script>
@@ -304,7 +308,6 @@ table thead .tableTitles {
 table tbody {
   text-align: center;
   color: #7e0a0a;
-  border-left: 1px dotted #7e0a0a;
 }
 table tbody td #editIcon {
   padding: 0 40px;
@@ -312,6 +315,27 @@ table tbody td #editIcon {
 }
 table tbody td #removeIcon {
   cursor: pointer;
+}
+#createButtonContainer {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0 30px;
+  padding-top: 20px;
+  border-top: 1px dotted #7e0a0a;
+}
+#createButtonContainer button {
+  border: 1px solid #7e0a0a;
+  border-radius: 6px;
+  color: #7e0a0a;
+  background: #ffffff;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 20px;
+}
+#createButtonContainer button:hover {
+  background: #7e0a0a;
+  color: #ffffff;
+  border: 1px solid #7e0a0a;
 }
 .updateCreateProductContainer {
   margin: 30px 0;
