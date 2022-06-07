@@ -50,7 +50,7 @@
       </table>
     </div>
     <!-- Edit product section -->
-    <div v-if="productToEdit >= 0" id="updateCreateProductContainer">
+    <div v-if="productToEdit >= 0" class="updateCreateProductContainer">
       <form @submit.prevent>
         <h4>Edita el producto</h4>
         <div id="inputsContainer">
@@ -125,7 +125,7 @@
     <!--     Create product section
  -->
     <button @click="toggleNewProductForm(true)">Crea un nuevo producto</button>
-    <div v-if="newProductForm" id="updateCreateProductContainer">
+    <div v-if="newProductForm" class="updateCreateProductContainer">
       <form @submit.prevent>
         <h4>Crea el producto</h4>
         <div id="inputsContainer">
@@ -133,36 +133,28 @@
           <input
             id="productName"
             type="text"
-            v-model="products[productToEdit].productName"
+            v-model="newProduct.productName"
           />
           <label for="productPrice">Precio del producto</label>
-          <input
-            id="productPrice"
-            type="number"
-            v-model="products[productToEdit].price"
-          />
+          <input id="productPrice" type="number" v-model="newProduct.price" />
           <label for="productCategory">Categoría del producto</label>
           <input
             id="productCategory"
             type="text"
-            v-model="products[productToEdit].category"
+            v-model="newProduct.category"
           />
           <label for="imgSrc">Fuente de la imagen del producto</label>
-          <input
-            id="imgSrc"
-            type="text"
-            v-model="products[productToEdit].imgSrc"
-          />
+          <input id="imgSrc" type="text" v-model="newProduct.imgSrc" />
           <label for="productDiscount">Descuento del producto</label>
           <input
             id="productDiscount"
             type="text"
-            v-model="products[productToEdit].hasDiscount"
+            v-model="newProduct.hasDiscount"
           />
           <select
             name="hasDiscount"
             id="hasDiscount"
-            v-model="products[productToEdit].hasDiscount"
+            v-model="newProduct.hasDiscount"
           >
             <option
               v-for="(boolean, i) in discountBooleans"
@@ -176,15 +168,11 @@
           <input
             id="productDiscountAmount"
             type="number"
-            v-model="products[productToEdit].discountAmount"
+            v-model="newProduct.discountAmount"
           />
         </div>
-        <button
-          id="updateProductButton"
-          type="submit"
-          @click="updateProduct(productToEdit + 1, products[productToEdit])"
-        >
-          Actualizar producto
+        <button id="updateProductButton" type="submit" @click="createProduct()">
+          Crear producto
         </button>
       </form>
       <div id="closeButtonContainer">
@@ -220,7 +208,14 @@ export default {
       discountBooleans: [true, false],
       productToEdit: -1,
       newProductForm: false,
-      newProduct: {},
+      newProduct: {
+        productName: "",
+        price: 0,
+        category: "",
+        imgSrc: "",
+        hasDiscount: false,
+        discountAmount: 0,
+      },
     };
   },
   created() {
@@ -232,6 +227,7 @@ export default {
     },
     toggleNewProductForm(value) {
       this.newProductForm = value;
+      console.log(this.newProductForm);
     },
     async getProducts() {
       this.products = await apiServices.getProducts();
@@ -239,6 +235,7 @@ export default {
     async deleteProduct(id) {
       try {
         const res = await axios.delete(`${apiUrl}/Products/${id}`);
+        alert("Producto")
         console.log(res.data);
         this.getProducts();
         console.log(this.products);
@@ -248,7 +245,23 @@ export default {
     },
     async updateProduct(id) {
       await apiServices.updateProduct(id, this.products[this.productToEdit]);
+      alert("Producto actualizado!")
     },
+    async createProduct() {
+      await apiServices.postProduct(this.newProduct);
+      alert("Producto creado!")
+      this.clearNewProductForm()
+    },
+    clearNewProductForm () {
+        this.newProduct = {
+        productName: "",
+        price: 0,
+        category: "",
+        imgSrc: "",
+        hasDiscount: false,
+        discountAmount: 0,
+      }
+    }
   },
 };
 </script>
@@ -300,10 +313,10 @@ table tbody td #editIcon {
 table tbody td #removeIcon {
   cursor: pointer;
 }
-#updateCreateProductContainer {
+.updateCreateProductContainer {
   margin: 30px 0;
 }
-#updateCreateProductContainer a {
+.updateCreateProductContainer a {
   border: 1px solid #7e0a0a;
   border-radius: 6px;
   color: #7e0a0a;
@@ -313,14 +326,14 @@ table tbody td #removeIcon {
   text-decoration: none;
   padding: 10px 5px;
 }
-#updateCreateProductContainer a:hover {
+.updateCreateProductContainer a:hover {
   color: #ffffff;
   background: #7e0a0a;
 }
-#updateCreateProductContainer form {
+.updateCreateProductContainer form {
   text-align: center;
 }
-#updateCreateProductContainer h4 {
+.updateCreateProductContainer h4 {
   background-color: #7e0a0a;
   color: #ffffff;
   padding: 10px 0;
