@@ -122,8 +122,6 @@ export default {
       localStorage.removeItem("Carrito Pendiente");
       localStorage.removeItem("Precio Total Carrito");
       this.clearCart();
-      this.toggleCartDropdown();
-      console.log(this.userOrder);
     },
     toggleBuyAlert() {
       this.buyAlert = !this.buyAlert;

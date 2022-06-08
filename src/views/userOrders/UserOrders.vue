@@ -8,7 +8,7 @@
     </div>
     <div v-if="userLogged != null" id="userOrdersContainer">
       <router-link to="/">Volver a la home</router-link>
-      <h4>Hola, {{ userLogged.username }}! Esta es tu lista de pedidos</h4>
+      <h4>{{userOrders.length > 0 ? `Hola, ${userLogged.username}! Esta es tu lista de pedidos` : `Aun no tienes pedidos hechos!`}}</h4>
       <div v-for="(order, i) in userOrders" :key="i">
         <UserOrderComponent :order="order" />
       </div>
@@ -23,10 +23,11 @@ import UserOrderComponent from "../../components/UserOrderComponent.vue";
 export default {
   name: "UserOrders",
   components: {
-    UserOrderComponent
+    UserOrderComponent,
   },
   created() {
     this.getOrders();
+    console.log('HOLA FLOR, ME ACABO DE CREAR! soy el componente USER ORDERS')
   },
   data() {
     return {
@@ -35,8 +36,10 @@ export default {
   },
   methods: {
     async getOrders() {
-      this.userOrders = await apiServices.getUserOrders(this.userLogged.id);
-      this.userOrders.reverse()
+      this.userOrders = await apiServices.getUserOrders(this.$route.params.userId);
+      console.log('USER ORDERS', this.userOrders)
+      console.log(this.$router.params);
+      this.userOrders.reverse();
     },
   },
 };

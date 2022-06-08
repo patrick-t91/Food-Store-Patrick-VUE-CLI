@@ -1,7 +1,7 @@
 <template>
   <div id="homeContainer">
     <router-view />
-    <HeaderComponent />
+    <HeaderComponent @user-info="emitUserInfo()" />
     <CarritoComponent
       :cart="cart"
       :totalCartPrice="totalCartPrice"
@@ -53,12 +53,15 @@ export default {
     async getProducts() {
       this.products = await apiServices.getProducts();
     },
-    addProductToCart(product, quantity) {
+    async addProductToCart(product, quantity) {
       if (quantity == 0) return;
-      if (this.userLogged.isAdmin) {
+      this.userLogged = await this.getUserLoggedFromStorage();
+      if (this.userLogged && this.userLogged.isAdmin) {
+        console.log('REGISTRO PERFECTO AL ADMIN DESDE HOME VIEW')
         alert("No puedes agregar productos en el modo administrador")
         return
       }
+      console.log(this.userLogged)
       let productIsInCart = this.cart.find((item) => item.id == product.id);
       if (productIsInCart) {
         product.quantity += quantity;
@@ -81,6 +84,11 @@ export default {
       localStorage.removeItem("Carrito Pendiente");
       localStorage.removeItem("Precio Total Carrito");
     },
+    emitUserInfo() {
+      this.userLogged = localStorage.getItem("Usuario Loggeado")
+      console.log(this.userLogged)
+      return this.userLogged
+    }
   },
 };
 </script>

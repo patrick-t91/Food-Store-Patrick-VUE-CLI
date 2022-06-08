@@ -16,7 +16,7 @@
         <ul>
           <a @mouseover="toggleCategoriesDropdown(true)">Comidas</a>
           <router-link to="">Ofertas</router-link>
-          <router-link to="/mis-pedidos">Mis pedidos</router-link>
+          <router-link :to="`/mis-pedidos/${userLogged && userLogged.id}`">Mis pedidos</router-link>
           <router-link to="/sugerencias-y-reclamos"
             >Sugerencias y reclamos</router-link
           >
@@ -292,6 +292,8 @@ export default {
         this.toggleLoginModal(3);
       }
       this.errors.loginError = "";
+      console.log(this.userLogged);
+      this.emitUserInfo();
     },
     async registerUser() {
       if (
@@ -321,11 +323,15 @@ export default {
       }
       this.errors.registerError = "";
       this.errors.confirmPasswordError = "";
+      this.emitUserInfo();
     },
     closeUserSession() {
       this.userLogged = null;
       localStorage.removeItem("Usuario Loggeado");
       this.toggleLoginModal(1);
+    },
+    emitUserInfo() {
+      this.$emit("user-info", this.userLogged);
     },
   },
 };

@@ -228,10 +228,15 @@ export default {
   methods: {
     toggleEditProduct(id) {
       this.productToEdit = id - 1;
+      setTimeout(() => {
+        window.scroll(0, window.innerHeight);
+      }, 100);
     },
     toggleNewProductForm(value) {
       this.newProductForm = value;
-      console.log(this.newProductForm);
+      setTimeout(() => {
+        window.scroll(0, window.innerHeight);
+      }, 100);
     },
     async getProducts() {
       this.products = await apiServices.getProducts();
@@ -239,10 +244,9 @@ export default {
     async deleteProduct(id) {
       try {
         const res = await axios.delete(`${apiUrl}/Products/${id}`);
-        alert("Producto");
+        alert("Producto eliminado!");
         console.log(res.data);
         this.getProducts();
-        console.log(this.products);
       } catch (err) {
         console.log(err);
       }
@@ -254,6 +258,7 @@ export default {
     async createProduct() {
       await apiServices.postProduct(this.newProduct);
       alert("Producto creado!");
+      this.getProducts();
       this.clearNewProductForm();
     },
     clearNewProductForm() {

@@ -17,7 +17,7 @@ const routes = [
         props: true
     },
     {
-        path: "/mis-pedidos",
+        path: "/mis-pedidos/:userId",
         name: "UserOrders",
         component: () => import('./views/userOrders/UserOrders.vue'),
         props: true
@@ -26,12 +26,6 @@ const routes = [
         path: "/admin",
         name: "AdminView",
         component: () => import('./views/admin/AdminView.vue'),
-        props: true
-    },
-    {
-        path: "/admin/update/:id",
-        name: "UpdateProduct",
-        component: () => import('./views/updateProduct/updateProduct.vue'),
         props: true
     }
 ]
