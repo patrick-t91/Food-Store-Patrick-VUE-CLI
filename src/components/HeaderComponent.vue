@@ -16,7 +16,9 @@
         <ul>
           <a @mouseover="toggleCategoriesDropdown(true)">Comidas</a>
           <router-link to="">Ofertas</router-link>
-          <router-link :to="`/mis-pedidos/${userLogged && userLogged.id}`">Mis pedidos</router-link>
+          <router-link :to="`/mis-pedidos/${userLogged && userLogged.id}`"
+            >Mis pedidos</router-link
+          >
           <router-link to="/sugerencias-y-reclamos"
             >Sugerencias y reclamos</router-link
           >
@@ -245,6 +247,10 @@ export default {
   methods: {
     toggleLoginModal(value) {
       this.loginModal = value;
+      this.loginData = {
+        username: "",
+        password: "",
+      };
     },
     toggleCategoriesDropdown(value) {
       this.categoriesDropdown = value;
@@ -294,6 +300,10 @@ export default {
       this.errors.loginError = "";
       console.log(this.userLogged);
       this.emitUserInfo();
+      this.loginData = {
+        username: "",
+        password: "",
+      };
     },
     async registerUser() {
       if (
@@ -324,6 +334,10 @@ export default {
       this.errors.registerError = "";
       this.errors.confirmPasswordError = "";
       this.emitUserInfo();
+      this.loginData = {
+        username: "",
+        password: "",
+      };
     },
     closeUserSession() {
       this.userLogged = null;

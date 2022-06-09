@@ -97,11 +97,15 @@ export default {
   methods: {
     toggleCartDropdown() {
       this.cartDropdown = !this.cartDropdown;
+      this.toggleBuyAlert(false);
+      this.userNotLogged = false;
+      this.emptyCart = false;
     },
     clearCart() {
       this.$emit("clear-cart", this.cart);
     },
-    confirmBuy() {
+    async confirmBuy() {
+      this.userLogged = await this.getUserLoggedFromStorage();
       if (this.userLogged == null) {
         this.userNotLogged = true;
         return;
@@ -116,15 +120,17 @@ export default {
       } else {
         this.emptyCart = false;
       }
+      this.userNotLogged = false;
+      this.emptyCart = false;
       this.userOrder.totalCartPrice = this.totalCartPrice;
       apiServices.postUserOrder(this.userLogged.id, this.userOrder);
-      this.toggleBuyAlert();
+      this.toggleBuyAlert(true);
       localStorage.removeItem("Carrito Pendiente");
       localStorage.removeItem("Precio Total Carrito");
       this.clearCart();
     },
-    toggleBuyAlert() {
-      this.buyAlert = !this.buyAlert;
+    toggleBuyAlert(value) {
+      this.buyAlert = value;
     },
   },
 };
