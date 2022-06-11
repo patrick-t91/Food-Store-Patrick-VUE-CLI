@@ -42,176 +42,12 @@
         </ul>
       </div>
     </nav>
-    <div v-if="loginModal == 1" class="loginModal">
-      <div class="loginModal--container">
-        <div class="loginModal--mainContainer">
-          <img
-            id="loginModal--loginLogo"
-            src="../assets/images/loginLogo.png"
-            alt="login"
-            width="60"
-            height="60"
-          />
-          <form @submit.prevent>
-            <label for="inputUsuerName">Nombre de usuario</label>
-            <input
-              type="text"
-              placeholder="Ingresa tu nombre de usuario"
-              v-model="loginData.username"
-              @keyup="validateUsername"
-            />
-            <span v-if="errors.usernameError.length > 0" class="error">
-              {{ errors.usernameError }}
-            </span>
-            <label for="inputPassword">Ingresa tu contraseña</label>
-            <input
-              type="password"
-              placeholder="Ingresa tu contraseña"
-              v-model="loginData.password"
-              @keyup="validatePassword"
-            />
-            <span v-if="errors.passwordError.length" class="error">
-              {{ errors.passwordError }}
-            </span>
-            <button type="submit" id="loginButton" @click="validateLogin">
-              INICIAR SESION
-            </button>
-            <span
-              v-if="errors.loginError.length"
-              id="loginError"
-              class="error"
-              >{{ errors.loginError }}</span
-            >
-          </form>
-          <button id="goToRegisterButton" @click="toggleLoginModal(2)">
-            Aun no eres usuario de la tienda? Registrate!
-          </button>
-        </div>
-        <div id="closeLoginModal">
-          <img
-            src="../assets/images/closeButton.png"
-            alt="loginModal close button"
-            @click="toggleLoginModal(0)"
-            width="40"
-            height="40"
-          />
-        </div>
-      </div>
-    </div>
-    <div v-if="loginModal == 2" class="loginModal">
-      <div class="loginModal--container">
-        <div class="loginModal--mainContainer">
-          <img
-            id="loginModal--loginLogo"
-            src="../assets/images/loginLogo.png"
-            alt="login"
-            width="60"
-            height="60"
-          />
-          <form @submit.prevent>
-            <label for="inputUsername">Crea tu nombre de usuario</label>
-            <input
-              id="inputUsername"
-              type="text"
-              placeholder="Solo numeros y letras"
-              v-model="loginData.username"
-              @keyup="validateUsername"
-            />
-            <span v-if="errors.usernameError.length > 0" class="error">
-              {{ errors.usernameError }}
-            </span>
-            <label for="inputPassword">Crea tu contraseña</label>
-            <input
-              id="inputPassword"
-              type="password"
-              placeholder="Crea tu contraseña"
-              v-model="loginData.password"
-              @keyup="validatePassword"
-            />
-            <span v-if="errors.passwordError.length" class="error">
-              {{ errors.passwordError }}
-            </span>
-            <label for="secondPassword">Confirma tu contraseña</label>
-            <input
-              id="secondPassword"
-              type="password"
-              v-model="passwordConfirmation"
-              placeholder="Repite la contraseña"
-            />
-            <span
-              v-if="errors.confirmPasswordError.length"
-              id="confirmPasswordError"
-              class="error"
-            >
-              {{ errors.confirmPasswordError }}
-            </span>
-            <button type="submit" id="loginButton" @click="registerUser">
-              REGISTRATE
-            </button>
-            <span v-if="errors.registerError.length" class="error">
-              {{ errors.registerError }}
-            </span>
-          </form>
-          <button id="goToRegisterButton" @click="toggleLoginModal(1)">
-            Si ya tienes un usuario, inicia sesion.
-          </button>
-        </div>
-        <div id="closeLoginModal">
-          <img
-            src="../assets/images/closeButton.png"
-            alt="loginModal close button"
-            @click="toggleLoginModal(0)"
-            width="40"
-            height="40"
-          />
-        </div>
-      </div>
-    </div>
-    <div v-if="loginModal == 3">
-      <div class="loginModal">
-        <div class="loginModal--container">
-          <div class="loginModal--mainContainer">
-            <h4>{{ `!Hola, ${userLogged.username}!` }}</h4>
-            <button id="closeSessionButton" @click="closeUserSession">
-              Cerrar sesión
-            </button>
-          </div>
-          <div id="closeLoginModal">
-            <img
-              src="../assets/images/closeButton.png"
-              alt="loginModal close button"
-              @click="toggleLoginModal(0)"
-              width="40"
-              height="40"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-    <div v-if="loginModal == 4">
-      <div class="loginModal">
-        <div class="loginModal--container">
-          <div class="loginModal--mainContainer">
-            <h4>{{ `!Hola, ${userLogged.username}!` }}</h4>
-            <router-link to="/admin">
-              Ir a la sesión de administrador
-            </router-link>
-          </div>
-          <button id="closeAdminSessionButton" @click="closeUserSession">
-            Cerrar sesión
-          </button>
-          <div id="closeLoginModal">
-            <img
-              src="../assets/images/closeButton.png"
-              alt="loginModal close button"
-              @click="toggleLoginModal(0)"
-              width="40"
-              height="40"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
+    <LoginComponent
+      :userLogged="userLogged"
+      :loginData="loginData"
+      :errors="errors"
+      :loginModal="loginModal"
+    />
     <div id="banner">
       <img src="../assets/images/foodBanner.jpg" alt="food banner" />
     </div>
@@ -220,29 +56,22 @@
 
 <script>
 import apiServices from "../services/api.services.js";
+import LoginComponent from "./LoginComponent.vue";
 
 export default {
   name: "HeaderComponent",
+  components: {
+    LoginComponent,
+  },
   data() {
     return {
       loginModal: Number(0),
-      categoriesDropdown: false,
-      loginData: {
-        username: "",
-        password: "",
-      },
-      validations: {
-        loginRegex: /^[a-zA-Z0-9]+$/,
-      },
-      passwordConfirmation: "",
-      errors: {
-        usernameError: "",
-        passwordError: "",
-        loginError: "",
-        registerError: "",
-        confirmPasswordError: "",
-      },
     };
+  },
+  props: {
+    loginData: { type: Object, required: true },
+    userLogged: { type: Object, required: true },
+    errors: { type: Object, required: true },
   },
   methods: {
     toggleLoginModal(value) {
@@ -256,94 +85,12 @@ export default {
       this.categoriesDropdown = value;
     },
     validateUsername() {
-      if (
-        this.loginData.username &&
-        this.validations.loginRegex.test(this.loginData.username)
-      ) {
-        this.errors.usernameError = "";
-        return;
-      }
-      this.errors.usernameError =
-        "El nombre de usuario solo admite letras y números";
+      this.$emit();
     },
-    validatePassword() {
-      if (this.loginData.password && this.loginData.password.length >= 6) {
-        this.errors.passwordError = "";
-        return;
-      }
-      this.errors.passwordError =
-        "La contraseña debe tener al menos 6 caracteres";
-    },
-    async validateLogin() {
-      if (
-        !this.errors.usernameError == "" || // Chequeo que el username y contrasena cumplan
-        !this.errors.passwordError == "" // los requisitos de validacion (solo numeros y letras)
-      )
-        return; // Si falla un requisito, salgo de la funcion
-      const users = await apiServices.getUsers();
-      this.userLogged = users.find(
-        (user) =>
-          user.username === this.loginData.username &&
-          user.password === this.loginData.password
-      );
-      if (this.userLogged == undefined) {
-        this.errors.loginError =
-          "La combinación de usuario y contraseña ingresados no es válida";
-        return;
-      }
-      localStorage.setItem("Usuario Loggeado", JSON.stringify(this.userLogged));
-      if (this.userLogged.isAdmin) {
-        this.toggleLoginModal(4);
-      } else {
-        this.toggleLoginModal(3);
-      }
-      this.errors.loginError = "";
-      console.log(this.userLogged);
-      this.emitUserInfo();
-      this.loginData = {
-        username: "",
-        password: "",
-      };
-    },
-    async registerUser() {
-      if (
-        !this.errors.usernameError == "" ||
-        !this.errors.passwordError == ""
-      ) {
-        return;
-      }
-      const users = await apiServices.getUsers();
-      for (let user of users) {
-        if (user.username === this.loginData.username) {
-          this.errors.registerError = "El usuario ya existe";
-          return;
-        }
-      }
-      if (this.passwordConfirmation != this.loginData.password) {
-        this.errors.confirmPasswordError =
-          "Las contraseñas ingresadas deben coincidir";
-        return;
-      }
-      this.userLogged = await apiServices.postUser(this.loginData);
-      localStorage.setItem("Usuario Loggeado", JSON.stringify(this.userLogged));
-      if (this.userLogged.isAdmin) {
-        this.toggleLoginModal(4);
-      } else {
-        this.toggleLoginModal(3);
-      }
-      this.errors.registerError = "";
-      this.errors.confirmPasswordError = "";
-      this.emitUserInfo();
-      this.loginData = {
-        username: "",
-        password: "",
-      };
-    },
-    closeUserSession() {
-      this.userLogged = null;
-      localStorage.removeItem("Usuario Loggeado");
-      this.toggleLoginModal(1);
-    },
+    validatePassword() {},
+    async validateLogin() {},
+    async registerUser() {},
+    closeUserSession() {},
     emitUserInfo() {
       this.$emit("user-info", this.userLogged);
     },
