@@ -3,7 +3,7 @@
     <router-view />
     <HeaderComponent
       :userLoggedHeader="userLoggedHome"
-      :errors="errors"
+      :errors="errorsHome"
       @validate-username="validateUsername"
       @validate-password="validatePassword"
       @login-user="loginUser"
@@ -44,14 +44,14 @@ export default {
   data() {
     return {
       productsInfo: ["Producto", "Precio", "Imagen del producto"],
-      products: [],
       cart: [],
       totalCartPrice: 0,
     };
   },
   props: {
     userLoggedHome: { type: Object },
-    errors: { type: Object },
+    errorsHome: { type: Object },
+    products: { type: Array, required: true },
   },
 
   methods: {

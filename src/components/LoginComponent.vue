@@ -1,6 +1,19 @@
 <template>
   <div id="loginContainer">
-    <div v-if="loginModalState == 1" class="loginModal">
+    <div
+      id="loginLogoContainer"
+      @click="
+        toggleLoginModal(1)
+      "
+    >
+      <img
+        src="../assets/images/loginLogo.png"
+        alt="login"
+        width="40"
+        height="40"
+      />
+    </div>
+    <div v-if="loginModal == 1" class="loginModal">
       <div class="loginModal--container">
         <div class="loginModal--mainContainer">
           <img
@@ -31,7 +44,7 @@
             <span v-if="errors.passwordError.length" class="error">
               {{ errors.passwordError }}
             </span>
-            <button type="submit" id="loginButton" @click="validateLogin">
+            <button type="submit" id="loginButton" @click="loginUser">
               INICIAR SESION
             </button>
             <span
@@ -56,7 +69,7 @@
         </div>
       </div>
     </div>
-    <div v-if="loginModalState == 2" class="loginModal">
+    <div v-if="loginModal == 2" class="loginModal">
       <div class="loginModal--container">
         <div class="loginModal--mainContainer">
           <img
@@ -125,11 +138,11 @@
         </div>
       </div>
     </div>
-    <div v-if="loginModalState == 3">
+    <div v-if="loginModal == 3">
       <div class="loginModal">
         <div class="loginModal--container">
           <div class="loginModal--mainContainer">
-            <h4>{{ `!Hola, ${userLogged.username}!` }}</h4>
+            <h4>!Hola{userLogged.username}!</h4>
             <button id="closeSessionButton" @click="closeUserSession">
               Cerrar sesión
             </button>
@@ -146,11 +159,11 @@
         </div>
       </div>
     </div>
-    <div v-if="loginModalState == 4">
+    <div v-if="loginModal == 4">
       <div class="loginModal">
         <div class="loginModal--container">
           <div class="loginModal--mainContainer">
-            <h4>{{ `!Hola, ${userLogged.username}!` }}</h4>
+            <h4>!Hola{userLogged.username}!</h4>
             <router-link to="/admin">
               Ir a la sesión de administrador
             </router-link>
@@ -178,23 +191,23 @@ export default {
   name: "LoginComponent",
   data() {
     return {
+      loginModal: 0,
       loginData: { username: "", password: "" },
     };
   },
   props: {
-    loginModal: { type: Number, required: true },
-    userLogged: { type: Object},
-    errors: { type: Object},
+    userLogged: { type: Object },
+    errors: { type: Object },
   },
   methods: {
-    toggleLoginModal() {
-      this.$emit("toggle-login-modal", this.loginModal);
+    toggleLoginModal(value) {
+      this.loginModal = value
     },
     validateUsername() {
-      this.$emit("validate-username", this.loginData);
+      this.$emit("validate-username", this.loginData, this.errors);
     },
     validatePassword() {
-      this.$emit("validate-password", this.loginData);
+      this.$emit("validate-password", this.loginData, this.errors);
     },
     loginUser() {
       this.$emit("login-user", this.userLogged);
@@ -210,7 +223,20 @@ export default {
 </script>
 
 <style scoped>
-#app .loginModal--container {
+#loginContainer #loginLogoContainer {
+  cursor: pointer;
+}
+#loginContainer #loginLogoContainer:hover {
+  background-color: #ffffff;
+  color: #7e0a0a;
+  font-weight: 700;
+  transform: scale(1.1);
+}
+#app .loginModal {
+  display: flex;
+  justify-content: center;
+}
+#loginContainer .loginModal--container {
   z-index: 2;
   position: fixed;
   width: 400px;
@@ -221,26 +247,26 @@ export default {
   text-align: center;
   border-radius: 20px;
 }
-#app .loginModal--mainContainer form {
+#loginContainer .loginModal--mainContainer form {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-#app #loginModal--loginLogo {
+#loginContainer #loginModal--loginLogo {
   margin-bottom: 30px;
 }
-#app .loginModal label {
+#loginContainer .loginModal label {
   color: #7e0a0a;
   font-weight: 600;
 }
-#app .loginModal input {
+#loginContainer .loginModal input {
   margin: 10px 0 20px;
   width: 200px;
   border: 1px solid #7e0a0a;
   color: #7e0a0a;
   text-align: center;
 }
-#app .loginModal #loginButton {
+#loginContainer .loginModal #loginButton {
   border: 1px solid #7e0a0a;
   border-radius: 32px;
   color: #7e0a0a;
@@ -248,12 +274,12 @@ export default {
   font-weight: 600;
   cursor: pointer;
 }
-#app .loginModal #loginButton:hover {
+#loginContainer .loginModal #loginButton:hover {
   background: #7e0a0a;
   color: #ffffff;
   border: 1px solid #7e0a0a;
 }
-#app .loginModal #goToRegisterButton {
+#loginContainer .loginModal #goToRegisterButton {
   margin-top: 10px;
   background: #fff;
   border: none;
@@ -261,7 +287,7 @@ export default {
   color: #7e0a0a;
   cursor: pointer;
 }
-#app .loginModal #closeSessionButton {
+#loginContainer .loginModal #closeSessionButton {
   border: 1px solid #7e0a0a;
   border-radius: 32px;
   color: #7e0a0a;
@@ -269,12 +295,12 @@ export default {
   font-weight: 600;
   cursor: pointer;
 }
-#app .loginModal #closeSessionButton:hover {
+#loginContainer .loginModal #closeSessionButton:hover {
   background: #7e0a0a;
   color: #ffffff;
   border: 1px solid #7e0a0a;
 }
-#app .loginModal #closeAdminSessionButton {
+#loginContainer .loginModal #closeAdminSessionButton {
   border: 1px solid #7e0a0a;
   border-radius: 32px;
   color: #7e0a0a;
@@ -283,27 +309,27 @@ export default {
   cursor: pointer;
   margin-top: 30px;
 }
-#app .loginModal #closeAdminSessionButton:hover {
+#loginContainer .loginModal #closeAdminSessionButton:hover {
   background: #7e0a0a;
   color: #ffffff;
   border: 1px solid #7e0a0a;
 }
-#app .loginModal .error {
+#loginContainer .loginModal .error {
   margin-top: 10px;
   margin-bottom: 15px;
   color: #7e0a0a;
 }
-#app .loginModal #loginError {
+#loginContainer .loginModal #loginError {
   width: 75%;
   margin-top: 15px;
 }
-#app .loginModal #confirmPasswordError {
+#loginContainer .loginModal #confirmPasswordError {
   margin-top: -10px;
 }
 #adminLogin {
   margin-top: 40px;
 }
-#app .loginModal a {
+#loginContainer .loginModal a {
   border: 1px solid #7e0a0a;
   border-radius: 6px;
   color: #7e0a0a;
@@ -313,15 +339,15 @@ export default {
   text-decoration: none;
   padding: 10px 5px;
 }
-#app .loginModal a:hover {
+#loginContainer .loginModal a:hover {
   color: #ffffff;
   background: #7e0a0a;
 }
-#app .loginModal #closeLoginModal {
+#loginContainer .loginModal #closeLoginModal {
   display: flex;
   justify-content: flex-end;
 }
-#app .loginModal #closeLoginModal img {
+#loginContainer .loginModal #closeLoginModal img {
   cursor: pointer;
   margin: 10px 10px 0;
 }

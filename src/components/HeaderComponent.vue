@@ -16,43 +16,27 @@
         <ul>
           <a @mouseover="toggleCategoriesDropdown(true)">Comidas</a>
           <router-link to="">Ofertas</router-link>
-          <router-link :to="`/mis-pedidos/${userLoggedHeader && userLoggedHeader.id}`"
+          <router-link
+            :to="`/mis-pedidos/${userLoggedHeader && userLoggedHeader.id}`"
             >Mis pedidos</router-link
           >
           <router-link to="/sugerencias-y-reclamos"
             >Sugerencias y reclamos</router-link
           >
-          <div
-            id="loginLogoContainer"
-            @click="
-              userLoggedHeader == null
-                ? toggleLoginModal(1)
-                : !userLoggedHeader.isAdmin
-                ? toggleLoginModal(3)
-                : toggleLoginModal(4)
-            "
-          >
-            <img
-              src="../assets/images/loginLogo.png"
-              alt="login"
-              width="40"
-              height="40"
-            />
-          </div>
+          <LoginComponent
+            :userLogged="userLoggedHeader"
+            :errors="errorsHeader"
+            @validate-username="validateUsername"
+            @validate-password="validatePassword"
+            @login-user="loginUser"
+            @register-user="registerUser"
+            @close-user-session="closeUserSession"
+          />
+          
         </ul>
       </div>
     </nav>
-    <LoginComponent
-      :userLogged="userLoggedHeader"
-      :errors="errors"
-      :loginModal="loginModal"
-      @toggle-login-modal="toggleLoginModal"
-      @validate-username="validateUsername"
-      @validate-password="validatePassword"
-      @login-user="loginUser"
-      @register-user="registerUser"
-      @close-user-session="closeUserSession"
-    />
+
     <div id="banner">
       <img src="../assets/images/foodBanner.jpg" alt="food banner" />
     </div>
@@ -68,14 +52,10 @@ export default {
     LoginComponent,
   },
   props: {
-    loginModal: { type: Number, required: true },
-    userLoggedHeader: { type: Object},
-    errors: { type: Object},
+    userLoggedHeader: { type: Object },
+    errorsHeader: { type: Object },
   },
   methods: {
-    toggleLoginModal() {
-      this.$emit("toggle-login-modal", this.loginModal);
-    },
     toggleCategoriesDropdown(value) {
       this.categoriesDropdown = value;
     },
@@ -192,133 +172,5 @@ export default {
 }
 #app #categoriesDropdown- .storeLink {
   cursor: pointer;
-}
-#app .loginModal {
-  display: flex;
-  justify-content: center;
-}
-#app #navLinks #loginLogoContainer {
-  cursor: pointer;
-}
-#app #navLinks #loginLogoContainer:hover {
-  background-color: #ffffff;
-  color: #7e0a0a;
-  font-weight: 700;
-  transform: scale(1.1);
-}
-#app .loginModal--container {
-  z-index: 2;
-  position: fixed;
-  width: 400px;
-  max-width: 85%;
-  padding: 20px 0;
-  border: 6px solid #7e0a0a;
-  background: #ffffff;
-  text-align: center;
-  border-radius: 20px;
-}
-#app .loginModal--mainContainer form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-#app #loginModal--loginLogo {
-  margin-bottom: 30px;
-}
-#app .loginModal label {
-  color: #7e0a0a;
-  font-weight: 600;
-}
-#app .loginModal input {
-  margin: 10px 0 20px;
-  width: 200px;
-  border: 1px solid #7e0a0a;
-  color: #7e0a0a;
-  text-align: center;
-}
-#app .loginModal #loginButton {
-  border: 1px solid #7e0a0a;
-  border-radius: 32px;
-  color: #7e0a0a;
-  background: #ffffff;
-  font-weight: 600;
-  cursor: pointer;
-}
-#app .loginModal #loginButton:hover {
-  background: #7e0a0a;
-  color: #ffffff;
-  border: 1px solid #7e0a0a;
-}
-#app .loginModal #goToRegisterButton {
-  margin-top: 10px;
-  background: #fff;
-  border: none;
-  text-decoration: underline;
-  color: #7e0a0a;
-  cursor: pointer;
-}
-#app .loginModal #closeSessionButton {
-  border: 1px solid #7e0a0a;
-  border-radius: 32px;
-  color: #7e0a0a;
-  background: #ffffff;
-  font-weight: 600;
-  cursor: pointer;
-}
-#app .loginModal #closeSessionButton:hover {
-  background: #7e0a0a;
-  color: #ffffff;
-  border: 1px solid #7e0a0a;
-}
-#app .loginModal #closeAdminSessionButton {
-  border: 1px solid #7e0a0a;
-  border-radius: 32px;
-  color: #7e0a0a;
-  background: #ffffff;
-  font-weight: 600;
-  cursor: pointer;
-  margin-top: 30px;
-}
-#app .loginModal #closeAdminSessionButton:hover {
-  background: #7e0a0a;
-  color: #ffffff;
-  border: 1px solid #7e0a0a;
-}
-#app .loginModal .error {
-  margin-top: 10px;
-  margin-bottom: 15px;
-  color: #7e0a0a;
-}
-#app .loginModal #loginError {
-  width: 75%;
-  margin-top: 15px;
-}
-#app .loginModal #confirmPasswordError {
-  margin-top: -10px;
-}
-#adminLogin {
-  margin-top: 40px;
-}
-#app .loginModal a {
-  border: 1px solid #7e0a0a;
-  border-radius: 6px;
-  color: #7e0a0a;
-  background: #ffffff;
-  font-weight: 600;
-  cursor: pointer;
-  text-decoration: none;
-  padding: 10px 5px;
-}
-#app .loginModal a:hover {
-  color: #ffffff;
-  background: #7e0a0a;
-}
-#app .loginModal #closeLoginModal {
-  display: flex;
-  justify-content: flex-end;
-}
-#app .loginModal #closeLoginModal img {
-  cursor: pointer;
-  margin: 10px 10px 0;
 }
 </style>

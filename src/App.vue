@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <router-view
+      :products="products"
       :userLoggedHome="userLogged"
+      :errorsHome="errors"
       @login-user="loginUser"
       @register-user="registerUser"
       @close-user-session="closeUserSession"
@@ -28,6 +30,7 @@ export default {
         registerError: "",
         confirmPasswordError: "",
       },
+      products: [],
     };
   },
   created() {
@@ -64,7 +67,6 @@ export default {
       this.errors.passwordError =
         "La contraseña debe tener al menos 6 caracteres";
     },
-
     async loginUser() {
       if (
         !this.errors.usernameError == "" || // Chequeo que el username y contrasena cumplan
@@ -83,11 +85,6 @@ export default {
         return;
       }
       localStorage.setItem("Usuario Loggeado", JSON.stringify(this.userLogged));
-      if (this.userLogged.isAdmin) {
-        this.toggleLoginModal(4);
-      } else {
-        this.toggleLoginModal(3);
-      }
       this.errors.loginError = "";
       console.log(this.userLogged);
       this.loginData = {
@@ -116,11 +113,6 @@ export default {
       }
       this.userLogged = await apiServices.postUser(this.loginData);
       localStorage.setItem("Usuario Loggeado", JSON.stringify(this.userLogged));
-      if (this.userLogged.isAdmin) {
-        this.toggleLoginModal(4);
-      } else {
-        this.toggleLoginModal(3);
-      }
       this.errors.registerError = "";
       this.errors.confirmPasswordError = "";
       this.emitUserInfo();
@@ -132,9 +124,8 @@ export default {
     closeUserSession() {
       this.userLogged = null;
       localStorage.removeItem("Usuario Loggeado");
-      this.toggleLoginModal(1);
     },
-  }
+  },
 };
 </script>
 
