@@ -3,7 +3,6 @@
     <router-view />
     <HeaderComponent
       :userLoggedHeader="userLoggedHome"
-      :errors="errorsHome"
       @validate-username="validateUsername"
       @validate-password="validatePassword"
       @login-user="loginUser"
@@ -50,7 +49,6 @@ export default {
   },
   props: {
     userLoggedHome: { type: Object },
-    errorsHome: { type: Object },
     products: { type: Array, required: true },
   },
 
@@ -61,14 +59,14 @@ export default {
     validatePassword(password) {
       this.$emit("validate-password", password);
     },
-    loginUser(user) {
-      this.$emit("login-user", user);
+    loginUser() {
+      this.$emit("login-user");
     },
-    registerUser(user) {
-      this.$emit("register-user", user);
+    registerUser() {
+      this.$emit("register-user");
     },
-    closeUserSession(user) {
-      this.$emit("close-user-session", user);
+    closeUserSession() {
+      this.$emit("close-user-session");
     },
     async addProductToCart(product, quantity) {
       if (quantity == 0) return;

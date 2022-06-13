@@ -14,7 +14,7 @@
       </div>
       <div id="navLinks">
         <ul>
-          <a @mouseover="toggleCategoriesDropdown(true)">Comidas</a>
+          <a>Comidas</a>
           <router-link to="">Ofertas</router-link>
           <router-link
             :to="`/mis-pedidos/${userLoggedHeader && userLoggedHeader.id}`"
@@ -24,8 +24,7 @@
             >Sugerencias y reclamos</router-link
           >
           <LoginComponent
-            :userLogged="userLoggedHeader"
-            :errors="errorsHeader"
+            :userLoggedLogin="userLoggedHeader"
             @validate-username="validateUsername"
             @validate-password="validatePassword"
             @login-user="loginUser"
@@ -53,26 +52,22 @@ export default {
   },
   props: {
     userLoggedHeader: { type: Object },
-    errorsHeader: { type: Object },
   },
   methods: {
-    toggleCategoriesDropdown(value) {
-      this.categoriesDropdown = value;
+    validateUsername(loginData) {
+      this.$emit("validate-username", loginData.username);
     },
-    validateUsername(username) {
-      this.$emit("validate-username", username);
+    validatePassword(loginData) {
+      this.$emit("validate-password", loginData.password);
     },
-    validatePassword(password) {
-      this.$emit("validate-password", password);
+    loginUser() {
+      this.$emit("login-user");
     },
-    loginUser(userLogged) {
-      this.$emit("login-user", userLogged);
+    registerUser() {
+      this.$emit("register-user");
     },
-    registerUser(userLogged) {
-      this.$emit("register-user", userLogged);
-    },
-    closeUserSession(userLogged) {
-      this.$emit("close-user-session", userLogged);
+    closeUserSession() {
+      this.$emit("close-user-session");
     },
   },
 };

@@ -1,11 +1,6 @@
 <template>
   <div id="loginContainer">
-    <div
-      id="loginLogoContainer"
-      @click="
-        toggleLoginModal(1)
-      "
-    >
+    <div id="loginLogoContainer" @click="toggleLoginModal(1)">
       <img
         src="../assets/images/loginLogo.png"
         alt="login"
@@ -31,8 +26,11 @@
               v-model="loginData.username"
               @keyup="validateUsername"
             />
-            <span v-if="errors.usernameError.length > 0" class="error">
-              {{ errors.usernameError }}
+            <span
+              v-if="loginData.errors.usernameError.length > 0"
+              class="error"
+            >
+              {{ loginData.errors.usernameError }}
             </span>
             <label for="inputPassword">Ingresa tu contraseña</label>
             <input
@@ -41,17 +39,17 @@
               v-model="loginData.password"
               @keyup="validatePassword"
             />
-            <span v-if="errors.passwordError.length" class="error">
-              {{ errors.passwordError }}
+            <span v-if="loginData.errors.passwordError.length" class="error">
+              {{ loginData.errors.passwordError }}
             </span>
             <button type="submit" id="loginButton" @click="loginUser">
               INICIAR SESION
             </button>
             <span
-              v-if="errors.loginError.length"
+              v-if="loginData.errors.loginError.length"
               id="loginError"
               class="error"
-              >{{ errors.loginError }}</span
+              >{{ loginData.errors.loginError }}</span
             >
           </form>
           <button id="goToRegisterButton" @click="toggleLoginModal(2)">
@@ -88,8 +86,11 @@
               v-model="loginData.username"
               @keyup="validateUsername"
             />
-            <span v-if="errors.usernameError.length > 0" class="error">
-              {{ errors.usernameError }}
+            <span
+              v-if="loginData.errors.usernameError.length > 0"
+              class="error"
+            >
+              {{ loginData.errors.usernameError }}
             </span>
             <label for="inputPassword">Crea tu contraseña</label>
             <input
@@ -99,8 +100,8 @@
               v-model="loginData.password"
               @keyup="validatePassword"
             />
-            <span v-if="errors.passwordError.length" class="error">
-              {{ errors.passwordError }}
+            <span v-if="loginData.errors.passwordError.length" class="error">
+              {{ loginData.errors.passwordError }}
             </span>
             <label for="secondPassword">Confirma tu contraseña</label>
             <input
@@ -110,17 +111,17 @@
               placeholder="Repite la contraseña"
             />
             <span
-              v-if="errors.confirmPasswordError.length"
+              v-if="loginData.errors.confirmPasswordError.length"
               id="confirmPasswordError"
               class="error"
             >
-              {{ errors.confirmPasswordError }}
+              {{ loginData.errors.confirmPasswordError }}
             </span>
             <button type="submit" id="loginButton" @click="registerUser">
               REGISTRATE
             </button>
-            <span v-if="errors.registerError.length" class="error">
-              {{ errors.registerError }}
+            <span v-if="loginData.errors.registerError.length" class="error">
+              {{ loginData.errors.registerError }}
             </span>
           </form>
           <button id="goToRegisterButton" @click="toggleLoginModal(1)">
@@ -142,7 +143,7 @@
       <div class="loginModal">
         <div class="loginModal--container">
           <div class="loginModal--mainContainer">
-            <h4>!Hola{userLogged.username}!</h4>
+            <h4>!Hola{userLoggedLogin.username}!</h4>
             <button id="closeSessionButton" @click="closeUserSession">
               Cerrar sesión
             </button>
@@ -163,7 +164,7 @@
       <div class="loginModal">
         <div class="loginModal--container">
           <div class="loginModal--mainContainer">
-            <h4>!Hola{userLogged.username}!</h4>
+            <h4>!Hola{userLoggedLogin.username}!</h4>
             <router-link to="/admin">
               Ir a la sesión de administrador
             </router-link>
@@ -192,31 +193,42 @@ export default {
   data() {
     return {
       loginModal: 0,
-      loginData: { username: "", password: "" },
+      loginData: {
+        username: "",
+        password: "",
+        passwordConfirmation: "",
+        errors: {
+          usernameError: "",
+          passwordError: "",
+          loginError: "",
+          registerError: "",
+          confirmPasswordError: "",
+        },
+      },
     };
   },
   props: {
-    userLogged: { type: Object },
+    userLoggedLogin: { type: Object },
     errors: { type: Object },
   },
   methods: {
     toggleLoginModal(value) {
-      this.loginModal = value
+      this.loginModal = value;
     },
     validateUsername() {
-      this.$emit("validate-username", this.loginData, this.errors);
+      this.$emit("validate-username", this.loginData);
     },
     validatePassword() {
-      this.$emit("validate-password", this.loginData, this.errors);
+      this.$emit("validate-password", this.loginData);
     },
     loginUser() {
-      this.$emit("login-user", this.userLogged);
+      this.$emit("login-user");
     },
     registerUser() {
-      this.$emit("register-user", this.userLogged);
+      this.$emit("register-user");
     },
     closeUserSession() {
-      this.$emit("close-user-session", this.userLogged);
+      this.$emit("close-user-session");
     },
   },
 };
@@ -236,7 +248,7 @@ export default {
   display: flex;
   justify-content: center;
 }
-#loginContainer .loginModal--container {
+#loginContainer .loginModal {
   z-index: 2;
   position: fixed;
   width: 400px;
@@ -246,6 +258,8 @@ export default {
   background: #ffffff;
   text-align: center;
   border-radius: 20px;
+  top: 133px;
+  right: 8px;
 }
 #loginContainer .loginModal--mainContainer form {
   display: flex;
