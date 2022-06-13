@@ -41,8 +41,6 @@ export default {
       this.quantity -= 1;
     },
     async addProductToCart() {
-      this.userLogged = await this.getUserLoggedFromStorage();
-      console.log(this.userLogged)
       this.$emit("add-to-cart", this.product, this.quantity)
     }
   },

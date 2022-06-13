@@ -1,7 +1,15 @@
 <template>
   <div id="homeContainer">
     <router-view />
-    <HeaderComponent @user-info="emitUserInfo()" />
+    <HeaderComponent
+      :userLoggedHeader="userLoggedHome"
+      :errors="errors"
+      @validate-username="validateUsername"
+      @validate-password="validatePassword"
+      @login-user="loginUser"
+      @register-user="registerUser"
+      @close-user-session="closeUserSession"
+    />
     <CarritoComponent
       :cart="cart"
       :totalCartPrice="totalCartPrice"
@@ -20,7 +28,6 @@
 </template>
 
 <script>
-import apiServices from "../../services/api.services.js";
 import HeaderComponent from "../../components/HeaderComponent.vue";
 import ProductInfo from "../../components/ProductInfo.vue";
 import CarritoComponent from "../../components/CarritoComponent.vue";
@@ -42,26 +49,34 @@ export default {
       totalCartPrice: 0,
     };
   },
-  created() {
-    this.getProducts();
-    if (this.cartFromStorage == null && this.totalCartPriceFromStorage == null)
-      return;
-    this.cart = this.cartFromStorage;
-    this.totalCartPrice = this.totalCartPriceFromStorage;
+  props: {
+    userLoggedHome: { type: Object },
+    errors: { type: Object },
   },
+
   methods: {
-    async getProducts() {
-      this.products = await apiServices.getProducts();
+    validateUsername(username) {
+      this.$emit("validate-username", username);
+    },
+    validatePassword(password) {
+      this.$emit("validate-password", password);
+    },
+    loginUser(user) {
+      this.$emit("login-user", user);
+    },
+    registerUser(user) {
+      this.$emit("register-user", user);
+    },
+    closeUserSession(user) {
+      this.$emit("close-user-session", user);
     },
     async addProductToCart(product, quantity) {
       if (quantity == 0) return;
-      this.userLogged = await this.getUserLoggedFromStorage();
-      if (this.userLogged && this.userLogged.isAdmin) {
-        console.log('REGISTRO PERFECTO AL ADMIN DESDE HOME VIEW')
-        alert("No puedes agregar productos en el modo administrador")
-        return
+      if (this.userLoggedHome && this.userLoggedHome.isAdmin) {
+        console.log("REGISTRO PERFECTO AL ADMIN DESDE HOME VIEW");
+        alert("No puedes agregar productos en el modo administrador");
+        return;
       }
-      console.log(this.userLogged)
       let productIsInCart = this.cart.find((item) => item.id == product.id);
       if (productIsInCart) {
         product.quantity += quantity;
@@ -84,11 +99,6 @@ export default {
       localStorage.removeItem("Carrito Pendiente");
       localStorage.removeItem("Precio Total Carrito");
     },
-    emitUserInfo() {
-      this.userLogged = localStorage.getItem("Usuario Loggeado")
-      console.log(this.userLogged)
-      return this.userLogged
-    }
   },
 };
 </script>

@@ -16,7 +16,7 @@
         <ul>
           <a @mouseover="toggleCategoriesDropdown(true)">Comidas</a>
           <router-link to="">Ofertas</router-link>
-          <router-link :to="`/mis-pedidos/${userLogged && userLogged.id}`"
+          <router-link :to="`/mis-pedidos/${userLoggedHeader && userLoggedHeader.id}`"
             >Mis pedidos</router-link
           >
           <router-link to="/sugerencias-y-reclamos"
@@ -25,9 +25,9 @@
           <div
             id="loginLogoContainer"
             @click="
-              userLogged == null
+              userLoggedHeader == null
                 ? toggleLoginModal(1)
-                : !userLogged.isAdmin
+                : !userLoggedHeader.isAdmin
                 ? toggleLoginModal(3)
                 : toggleLoginModal(4)
             "
@@ -43,10 +43,15 @@
       </div>
     </nav>
     <LoginComponent
-      :userLogged="userLogged"
-      :loginData="loginData"
+      :userLogged="userLoggedHeader"
       :errors="errors"
       :loginModal="loginModal"
+      @toggle-login-modal="toggleLoginModal"
+      @validate-username="validateUsername"
+      @validate-password="validatePassword"
+      @login-user="loginUser"
+      @register-user="registerUser"
+      @close-user-session="closeUserSession"
     />
     <div id="banner">
       <img src="../assets/images/foodBanner.jpg" alt="food banner" />
@@ -55,7 +60,6 @@
 </template>
 
 <script>
-import apiServices from "../services/api.services.js";
 import LoginComponent from "./LoginComponent.vue";
 
 export default {
@@ -63,36 +67,32 @@ export default {
   components: {
     LoginComponent,
   },
-  data() {
-    return {
-      loginModal: Number(0),
-    };
-  },
   props: {
-    loginData: { type: Object, required: true },
-    userLogged: { type: Object, required: true },
-    errors: { type: Object, required: true },
+    loginModal: { type: Number, required: true },
+    userLoggedHeader: { type: Object},
+    errors: { type: Object},
   },
   methods: {
-    toggleLoginModal(value) {
-      this.loginModal = value;
-      this.loginData = {
-        username: "",
-        password: "",
-      };
+    toggleLoginModal() {
+      this.$emit("toggle-login-modal", this.loginModal);
     },
     toggleCategoriesDropdown(value) {
       this.categoriesDropdown = value;
     },
-    validateUsername() {
-      this.$emit();
+    validateUsername(username) {
+      this.$emit("validate-username", username);
     },
-    validatePassword() {},
-    async validateLogin() {},
-    async registerUser() {},
-    closeUserSession() {},
-    emitUserInfo() {
-      this.$emit("user-info", this.userLogged);
+    validatePassword(password) {
+      this.$emit("validate-password", password);
+    },
+    loginUser(userLogged) {
+      this.$emit("login-user", userLogged);
+    },
+    registerUser(userLogged) {
+      this.$emit("register-user", userLogged);
+    },
+    closeUserSession(userLogged) {
+      this.$emit("close-user-session", userLogged);
     },
   },
 };

@@ -176,11 +176,15 @@
 <script>
 export default {
   name: "LoginComponent",
+  data() {
+    return {
+      loginData: { username: "", password: "" },
+    };
+  },
   props: {
     loginModal: { type: Number, required: true },
-    loginData: { type: Object, required: true },
-    userLogged: { type: Object, required: true },
-    errors: { type: Object, required: true },
+    userLogged: { type: Object},
+    errors: { type: Object},
   },
   methods: {
     toggleLoginModal() {
@@ -190,7 +194,7 @@ export default {
       this.$emit("validate-username", this.loginData);
     },
     validatePassword() {
-      this.$emit("validate-username", this.loginData);
+      this.$emit("validate-password", this.loginData);
     },
     loginUser() {
       this.$emit("login-user", this.userLogged);

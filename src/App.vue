@@ -1,8 +1,7 @@
 <template>
   <div id="app">
     <router-view
-      :products="products"
-      :userLogged="userLogged"
+      :userLoggedHome="userLogged"
       @login-user="loginUser"
       @register-user="registerUser"
       @close-user-session="closeUserSession"
@@ -18,10 +17,6 @@ export default {
   data() {
     return {
       userLogged: null,
-      loginData: {
-        username: "",
-        password: "",
-      },
       validations: {
         loginRegex: /^[a-zA-Z0-9]+$/,
       },
@@ -35,14 +30,25 @@ export default {
       },
     };
   },
+  created() {
+    this.getUserLoggedFromStorage();
+    this.getProducts();
+    if (this.cartFromStorage == null && this.totalCartPriceFromStorage == null)
+      return;
+    this.cart = this.cartFromStorage;
+    this.totalCartPrice = this.totalCartPriceFromStorage;
+  },
   methods: {
     getUserLoggedFromStorage() {
       this.userLogged = JSON.parse(localStorage.getItem("Usuario loggeado"));
     },
-    validateUsername() {
+    async getProducts() {
+      this.products = await apiServices.getProducts();
+    },
+    validateUsername(loginData) {
       if (
-        this.loginData.username &&
-        this.validations.loginRegex.test(this.loginData.username)
+        loginData.username &&
+        this.validations.loginRegex.test(loginData.username)
       ) {
         this.errors.usernameError = "";
         return;
@@ -50,8 +56,8 @@ export default {
       this.errors.usernameError =
         "El nombre de usuario solo admite letras y números";
     },
-    validatePassword() {
-      if (this.loginData.password && this.loginData.password.length >= 6) {
+    validatePassword(loginData) {
+      if (loginData.password && loginData.password.length >= 6) {
         this.errors.passwordError = "";
         return;
       }
@@ -84,7 +90,6 @@ export default {
       }
       this.errors.loginError = "";
       console.log(this.userLogged);
-      this.emitUserInfo();
       this.loginData = {
         username: "",
         password: "",
@@ -129,10 +134,7 @@ export default {
       localStorage.removeItem("Usuario Loggeado");
       this.toggleLoginModal(1);
     },
-  },
-  created() {
-    this.getUserLoggedFromStorage();
-  },
+  }
 };
 </script>
 
