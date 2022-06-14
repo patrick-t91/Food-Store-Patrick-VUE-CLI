@@ -12,6 +12,7 @@
       :cart="cart"
       :totalCartPrice="totalCartPrice"
       @clear-cart="clearCart"
+      @toggle-product-in-cart="toggleProductInCart"
     />
     <div>
       <h3>GALERIA DE PRODUCTOS</h3>
@@ -50,14 +51,15 @@ export default {
     userLoggedHome: { type: Object },
     products: { type: Array, required: true },
   },
-
+  created() {
+    this.cart = this.cartFromStorage;
+    this.totalCartPrice = this.totalCartPriceFromStorage;
+  },
   methods: {
     validateUsername(username) {
-      console.log(username)
       this.$emit("validate-username", username);
     },
     validatePassword(password) {
-      console.log(password)
       this.$emit("validate-password", password);
     },
     loginUser() {
@@ -69,10 +71,9 @@ export default {
     closeUserSession() {
       this.$emit("close-user-session");
     },
-    async addProductToCart(product, quantity) {
+    addProductToCart(product, quantity) {
       if (quantity == 0) return;
       if (this.userLoggedHome && this.userLoggedHome.isAdmin) {
-        console.log("REGISTRO PERFECTO AL ADMIN DESDE HOME VIEW");
         alert("No puedes agregar productos en el modo administrador");
         return;
       }
@@ -90,6 +91,33 @@ export default {
         "Precio Total Carrito",
         JSON.stringify(this.totalCartPrice)
       );
+    },
+    toggleProductInCart(product, action) {
+      let productIsInCart = this.cart.find((item) => item.id == product.id);
+      if (productIsInCart && action == "remove" && product.quantity > 0) {
+        product.quantity -= 1;
+        this.totalCartPrice -= product.price;
+        if (product.quantity == 0) {
+          let filteredArray = this.cart.filter(item => item.id != product.id);
+          this.cart = filteredArray;
+          console.log('cart luego de la eliminacion del producto:', this.cart)
+        }
+        localStorage.setItem("Carrito Pendiente", JSON.stringify(this.cart));
+        localStorage.setItem(
+          "Precio Total Carrito",
+          JSON.stringify(this.totalCartPrice)
+        );
+      } else if (productIsInCart && action == "add") {
+        product.quantity += 1;
+        this.totalCartPrice += product.price;
+        localStorage.setItem("Carrito Pendiente", JSON.stringify(this.cart));
+        localStorage.setItem(
+          "Precio Total Carrito",
+          JSON.stringify(this.totalCartPrice)
+        );
+      } else {
+        return;
+      }
     },
     clearCart() {
       let cleanedCart = this.cart.slice(-1, 0);

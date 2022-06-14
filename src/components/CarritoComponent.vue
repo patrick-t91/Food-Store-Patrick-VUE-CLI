@@ -16,7 +16,12 @@
             <p>{{ product.productName }}</p>
             <p>{{ product.quantity }} unidades</p>
           </div>
-          <button @click="removeFromCart(product)">-</button>
+          <button @click="toggleProductInCart(product, cartActions.remove)">
+            -
+          </button>
+          <button @click="toggleProductInCart(product, cartActions.add)">
+            +
+          </button>
           <div class="totalProductPrice">
             $ {{ product.price * product.quantity }}
           </div>
@@ -83,6 +88,7 @@ export default {
       },
       userNotLogged: false,
       emptyCart: false,
+      cartActions: { remove: "remove", add: "add" },
     };
   },
   props: {
@@ -103,6 +109,9 @@ export default {
     },
     clearCart() {
       this.$emit("clear-cart", this.cart);
+    },
+    toggleProductInCart(product, action) {
+      this.$emit("toggle-product-in-cart", product, action);
     },
     async confirmBuy() {
       this.userLogged = await this.getUserLoggedFromStorage();
@@ -129,6 +138,7 @@ export default {
       localStorage.removeItem("Precio Total Carrito");
       this.clearCart();
     },
+
     toggleBuyAlert(value) {
       this.buyAlert = value;
     },

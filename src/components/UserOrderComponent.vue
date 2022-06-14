@@ -45,10 +45,7 @@ export default {
       type: Object,
       required: true,
     },
-  },
-  mounted() {
-    console.log(this.order.totalCartPrice);
-  },
+  }
 };
 </script>
 

@@ -27,7 +27,6 @@ export default {
   },
   created() {
     this.getOrders();
-    console.log('HOLA FLOR, ME ACABO DE CREAR! soy el componente USER ORDERS')
   },
   data() {
     return {
@@ -37,8 +36,6 @@ export default {
   methods: {
     async getOrders() {
       this.userOrders = await apiServices.getUserOrders(this.$route.params.userId);
-      console.log('USER ORDERS', this.userOrders)
-      console.log(this.$router.params);
       this.userOrders.reverse();
     },
   },
