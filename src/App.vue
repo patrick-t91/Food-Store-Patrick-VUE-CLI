@@ -2,7 +2,9 @@
   <div id="app">
     <router-view
       :products="products"
-      :userLoggedHome="userLoggedApp"
+      :userLoggedHome="userLogged"
+      @validate-username="validateUsername"
+      @validate-password="validatePassword"
       @login-user="loginUser"
       @register-user="registerUser"
       @close-user-session="closeUserSession"
@@ -17,7 +19,7 @@ export default {
   name: "App",
   data() {
     return {
-      userLoggedApp: null,
+      userLogged: null,
       validations: {
         loginRegex: /^[a-zA-Z0-9]+$/,
       },
@@ -40,22 +42,23 @@ export default {
       this.products = await apiServices.getProducts();
     },
     validateUsername(loginData) {
+      console.log(loginData);
       if (
         loginData.username &&
         this.validations.loginRegex.test(loginData.username)
       ) {
-        this.loginData.errors.usernameError = "";
+        loginData.errors.usernameError = "";
         return;
       }
-      this.errors.usernameError =
+      loginData.errors.usernameError =
         "El nombre de usuario solo admite letras y números";
     },
     validatePassword(loginData) {
       if (loginData.password && loginData.password.length >= 6) {
-        this.loginData.errors.passwordError = "";
+        loginData.errors.passwordError = "";
         return;
       }
-      this.loginData.errors.passwordError =
+      loginData.errors.passwordError =
         "La contraseña debe tener al menos 6 caracteres";
     },
     async loginUser() {

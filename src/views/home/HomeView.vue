@@ -1,6 +1,5 @@
 <template>
   <div id="homeContainer">
-    <router-view />
     <HeaderComponent
       :userLoggedHeader="userLoggedHome"
       @validate-username="validateUsername"
@@ -54,9 +53,11 @@ export default {
 
   methods: {
     validateUsername(username) {
+      console.log(username)
       this.$emit("validate-username", username);
     },
     validatePassword(password) {
+      console.log(password)
       this.$emit("validate-password", password);
     },
     loginUser() {
