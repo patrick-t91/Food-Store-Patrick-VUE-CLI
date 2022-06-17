@@ -2,8 +2,8 @@
   <div id="homeContainer">
     <HeaderComponent
       :userLoggedHeader="userLoggedHome"
-      @validate-username="validateUsername"
-      @validate-password="validatePassword"
+      @validate-username-2="validateUsername($event)"
+      @validate-password-2="validatePassword($event)"
       @login-user="loginUser"
       @register-user="registerUser"
       @close-user-session="closeUserSession"
@@ -18,7 +18,7 @@
       <h3>GALERIA DE PRODUCTOS</h3>
       <div class="productsContainer">
         <div v-for="(product, i) in products" :key="i">
-          <ProductInfo :product="product" @add-to-cart="addProductToCart" />
+          <ProductInfo :product="product"  @add-to-cart="addProductToCart" />
         </div>
       </div>
     </div>
@@ -33,7 +33,7 @@ import CarritoComponent from "../../components/CarritoComponent.vue";
 import FooterComponent from "../../components/FooterComponent.vue";
 
 export default {
-  name: "HomeComponent",
+  name: "HomeView",
   components: {
     HeaderComponent,
     CarritoComponent,
@@ -52,26 +52,28 @@ export default {
     products: { type: Array, required: true },
   },
   created() {
-    this.cart = this.cartFromStorage;
-    this.totalCartPrice = this.totalCartPriceFromStorage;
+    if (this.cartFromStorage) this.cart = this.cartFromStorage;
+    if (this.totalCartPriceFromStorage) this.totalCartPrice = this.totalCartPriceFromStorage;
   },
   methods: {
-    validateUsername(username) {
-      this.$emit("validate-username", username);
+    validateUsername(loginData) {
+      this.$emit("validate-username", loginData);
     },
-    validatePassword(password) {
-      this.$emit("validate-password", password);
+    validatePassword(loginData) {
+      console.log('login data en HomeView', loginData)
+      this.$emit("validate-password", loginData)
     },
-    loginUser() {
-      this.$emit("login-user");
+    loginUser(loginData) {
+      this.$emit("login-user", loginData);
     },
-    registerUser() {
-      this.$emit("register-user");
+    registerUser(loginData) {
+      this.$emit("register-user", loginData);
     },
-    closeUserSession() {
-      this.$emit("close-user-session");
+    closeUserSession(loginData) {
+      this.$emit("close-user-session", loginData);
     },
     addProductToCart(product, quantity) {
+      console.log(this.totalCartPrice)
       if (quantity == 0) return;
       if (this.userLoggedHome && this.userLoggedHome.isAdmin) {
         alert("No puedes agregar productos en el modo administrador");

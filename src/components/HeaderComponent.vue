@@ -25,8 +25,8 @@
           >
           <LoginComponent
             :userLoggedLogin="userLoggedHeader"
-            @validate-username="validateUsername"
-            @validate-password="validatePassword"
+            @validate-username="validateUsername($event)"
+            @validate-password="validatePassword($event)"
             @login-user="loginUser"
             @register-user="registerUser"
             @close-user-session="closeUserSession"
@@ -55,19 +55,20 @@ export default {
   },
   methods: {
     validateUsername(loginData) {
-      this.$emit("validate-username", loginData.username);
+      console.log('logindata en header (validate username): ', loginData)
+      this.$emit("validate-username-2", loginData);
     },
     validatePassword(loginData) {
-      this.$emit("validate-password", loginData.password);
+      this.$emit("validate-password-2", loginData);
     },
-    loginUser() {
-      this.$emit("login-user");
+    loginUser(loginData) {
+      this.$emit("login-user", loginData);
     },
-    registerUser() {
-      this.$emit("register-user");
+    registerUser(loginData) {
+      this.$emit("register-user", loginData);
     },
-    closeUserSession() {
-      this.$emit("close-user-session");
+    closeUserSession(loginData) {
+      this.$emit("close-user-session", loginData);
     },
   },
 };

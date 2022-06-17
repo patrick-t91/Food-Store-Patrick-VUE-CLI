@@ -1,7 +1,7 @@
 <template>
   <div id="CartContainer">
     <div
-      v-if="cart.length > 0"
+      v-if="cart && cart.length > 0"
       @click="toggleCartDropdown"
       id="CartImgContainer"
     >
@@ -93,8 +93,7 @@ export default {
   },
   props: {
     cart: {
-      type: Array,
-      required: true,
+      type: Array
     },
     totalCartPrice: {
       type: Number,

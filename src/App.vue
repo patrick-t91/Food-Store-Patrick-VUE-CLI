@@ -27,7 +27,7 @@ export default {
     };
   },
   created() {
-    this.getuserLoggedAppFromStorage();
+    this.getUserLoggedFromStorage();
     this.getProducts();
     if (this.cartFromStorage == null && this.totalCartPriceFromStorage == null)
       return;
@@ -35,14 +35,14 @@ export default {
     this.totalCartPrice = this.totalCartPriceFromStorage;
   },
   methods: {
-    getuserLoggedAppFromStorage() {
-      this.userLoggedApp = JSON.parse(localStorage.getItem("Usuario loggeado"));
+    getUserLoggedFromStorage() {
+      this.userLogged = JSON.parse(localStorage.getItem("Usuario loggeado"));
     },
     async getProducts() {
       this.products = await apiServices.getProducts();
     },
     validateUsername(loginData) {
-      console.log(loginData);
+      console.log('loginData en App.vue', loginData);
       if (
         loginData.username &&
         this.validations.loginRegex.test(loginData.username)
@@ -61,62 +61,62 @@ export default {
       loginData.errors.passwordError =
         "La contraseña debe tener al menos 6 caracteres";
     },
-    async loginUser() {
+    async loginUser(loginData) {
       if (
-        !this.loginData.errors.usernameError == "" || // Chequeo que el username y contrasena cumplan
-        !this.loginData.errors.passwordError == "" // los requisitos de validacion (solo numeros y letras)
+        !loginData.errors.usernameError == "" || // Chequeo que el username y contrasena cumplan
+        !loginData.errors.passwordError == "" // los requisitos de validacion (solo numeros y letras)
       )
         return; // Si falla un requisito, salgo de la funcion
       const users = await apiServices.getUsers();
-      this.userLoggedApp = users.find(
+      this.userLogged = users.find(
         (user) =>
-          user.username === this.loginData.username &&
-          user.password === this.loginData.password
+          user.username === loginData.username &&
+          user.password === loginData.password
       );
-      if (this.userLoggedApp == undefined) {
-        this.loginData.errors.loginError =
+      if (this.userLogged == undefined) {
+        loginData.errors.loginError =
           "La combinación de usuario y contraseña ingresados no es válida";
         return;
       }
-      localStorage.setItem("Usuario Loggeado", JSON.stringify(this.userLoggedApp));
-      this.loginData.errors.loginError = "";
-      console.log(this.userLoggedApp);
-      this.loginData = {
+      localStorage.setItem("Usuario Loggeado", JSON.stringify(this.userLogged));
+      loginData.errors.loginError = "";
+      console.log(this.userLogged);
+      loginData = {
         username: "",
         password: "",
       };
     },
-    async registerUser() {
+    async registerUser(loginData) {
       if (
-        !this.loginData.errors.usernameError == "" ||
-        !this.loginData.errors.passwordError == ""
+        !loginData.errors.usernameError == "" ||
+        !loginData.errors.passwordError == ""
       ) {
         return;
       }
       const users = await apiServices.getUsers();
       for (let user of users) {
-        if (user.username === this.loginData.username) {
-          this.loginData.errors.registerError = "El usuario ya existe";
+        if (user.username === loginData.username) {
+          loginData.errors.registerError = "El usuario ya existe";
           return;
         }
       }
-      if (this.passwordConfirmation != this.loginData.password) {
-        this.loginData.errors.confirmPasswordError =
+      if (this.passwordConfirmation != loginData.password) {
+        loginData.errors.confirmPasswordError =
           "Las contraseñas ingresadas deben coincidir";
         return;
       }
-      this.userLoggedApp = await apiServices.postUser(this.loginData);
-      localStorage.setItem("Usuario Loggeado", JSON.stringify(this.userLoggedApp));
-      this.loginData.errors.registerError = "";
-      this.loginData.errors.confirmPasswordError = "";
+      this.userLogged = await apiServices.postUser(loginData);
+      localStorage.setItem("Usuario Loggeado", JSON.stringify(this.userLogged));
+      loginData.errors.registerError = "";
+      loginData.errors.confirmPasswordError = "";
       this.emitUserInfo();
-      this.loginData = {
+      loginData = {
         username: "",
         password: "",
       };
     },
     closeUserSession() {
-      this.userLoggedApp = null;
+      this.userLogged = null;
       localStorage.removeItem("Usuario Loggeado");
     },
   },

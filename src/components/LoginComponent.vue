@@ -222,13 +222,13 @@ export default {
       this.$emit("validate-password", this.loginData);
     },
     loginUser() {
-      this.$emit("login-user");
+      this.$emit("login-user", this.loginData);
     },
     registerUser() {
-      this.$emit("register-user");
+      this.$emit("register-user", this.loginData);
     },
     closeUserSession() {
-      this.$emit("close-user-session");
+      this.$emit("close-user-session", this.loginData);
     },
   },
 };
