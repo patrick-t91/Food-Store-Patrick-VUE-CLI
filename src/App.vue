@@ -28,6 +28,7 @@ export default {
   },
   created() {
     this.getUserLoggedFromStorage();
+    console.log(this.userLogged)
     this.getProducts();
     if (this.cartFromStorage == null && this.totalCartPriceFromStorage == null)
       return;
@@ -36,13 +37,13 @@ export default {
   },
   methods: {
     getUserLoggedFromStorage() {
-      this.userLogged = JSON.parse(localStorage.getItem("Usuario loggeado"));
+      this.userLogged = JSON.parse(localStorage.getItem("Usuario Loggeado"));
     },
     async getProducts() {
       this.products = await apiServices.getProducts();
     },
     validateUsername(loginData) {
-      console.log('loginData en App.vue', loginData);
+      console.log("loginData en App.vue", loginData);
       if (
         loginData.username &&
         this.validations.loginRegex.test(loginData.username)
@@ -100,7 +101,7 @@ export default {
           return;
         }
       }
-      if (this.passwordConfirmation != loginData.password) {
+      if (loginData.passwordConfirmation != loginData.password) {
         loginData.errors.confirmPasswordError =
           "Las contraseñas ingresadas deben coincidir";
         return;

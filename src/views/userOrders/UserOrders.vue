@@ -8,7 +8,13 @@
     </div>
     <div v-if="userLogged != null" id="userOrdersContainer">
       <router-link to="/">Volver a la home</router-link>
-      <h4>{{userOrders.length > 0 ? `Hola, ${userLogged.username}! Esta es tu lista de pedidos` : `Aun no tienes pedidos hechos!`}}</h4>
+      <h4>
+        {{
+          userOrders.length > 0
+            ? `Hola, ${userLogged.username}! Esta es tu lista de pedidos`
+            : `Aun no tienes pedidos hechos!`
+        }}
+      </h4>
       <div v-for="(order, i) in userOrders" :key="i">
         <UserOrderComponent :order="order" />
       </div>
@@ -33,9 +39,14 @@ export default {
       userOrders: [],
     };
   },
+  props: {
+    userId: { type: Number, required: true },
+  },
   methods: {
     async getOrders() {
-      this.userOrders = await apiServices.getUserOrders(this.$route.params.userId);
+      this.userOrders = await apiServices.getUserOrders(
+        this.$route.params.userId
+      );
       this.userOrders.reverse();
     },
   },

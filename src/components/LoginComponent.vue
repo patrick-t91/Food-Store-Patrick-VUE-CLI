@@ -8,7 +8,7 @@
         height="40"
       />
     </div>
-    <div v-if="loginModal == 1" class="loginModal">
+    <div v-if="loginModal == 1 && !userLoggedLogin" class="loginModal">
       <div class="loginModal--container">
         <div class="loginModal--mainContainer">
           <img
@@ -67,7 +67,7 @@
         </div>
       </div>
     </div>
-    <div v-if="loginModal == 2" class="loginModal">
+    <div v-if="loginModal == 2 && !userLoggedLogin" class="loginModal">
       <div class="loginModal--container">
         <div class="loginModal--mainContainer">
           <img
@@ -107,7 +107,7 @@
             <input
               id="secondPassword"
               type="password"
-              v-model="passwordConfirmation"
+              v-model="loginData.passwordConfirmation"
               placeholder="Repite la contraseña"
             />
             <span
@@ -139,11 +139,11 @@
         </div>
       </div>
     </div>
-    <div v-if="loginModal == 3">
+    <div v-if="userLoggedLogin && loginModal != 0">
       <div class="loginModal">
         <div class="loginModal--container">
           <div class="loginModal--mainContainer">
-            <h4>!Hola{userLoggedLogin.username}!</h4>
+            <h4>!Hola, <span style='font-size: 18px'>{{userLoggedLogin.username}}</span>!</h4>
             <button id="closeSessionButton" @click="closeUserSession">
               Cerrar sesión
             </button>
@@ -160,11 +160,11 @@
         </div>
       </div>
     </div>
-    <div v-if="loginModal == 4">
+    <div v-if="userLoggedLogin && userLoggedLogin.isAdmin && loginModal != 0">
       <div class="loginModal">
         <div class="loginModal--container">
           <div class="loginModal--mainContainer">
-            <h4>!Hola{userLoggedLogin.username}!</h4>
+            <h4>!Hola, <span style='font-size: 18px'>{{userLoggedLogin.username}}</span>!</h4>
             <router-link to="/admin">
               Ir a la sesión de administrador
             </router-link>
@@ -208,8 +208,7 @@ export default {
     };
   },
   props: {
-    userLoggedLogin: { type: Object },
-    errors: { type: Object },
+    userLoggedLogin: { type: Object }
   },
   methods: {
     toggleLoginModal(value) {
@@ -229,7 +228,7 @@ export default {
     },
     closeUserSession() {
       this.$emit("close-user-session", this.loginData);
-    },
+    }
   },
 };
 </script>
@@ -244,7 +243,7 @@ export default {
   font-weight: 700;
   transform: scale(1.1);
 }
-#app .loginModal {
+#loginContainer .loginModal {
   display: flex;
   justify-content: center;
 }
@@ -364,5 +363,11 @@ export default {
 #loginContainer .loginModal #closeLoginModal img {
   cursor: pointer;
   margin: 10px 10px 0;
+}
+#loginContainer .loginModal .loginModal--container {
+  width: 100%;
+}
+#loginContainer .loginModal .loginModal--container .loginModal--mainContainer h4 {
+  color: #7e0a0a;
 }
 </style>

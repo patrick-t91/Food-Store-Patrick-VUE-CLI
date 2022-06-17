@@ -17,7 +17,12 @@
           <a>Comidas</a>
           <router-link to="">Ofertas</router-link>
           <router-link
-            :to="`/mis-pedidos/${userLoggedHeader && userLoggedHeader.id}`"
+            v-if="userLoggedHeader != null"
+            :to="{
+              name: 'UserOrders',
+              params: {
+                userId: userLoggedHeader.id              },
+            }"
             >Mis pedidos</router-link
           >
           <router-link to="/sugerencias-y-reclamos"
@@ -25,13 +30,12 @@
           >
           <LoginComponent
             :userLoggedLogin="userLoggedHeader"
-            @validate-username="validateUsername($event)"
-            @validate-password="validatePassword($event)"
+            @validate-username="validateUsername"
+            @validate-password="validatePassword"
             @login-user="loginUser"
             @register-user="registerUser"
             @close-user-session="closeUserSession"
           />
-          
         </ul>
       </div>
     </nav>
@@ -55,11 +59,11 @@ export default {
   },
   methods: {
     validateUsername(loginData) {
-      console.log('logindata en header (validate username): ', loginData)
-      this.$emit("validate-username-2", loginData);
+      console.log("logindata en header (validate username): ", loginData);
+      this.$emit("validate-username", loginData);
     },
     validatePassword(loginData) {
-      this.$emit("validate-password-2", loginData);
+      this.$emit("validate-password", loginData);
     },
     loginUser(loginData) {
       this.$emit("login-user", loginData);

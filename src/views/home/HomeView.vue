@@ -2,8 +2,8 @@
   <div id="homeContainer">
     <HeaderComponent
       :userLoggedHeader="userLoggedHome"
-      @validate-username-2="validateUsername($event)"
-      @validate-password-2="validatePassword($event)"
+      @validate-username="validateUsername"
+      @validate-password="validatePassword"
       @login-user="loginUser"
       @register-user="registerUser"
       @close-user-session="closeUserSession"
