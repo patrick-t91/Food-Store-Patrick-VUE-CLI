@@ -21,7 +21,8 @@
             :to="{
               name: 'UserOrders',
               params: {
-                userId: userLoggedHeader.id              },
+                userId: parseInt(userLoggedHeader.id),
+              },
             }"
             >Mis pedidos</router-link
           >

@@ -28,7 +28,7 @@ export default {
   },
   created() {
     this.getUserLoggedFromStorage();
-    console.log(this.userLogged)
+    console.log(this.userLogged);
     this.getProducts();
     if (this.cartFromStorage == null && this.totalCartPriceFromStorage == null)
       return;
@@ -36,9 +36,6 @@ export default {
     this.totalCartPrice = this.totalCartPriceFromStorage;
   },
   methods: {
-    getUserLoggedFromStorage() {
-      this.userLogged = JSON.parse(localStorage.getItem("Usuario Loggeado"));
-    },
     async getProducts() {
       this.products = await apiServices.getProducts();
     },
@@ -80,12 +77,9 @@ export default {
         return;
       }
       localStorage.setItem("Usuario Loggeado", JSON.stringify(this.userLogged));
-      loginData.errors.loginError = "";
-      console.log(this.userLogged);
-      loginData = {
-        username: "",
-        password: "",
-      };
+      Object.keys(loginData).forEach((key) => {
+        loginData[key] = "";
+      });
     },
     async registerUser(loginData) {
       if (
@@ -108,13 +102,9 @@ export default {
       }
       this.userLogged = await apiServices.postUser(loginData);
       localStorage.setItem("Usuario Loggeado", JSON.stringify(this.userLogged));
-      loginData.errors.registerError = "";
-      loginData.errors.confirmPasswordError = "";
-      this.emitUserInfo();
-      loginData = {
-        username: "",
-        password: "",
-      };
+      Object.keys(loginData).forEach((key) => {
+        loginData[key] = "";
+      });
     },
     closeUserSession() {
       this.userLogged = null;

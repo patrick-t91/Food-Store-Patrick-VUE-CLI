@@ -243,9 +243,8 @@ export default {
     },
     async deleteProduct(id) {
       try {
-        const res = await axios.delete(`${apiUrl}/Products/${id}`);
+        await axios.delete(`${apiUrl}/Products/${id}`);
         alert("Producto eliminado!");
-        console.log(res.data);
         this.getProducts();
       } catch (err) {
         console.log(err);

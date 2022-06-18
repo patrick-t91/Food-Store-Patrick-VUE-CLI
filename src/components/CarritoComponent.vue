@@ -47,7 +47,9 @@
       </div>
       <div v-if="buyAlert" id="buyFinished">
         <h4>Gracias por tu compra!</h4>
-        <button @click="toggleBuyAlert">Volver a comprar</button>
+        <button @click="toggleBuyAlert(false), toggleCartDropdown()">
+          Volver a comprar
+        </button>
       </div>
       <div v-if="userNotLogged" id="userNotLoggedContainer">
         <button @click="toggleCartDropdown">
@@ -55,7 +57,7 @@
           y volvé que tu carrito estará esperando!
         </button>
       </div>
-      <div v-if="emptyCart" id="emptyCart">
+      <div v-if="cart.length == 0 && !buyAlert" id="emptyCart">
         <button>
           El carrito está vacío, agrega productos para realizar tu compra!
         </button>
@@ -86,14 +88,12 @@ export default {
         totalCartPrice: this.totalCartPrice,
         date: new Date(),
       },
-      userNotLogged: false,
-      emptyCart: false,
       cartActions: { remove: "remove", add: "add" },
     };
   },
   props: {
     cart: {
-      type: Array
+      type: Array,
     },
     totalCartPrice: {
       type: Number,
@@ -102,11 +102,11 @@ export default {
   methods: {
     toggleCartDropdown() {
       this.cartDropdown = !this.cartDropdown;
-      this.toggleBuyAlert(false);
-      this.userNotLogged = false;
-      this.emptyCart = false;
     },
     clearCart() {
+      setTimeout(() => {
+        this.toggleCartDropdown();
+      }, 250);
       this.$emit("clear-cart", this.cart);
     },
     toggleProductInCart(product, action) {
@@ -122,14 +122,6 @@ export default {
         alert("No puedes comprar productos como administrador");
         return;
       }
-      if (this.cart.length == 0) {
-        this.emptyCart = true;
-        return;
-      } else {
-        this.emptyCart = false;
-      }
-      this.userNotLogged = false;
-      this.emptyCart = false;
       this.userOrder.totalCartPrice = this.totalCartPrice;
       apiServices.postUserOrder(this.userLogged.id, this.userOrder);
       this.toggleBuyAlert(true);
@@ -137,7 +129,6 @@ export default {
       localStorage.removeItem("Precio Total Carrito");
       this.clearCart();
     },
-
     toggleBuyAlert(value) {
       this.buyAlert = value;
     },
