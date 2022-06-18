@@ -60,7 +60,6 @@ export default {
       this.$emit("validate-username", loginData);
     },
     validatePassword(loginData) {
-      console.log('login data en HomeView', loginData)
       this.$emit("validate-password", loginData)
     },
     loginUser(loginData) {
@@ -73,7 +72,6 @@ export default {
       this.$emit("close-user-session", loginData);
     },
     addProductToCart(product, quantity) {
-      console.log(this.totalCartPrice)
       if (quantity == 0) return;
       if (this.userLoggedHome && this.userLoggedHome.isAdmin) {
         alert("No puedes agregar productos en el modo administrador");
@@ -102,7 +100,6 @@ export default {
         if (product.quantity == 0) {
           let filteredArray = this.cart.filter(item => item.id != product.id);
           this.cart = filteredArray;
-          console.log('cart luego de la eliminacion del producto:', this.cart)
         }
         localStorage.setItem("Carrito Pendiente", JSON.stringify(this.cart));
         localStorage.setItem(

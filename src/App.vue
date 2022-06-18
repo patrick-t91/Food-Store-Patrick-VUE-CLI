@@ -28,7 +28,6 @@ export default {
   },
   created() {
     this.getUserLoggedFromStorage();
-    console.log(this.userLogged);
     this.getProducts();
     if (this.cartFromStorage == null && this.totalCartPriceFromStorage == null)
       return;
@@ -40,7 +39,6 @@ export default {
       this.products = await apiServices.getProducts();
     },
     validateUsername(loginData) {
-      console.log("loginData en App.vue", loginData);
       if (
         loginData.username &&
         this.validations.loginRegex.test(loginData.username)

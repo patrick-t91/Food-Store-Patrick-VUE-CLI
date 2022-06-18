@@ -60,7 +60,6 @@ export default {
   },
   methods: {
     validateUsername(loginData) {
-      console.log("logindata en header (validate username): ", loginData);
       this.$emit("validate-username", loginData);
     },
     validatePassword(loginData) {
