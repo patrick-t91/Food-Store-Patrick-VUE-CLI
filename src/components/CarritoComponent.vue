@@ -51,7 +51,7 @@
           Volver a comprar
         </button>
       </div>
-      <div v-if="userNotLogged" id="userNotLoggedContainer">
+      <div v-if="userLogged == null" id="userNotLoggedContainer">
         <button @click="toggleCartDropdown">
           Debés estar loggeado para confirmar tu compra. Loggeate o registrate,
           y volvé que tu carrito estará esperando!
@@ -115,7 +115,6 @@ export default {
     async confirmBuy() {
       this.userLogged = await this.getUserLoggedFromStorage();
       if (this.userLogged == null) {
-        this.userNotLogged = true;
         return;
       }
       if (this.userLogged.isAdmin) {

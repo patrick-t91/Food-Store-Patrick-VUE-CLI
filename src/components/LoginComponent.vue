@@ -249,7 +249,7 @@ export default {
 }
 #loginContainer .loginModal {
   z-index: 2;
-  position: fixed;
+  position: absolute;
   width: 400px;
   max-width: 85%;
   padding: 20px 0;

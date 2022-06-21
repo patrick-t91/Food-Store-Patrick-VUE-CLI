@@ -18,7 +18,7 @@
       <h3>GALERIA DE PRODUCTOS</h3>
       <div class="productsContainer">
         <div v-for="(product, i) in products" :key="i">
-          <ProductInfo :product="product"  @add-to-cart="addProductToCart" />
+          <ProductInfo :product="product" @add-to-cart="addProductToCart" />
         </div>
       </div>
     </div>
@@ -53,14 +53,15 @@ export default {
   },
   created() {
     if (this.cartFromStorage) this.cart = this.cartFromStorage;
-    if (this.totalCartPriceFromStorage) this.totalCartPrice = this.totalCartPriceFromStorage;
+    if (this.totalCartPriceFromStorage)
+      this.totalCartPrice = this.totalCartPriceFromStorage;
   },
   methods: {
     validateUsername(loginData) {
       this.$emit("validate-username", loginData);
     },
     validatePassword(loginData) {
-      this.$emit("validate-password", loginData)
+      this.$emit("validate-password", loginData);
     },
     loginUser(loginData) {
       this.$emit("login-user", loginData);
@@ -98,7 +99,7 @@ export default {
         product.quantity -= 1;
         this.totalCartPrice -= product.price;
         if (product.quantity == 0) {
-          let filteredArray = this.cart.filter(item => item.id != product.id);
+          let filteredArray = this.cart.filter((item) => item.id != product.id);
           this.cart = filteredArray;
         }
         localStorage.setItem("Carrito Pendiente", JSON.stringify(this.cart));
