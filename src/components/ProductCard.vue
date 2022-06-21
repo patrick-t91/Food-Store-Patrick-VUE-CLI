@@ -1,7 +1,7 @@
 <template>
   <div class="productContainer">
     <img :src="product.imgSrc" alt="" height="100" />
-    <div class="productInfoContainer">
+    <div class="productCardContainer">
       <div class="productMainInfoContainer">
         <p>{{ product.productName }}</p>
         <p>$ {{ product.price }}</p>
@@ -19,8 +19,10 @@
 </template>
 
 <script>
+import {mapState, mapGetters, mapActions} from 'vuex';
+
 export default {
-  name: "ProductInfo",
+  name: "ProductCard",
   data() {
     return {
       quantity: 0,
@@ -57,7 +59,7 @@ export default {
 .productContainer img {
   width: 100%;
 }
-.productInfoContainer {
+.productCardContainer {
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -69,7 +71,7 @@ export default {
   align-items: center;
   min-height: 70px;
 }
-.productInfoContainer p {
+.productCardContainer p {
   margin: 5px;
   font-size: 14px;
   text-align: center;

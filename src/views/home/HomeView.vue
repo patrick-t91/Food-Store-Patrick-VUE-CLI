@@ -18,7 +18,7 @@
       <h3>GALERIA DE PRODUCTOS</h3>
       <div class="productsContainer">
         <div v-for="(product, i) in products" :key="i">
-          <ProductInfo :product="product"  @add-to-cart="addProductToCart" />
+          <ProductCard :product="product"  @add-to-cart="addProductToCart" />
         </div>
       </div>
     </div>
@@ -28,7 +28,7 @@
 
 <script>
 import HeaderComponent from "../../components/HeaderComponent.vue";
-import ProductInfo from "../../components/ProductInfo.vue";
+import ProductCard from "../../components/ProductCard.vue";
 import CarritoComponent from "../../components/CarritoComponent.vue";
 import FooterComponent from "../../components/FooterComponent.vue";
 
@@ -37,7 +37,7 @@ export default {
   components: {
     HeaderComponent,
     CarritoComponent,
-    ProductInfo,
+    ProductCard,
     FooterComponent,
   },
   data() {

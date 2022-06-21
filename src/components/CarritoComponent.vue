@@ -10,7 +10,7 @@
     </div>
     <div v-if="cartDropdown" id="SubCartContainer">
       <div v-for="(product, i) in cart" :key="i">
-        <div class="productInfoContainer">
+        <div class="productCardContainer">
           <img :src="product.imgSrc" alt="" width="100" height="100" />
           <div class="productMainInfoContainer">
             <p>{{ product.productName }}</p>
@@ -178,7 +178,7 @@ export default {
   border: 3px solid #7e0a0a;
   border-radius: 30px;
 }
-.productInfoContainer {
+.productCardContainer {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -186,7 +186,7 @@ export default {
   padding: 0 5%;
   margin-bottom: 10px;
 }
-.productInfoContainer button {
+.productCardContainer button {
   cursor: pointer;
   color: #ffffff;
   background-color: #7e0a0a;
