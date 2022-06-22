@@ -85,7 +85,7 @@ export default {
       } else {
         product.quantity = quantity;
         this.cart.push(product);
-        this.totalCartPrice += product.price * product.quantity;
+        this.totalCartPrice += parseInt(product.price) * parseInt(product.quantity);
       }
       localStorage.setItem("Carrito Pendiente", JSON.stringify(this.cart));
       localStorage.setItem(
@@ -109,7 +109,7 @@ export default {
         );
       } else if (productIsInCart && action == "add") {
         product.quantity += 1;
-        this.totalCartPrice += product.price;
+        this.totalCartPrice += parseInt(product.price);
         localStorage.setItem("Carrito Pendiente", JSON.stringify(this.cart));
         localStorage.setItem(
           "Precio Total Carrito",

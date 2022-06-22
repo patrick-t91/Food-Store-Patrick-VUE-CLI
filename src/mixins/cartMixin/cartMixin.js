@@ -9,7 +9,7 @@ export default {
   },
   created() {
     this.cartFromStorage = this.getCartFromStorage();
-    this.totalCartPriceFromStorage = this.getTotalCartPriceFromStorage();
+    this.totalCartPriceFromStorage = parseInt(this.getTotalCartPriceFromStorage());
     return;
   },
   methods: {
