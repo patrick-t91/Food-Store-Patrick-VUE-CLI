@@ -1,3 +1,5 @@
+import apiServices from "../../services/api.services.js";
+
 export default {
   namespaced: true,
   state: { products: [] },
@@ -7,7 +9,9 @@ export default {
     },
   },
   mutations: {
-    SET_PRODUCTS: {}
+    SET_PRODUCTS(state, data) {
+      state.products = data
+    }
   },
   actions: {
     getProducts: ({ commit }) => {

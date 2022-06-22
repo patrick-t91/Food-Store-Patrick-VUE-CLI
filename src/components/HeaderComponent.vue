@@ -56,7 +56,7 @@ export default {
     LoginComponent,
   },
   props: {
-    userLoggedHeader: { type: Object },
+    userLoggedHeader: { type: Object }
   },
   methods: {
     validateUsername(loginData) {
