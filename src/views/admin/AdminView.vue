@@ -64,7 +64,7 @@
           <input
             id="productPrice"
             type="number"
-            v-model="products[productToEdit].price"
+            v-model.number="products[productToEdit].price"
           />
           <label for="productCategory">Categoría del producto</label>
           <input
@@ -140,7 +140,7 @@
             v-model="newProduct.productName"
           />
           <label for="productPrice">Precio del producto</label>
-          <input id="productPrice" type="number" v-model="newProduct.price" />
+          <input id="productPrice" type="number" v-model.number="newProduct.price" />
           <label for="productCategory">Categoría del producto</label>
           <input
             id="productCategory"
