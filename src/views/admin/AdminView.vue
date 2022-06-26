@@ -16,7 +16,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(product, i) in products" :key="i">
+          <tr v-for="(product, i) in getProducts" :key="i">
             <td>
               {{ product.productName }}
             </td>
@@ -58,31 +58,31 @@
           <input
             id="productName"
             type="text"
-            v-model="products[productToEdit].productName"
+            v-model="getProducts[productToEdit].productName"
           />
           <label for="productPrice">Precio del producto</label>
           <input
             id="productPrice"
             type="number"
-            v-model="products[productToEdit].price"
+            v-model="getProducts[productToEdit].price"
           />
           <label for="productCategory">Categoría del producto</label>
           <input
             id="productCategory"
             type="text"
-            v-model="products[productToEdit].category"
+            v-model="getProducts[productToEdit].category"
           />
           <label for="imgSrc">Fuente de la imagen del producto</label>
           <input
             id="imgSrc"
             type="text"
-            v-model="products[productToEdit].imgSrc"
+            v-model="getProducts[productToEdit].imgSrc"
           />
           <label for="productDiscount">Descuento del producto</label>
           <input
             id="productDiscount"
             type="text"
-            v-model="products[productToEdit].hasDiscount"
+            v-model="getProducts[productToEdit].hasDiscount"
           />
           <select
             name="hasDiscount"
@@ -196,6 +196,7 @@
 import apiServices from "../../services/api.services.js";
 import axios from "axios";
 const apiUrl = process.env.VUE_APP_API_URL;
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   data() {
@@ -208,7 +209,6 @@ export default {
         "Descuento",
         "Cantidad del descuento",
       ],
-      products: [],
       discountBooleans: [true, false],
       productToEdit: -1,
       newProductForm: false,
@@ -223,9 +223,11 @@ export default {
     };
   },
   created() {
-    this.getProducts();
+    this.setProducts();
+    console.log(this.getProducts)
   },
   methods: {
+    ...mapActions("products", ["setProducts"]),
     toggleEditProduct(id) {
       this.productToEdit = id - 1;
       setTimeout(() => {
@@ -238,14 +240,11 @@ export default {
         window.scroll(0, window.innerHeight);
       }, 100);
     },
-    async getProducts() {
-      this.products = await apiServices.getProducts();
-    },
     async deleteProduct(id) {
       try {
         await axios.delete(`${apiUrl}/Products/${id}`);
         alert("Producto eliminado!");
-        this.getProducts();
+        this.setProducts();
       } catch (err) {
         console.log(err);
       }
@@ -257,7 +256,7 @@ export default {
     async createProduct() {
       await apiServices.postProduct(this.newProduct);
       alert("Producto creado!");
-      this.getProducts();
+      this.setProducts();
       this.clearNewProductForm();
     },
     clearNewProductForm() {
@@ -270,6 +269,9 @@ export default {
         discountAmount: 0,
       };
     },
+  },
+  computed: {
+    ...mapGetters("products", ["getProducts"]),
   },
 };
 </script>

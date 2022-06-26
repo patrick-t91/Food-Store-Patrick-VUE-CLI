@@ -11,7 +11,7 @@
         <p>Cantidad: {{ quantity }}</p>
         <button @click="decreaseQuantity">-</button>
       </div>
-      <button id="addToCart" @click="addProductToCart">
+      <button id="addToCart" @click="addToCart({product, quantity})">
         Agregar al carrito
       </button>
     </div>
@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 
 export default {
   name: "ProductCard",
@@ -34,6 +35,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions("cart", ["addToCart"]),
     increaseQuantity() {
       this.quantity += 1;
     },

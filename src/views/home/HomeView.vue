@@ -1,7 +1,6 @@
 <template>
   <div id="homeContainer">
     <HeaderComponent
-      :products="products"
       :userLoggedHeader="userLoggedHome"
       @validate-username="validateUsername"
       @validate-password="validatePassword"
@@ -18,7 +17,7 @@
     <div>
       <h3>GALERIA DE PRODUCTOS</h3>
       <div class="productsContainer">
-        <div v-for="(product, i) in products" :key="i">
+        <div v-for="(product, i) in getProducts" :key="i">
           <ProductCard :product="product" @add-to-cart="addProductToCart" />
         </div>
       </div>
@@ -46,20 +45,20 @@ export default {
     return {
       productsInfo: ["Producto", "Precio", "Imagen del producto"],
       cart: [],
-      totalCartPrice: 0
+      totalCartPrice: 0,
     };
   },
   props: {
     userLoggedHome: { type: Object },
   },
   created() {
-    this.getProducts();
+    this.setProducts();
     if (this.cartFromStorage) this.cart = this.cartFromStorage;
     if (this.totalCartPriceFromStorage)
       this.totalCartPrice = this.totalCartPriceFromStorage;
   },
   methods: {
-    ...mapActions("products", { getProducts: "getProducts" }),
+    ...mapActions("products", ["setProducts"]),
     validateUsername(loginData) {
       this.$emit("validate-username", loginData);
     },
@@ -131,8 +130,8 @@ export default {
     },
   },
   computed: {
-    ...mapGetters("products", ["getProducts"])
-  }
+    ...mapGetters("products", ["getProducts"]),
+  },
 };
 </script>
 

@@ -1,15 +1,15 @@
 <template>
   <div id="CartContainer">
     <div
-      v-if="cart && cart.length > 0"
+      v-if="getCart.products.length > 0"
       @click="toggleCartDropdown"
       id="CartImgContainer"
     >
       <img src="../assets/images/cart.jpg" alt="" />
-      <p>{{ cart.length }}</p>
+      <p>{{ getCart.products.length }}</p>
     </div>
     <div v-if="cartDropdown" id="SubCartContainer">
-      <div v-for="(product, i) in cart" :key="i">
+      <div v-for="(product, i) in getCart.products" :key="i">
         <div class="productCardContainer">
           <img :src="product.imgSrc" alt="" width="100" height="100" />
           <div class="productMainInfoContainer">
@@ -29,8 +29,8 @@
       </div>
       <div v-if="!buyAlert" id="totalCartInfo">
         <div>
-          <p>Cantidad de productos: {{ cart.length }}</p>
-          <p>Total de tu compra: $ {{ totalCartPrice }}</p>
+          <p>Cantidad de productos: {{ getCart.products.length }}</p>
+          <p>Total de tu compra: $ {{ getCart.totalCartPrice }}</p>
         </div>
         <div>
           <img
@@ -57,7 +57,7 @@
           y volvé que tu carrito estará esperando!
         </button>
       </div>
-      <div v-if="cart.length == 0 && !buyAlert" id="emptyCart">
+      <div v-if="getCart.products.length == 0 && !buyAlert" id="emptyCart">
         <button>
           El carrito está vacío, agrega productos para realizar tu compra!
         </button>
@@ -77,6 +77,7 @@
 
 <script>
 import apiServices from "../services/api.services.js";
+import {mapGetters} from "vuex";
 
 export default {
   data() {
@@ -125,7 +126,7 @@ export default {
       this.userOrder.totalCartPrice = this.totalCartPrice;
       apiServices.postUserOrder(this.userLogged.id, this.userOrder);
       this.toggleBuyAlert(true);
-      localStorage.removeItem("Carrito Pendiente");
+      localStorage.removeItem("Carrito");
       localStorage.removeItem("Precio Total Carrito");
       this.clearCart();
     },
@@ -133,6 +134,9 @@ export default {
       this.buyAlert = value;
     },
   },
+  computed: {
+  ...mapGetters("cart", ["getCart"])
+  }
 };
 </script>
 
@@ -167,8 +171,8 @@ export default {
   color: #7e0a0a;
   font-size: 16px;
   font-weight: 700;
-  position: fixed;
-  top: 50px;
+  position: absolute;
+  top: 132px;
   right: 0;
   background: white;
   width: 600px;
