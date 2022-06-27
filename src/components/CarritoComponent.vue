@@ -16,12 +16,8 @@
             <p>{{ product.productName }}</p>
             <p>{{ product.quantity }} unidades</p>
           </div>
-          <button @click="toggleProductInCart(product, cartActions.remove)">
-            -
-          </button>
-          <button @click="toggleProductInCart(product, cartActions.add)">
-            +
-          </button>
+          <button @click="removeFromCart({product, quantity: 1})">-</button>
+          <button @click="addToCart({product, quantity: 1})">+</button>
           <div class="totalProductPrice">
             $ {{ product.price * product.quantity }}
           </div>
@@ -51,7 +47,7 @@
           Volver a comprar
         </button>
       </div>
-      <div v-if="userNotLogged" id="userNotLoggedContainer">
+      <div v-if="userLogged == null" id="userNotLoggedContainer">
         <button @click="toggleCartDropdown">
           Debés estar loggeado para confirmar tu compra. Loggeate o registrate,
           y volvé que tu carrito estará esperando!
@@ -77,7 +73,7 @@
 
 <script>
 import apiServices from "../services/api.services.js";
-import {mapGetters} from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   data() {
@@ -92,26 +88,10 @@ export default {
       cartActions: { remove: "remove", add: "add" },
     };
   },
-  props: {
-    cart: {
-      type: Array,
-    },
-    totalCartPrice: {
-      type: Number,
-    },
-  },
   methods: {
+    ...mapActions("cart", ["addToCart", "removeFromCart", "clearCart"]),
     toggleCartDropdown() {
       this.cartDropdown = !this.cartDropdown;
-    },
-    clearCart() {
-      setTimeout(() => {
-        this.toggleCartDropdown();
-      }, 250);
-      this.$emit("clear-cart", this.cart);
-    },
-    toggleProductInCart(product, action) {
-      this.$emit("toggle-product-in-cart", product, action);
     },
     async confirmBuy() {
       this.userLogged = await this.getUserLoggedFromStorage();
@@ -135,8 +115,8 @@ export default {
     },
   },
   computed: {
-  ...mapGetters("cart", ["getCart"])
-  }
+    ...mapGetters("cart", ["getCart"]),
+  },
 };
 </script>
 

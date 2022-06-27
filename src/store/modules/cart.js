@@ -13,13 +13,10 @@ export default {
   },
   mutations: {
     ADD_TO_CART: (state, { product, quantity }) => {
-      console.log("cart from storage in actions: ", state.cart);
       if (quantity == 0) return;
       const isInCart = state.cart.products.find((item) => item.id === product.id);
       if (isInCart) {
-        console.log("isInCart: ", isInCart);
-        console.log("product quantity in existing cart: ", product.quantity);
-        isInCart.quantity += quantity;
+        product.quantity += quantity;
         state.cart.totalCartPrice += product.price * quantity;
         localStorage.setItem("Carrito", JSON.stringify(state.cart));
       } else {
@@ -30,13 +27,7 @@ export default {
         localStorage.setItem("Carrito", JSON.stringify(state.cart));
       }
     },
-    REMOVE_FROM_CART: (state, product, quantity) => {
-      console.log(
-        "product from mutation: ",
-        product,
-        "quantity from mutation: ",
-        quantity
-      );
+    REMOVE_FROM_CART: (state, {product, quantity}) => {
       if (quantity == 1) {
         product.quantity -= 1;
         state.cart.totalCartPrice -= product.price;
@@ -55,16 +46,16 @@ export default {
     },
     CLEAR_CART: (state) => {
       state.cart.products = [];
+      state.cart.totalCartPrice = 0;
       localStorage.removeItem("Carrito");
     },
   },
   actions: {
     addToCart: ({ commit }, item) => {
-      console.log("product from action: ", item);
       commit("ADD_TO_CART", item);
     },
-    removeFromCart: ({ commit }) => {
-      commit("FROM_FROM_CART");
+    removeFromCart: ({ commit }, item) => {
+      commit("REMOVE_FROM_CART", item);
     },
     clearCart: ({ commit }) => {
       commit("CLEAR_CART");

@@ -9,8 +9,6 @@
       @close-user-session="closeUserSession"
     />
     <CarritoComponent
-      :cart="cart"
-      :totalCartPrice="totalCartPrice"
       @clear-cart="clearCart"
       @toggle-product-in-cart="toggleProductInCart"
     />
@@ -31,7 +29,7 @@ import HeaderComponent from "../../components/HeaderComponent.vue";
 import ProductCard from "../../components/ProductCard.vue";
 import CarritoComponent from "../../components/CarritoComponent.vue";
 import FooterComponent from "../../components/FooterComponent.vue";
-import { mapActions, mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "HomeView",

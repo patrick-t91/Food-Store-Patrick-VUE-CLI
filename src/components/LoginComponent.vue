@@ -143,7 +143,11 @@
       <div class="loginModal">
         <div class="loginModal--container">
           <div class="loginModal--mainContainer">
-            <h4>!Hola, <span style='font-size: 18px'>{{userLoggedLogin.username}}</span>!</h4>
+            <h4>
+              !Hola,
+              <span style="font-size: 18px">{{ userLoggedLogin.username }}</span
+              >!
+            </h4>
             <button id="closeSessionButton" @click="closeUserSession">
               Cerrar sesión
             </button>
@@ -164,7 +168,11 @@
       <div class="loginModal">
         <div class="loginModal--container">
           <div class="loginModal--mainContainer">
-            <h4>!Hola, <span style='font-size: 18px'>{{userLoggedLogin.username}}</span>!</h4>
+            <h4>
+              !Hola,
+              <span style="font-size: 18px">{{ userLoggedLogin.username }}</span
+              >!
+            </h4>
             <router-link to="/admin">
               Ir a la sesión de administrador
             </router-link>
@@ -188,6 +196,8 @@
 </template>
 
 <script>
+import apiServices from "./services/api.services.js";
+
 export default {
   name: "LoginComponent",
   data() {
@@ -196,39 +206,43 @@ export default {
       loginData: {
         username: "",
         password: "",
+        error: "",
+      },
+      registerData: {
+        username: "",
+        password: "",
         passwordConfirmation: "",
         errors: {
-          usernameError: "",
-          passwordError: "",
-          loginError: "",
-          registerError: "",
+          usernameError: { length: "", characters: "" },
+          passwordError: { length: "", characters: "" },
           confirmPasswordError: "",
+          userExists: false
         },
+      },
+      validations: {
+        usernameRegex: /^[A-Za-z0-9_-]*$/,
+        passwordRegex: /[\w\[\]`!@#$%\^&*()={}:;<>+'-]*/g,
       },
     };
   },
   props: {
-    userLoggedLogin: { type: Object }
+    userLoggedLogin: { type: Object },
   },
   methods: {
     toggleLoginModal(value) {
       this.loginModal = value;
     },
     validateUsername() {
-      this.$emit("validate-username", this.loginData);
+      const users = await apiServices.getUsers();
+      let validUser = users.find(user => user.username === this.loginData.username && user.password === this.loginData.password);
+      if (!validUser) {
+        this.loginData.error = "La combinación de usuario y contraseña ingresados no es válida";
+        return
+      }
     },
     validatePassword() {
       this.$emit("validate-password", this.loginData);
     },
-    loginUser() {
-      this.$emit("login-user", this.loginData);
-    },
-    registerUser() {
-      this.$emit("register-user", this.loginData);
-    },
-    closeUserSession() {
-      this.$emit("close-user-session", this.loginData);
-    }
   },
 };
 </script>
@@ -367,7 +381,11 @@ export default {
 #loginContainer .loginModal .loginModal--container {
   width: 100%;
 }
-#loginContainer .loginModal .loginModal--container .loginModal--mainContainer h4 {
+#loginContainer
+  .loginModal
+  .loginModal--container
+  .loginModal--mainContainer
+  h4 {
   color: #7e0a0a;
 }
 </style>
