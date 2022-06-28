@@ -16,8 +16,8 @@
             <p>{{ product.productName }}</p>
             <p>{{ product.quantity }} unidades</p>
           </div>
-          <button @click="removeFromCart({product, quantity: 1})">-</button>
-          <button @click="addToCart({product, quantity: 1})">+</button>
+          <button @click="removeFromCart({ product, quantity: 1 })">-</button>
+          <button @click="addToCart({ product, quantity: 1 })">+</button>
           <div class="totalProductPrice">
             $ {{ product.price * product.quantity }}
           </div>
@@ -129,11 +129,12 @@ export default {
   cursor: pointer;
 }
 #CartContainer #CartImgContainer img {
-  width: 60px;
+  width: 80px;
   height: 60px;
   position: absolute;
   top: 0;
   right: 0;
+  border: 6px solid #7e0a0a;
 }
 #CartContainer #CartImgContainer p {
   color: #ffffff;
@@ -151,8 +152,8 @@ export default {
   color: #7e0a0a;
   font-size: 16px;
   font-weight: 700;
-  position: absolute;
-  top: 132px;
+  position: fixed;
+  top: 61px;
   right: 0;
   background: white;
   width: 600px;
@@ -161,6 +162,8 @@ export default {
   margin: auto;
   border: 3px solid #7e0a0a;
   border-radius: 30px;
+  max-height: 80vh;
+  overflow-y: scroll;
 }
 .productCardContainer {
   display: flex;

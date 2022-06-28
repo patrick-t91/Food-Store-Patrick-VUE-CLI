@@ -1,17 +1,17 @@
 <template>
   <div>
-    <div v-if="userLogged == null" id="noUserLoggedOrders">
+    <div v-if="!getUser" id="noUserLoggedOrders">
       <div>
         <h4>Para ver tus pedidos, debes estar loggeado</h4>
         <router-link to="/">Volver a la home</router-link>
       </div>
     </div>
-    <div v-if="userLogged != null" id="userOrdersContainer">
+    <div v-if="getUser" id="userOrdersContainer">
       <router-link to="/">Volver a la home</router-link>
       <h4>
         {{
           userOrders.length > 0
-            ? `Hola, ${userLogged.username}! Esta es tu lista de pedidos`
+            ? `Hola, ${getUser.username}! Esta es tu lista de pedidos`
             : `Aun no tienes pedidos hechos!`
         }}
       </h4>
@@ -25,6 +25,7 @@
 <script>
 import apiServices from "../../services/api.services.js";
 import UserOrderComponent from "../../components/UserOrderComponent.vue";
+import {mapGetters} from "vuex";
 
 export default {
   name: "UserOrders",
@@ -50,6 +51,9 @@ export default {
       this.userOrders.reverse();
     },
   },
+  computed: {
+    ...mapGetters("user", ["getUser"])
+  }
 };
 </script>
 

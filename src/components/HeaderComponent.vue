@@ -17,11 +17,11 @@
           <a>Comidas</a>
           <router-link to="">Ofertas</router-link>
           <router-link
-            v-if="userLoggedHeader != null"
+            v-if="getUser"
             :to="{
               name: 'UserOrders',
               params: {
-                userId: parseInt(userLoggedHeader.id),
+                userId: parseInt(getUser.id),
               },
             }"
             >Mis pedidos</router-link
@@ -29,14 +29,7 @@
           <router-link to="/sugerencias-y-reclamos"
             >Sugerencias y reclamos</router-link
           >
-          <LoginComponent
-            :userLoggedLogin="userLoggedHeader"
-            @validate-username="validateUsername"
-            @validate-password="validatePassword"
-            @login-user="loginUser"
-            @register-user="registerUser"
-            @close-user-session="closeUserSession"
-          />
+          <LoginComponent />
         </ul>
       </div>
     </nav>
@@ -49,32 +42,19 @@
 
 <script>
 import LoginComponent from "./LoginComponent.vue";
+import { mapGetters } from "vuex";
 
 export default {
   name: "HeaderComponent",
   components: {
     LoginComponent,
   },
-  props: {
-    userLoggedHeader: { type: Object }
-  },
   methods: {
-    validateUsername(loginData) {
-      this.$emit("validate-username", loginData);
-    },
-    validatePassword(loginData) {
-      this.$emit("validate-password", loginData);
-    },
-    loginUser(loginData) {
-      this.$emit("login-user", loginData);
-    },
-    registerUser(loginData) {
-      this.$emit("register-user", loginData);
-    },
-    closeUserSession(loginData) {
-      this.$emit("close-user-session", loginData);
-    },
+    
   },
+  computed: {
+    ...mapGetters("user", ["getUser"])
+  }
 };
 </script>
 

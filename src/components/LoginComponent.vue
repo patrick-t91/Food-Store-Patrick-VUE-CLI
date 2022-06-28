@@ -8,7 +8,7 @@
         height="40"
       />
     </div>
-    <div v-if="loginModal == 1 && !userLoggedLogin" class="loginModal">
+    <div v-if="getLoginModal == 1 && !getUser" class="loginModal">
       <div class="loginModal--container">
         <div class="loginModal--mainContainer">
           <img
@@ -24,32 +24,19 @@
               type="text"
               placeholder="Ingresa tu nombre de usuario"
               v-model="loginData.username"
-              @keyup="validateUsername"
             />
-            <span
-              v-if="loginData.errors.usernameError.length > 0"
-              class="error"
-            >
-              {{ loginData.errors.usernameError }}
-            </span>
             <label for="inputPassword">Ingresa tu contraseña</label>
             <input
               type="password"
               placeholder="Ingresa tu contraseña"
               v-model="loginData.password"
-              @keyup="validatePassword"
             />
-            <span v-if="loginData.errors.passwordError.length" class="error">
-              {{ loginData.errors.passwordError }}
-            </span>
-            <button type="submit" id="loginButton" @click="loginUser">
+            <button type="submit" id="loginButton" @click="validateLogin">
               INICIAR SESION
             </button>
-            <span
-              v-if="loginData.errors.loginError.length"
-              id="loginError"
-              class="error"
-              >{{ loginData.errors.loginError }}</span
+            <span v-if="loginData.error" id="loginError" class="error"
+              >La combinación de usuario y contraseña ingresados no es
+              válida</span
             >
           </form>
           <button id="goToRegisterButton" @click="toggleLoginModal(2)">
@@ -67,7 +54,7 @@
         </div>
       </div>
     </div>
-    <div v-if="loginModal == 2 && !userLoggedLogin" class="loginModal">
+    <div v-if="getLoginModal == 2 && !getUser" class="loginModal">
       <div class="loginModal--container">
         <div class="loginModal--mainContainer">
           <img
@@ -82,46 +69,75 @@
             <input
               id="inputUsername"
               type="text"
-              placeholder="Solo numeros y letras"
-              v-model="loginData.username"
-              @keyup="validateUsername"
+              placeholder="Crea tu nombre de usuario"
+              v-model="registerData.username"
+              @keyup="validateUsername(), emptyUserExistsError()"
             />
             <span
-              v-if="loginData.errors.usernameError.length > 0"
+              v-if="
+                registerData.username.length &&
+                registerData.errors.usernameError
+              "
               class="error"
             >
-              {{ loginData.errors.usernameError }}
+              El nombre de usuario debe tener entre 8 y 12 caracteres y solo
+              admite caracteres alfanuméricos, sin espacios.
             </span>
             <label for="inputPassword">Crea tu contraseña</label>
             <input
               id="inputPassword"
               type="password"
               placeholder="Crea tu contraseña"
-              v-model="loginData.password"
+              v-model="registerData.password"
               @keyup="validatePassword"
             />
-            <span v-if="loginData.errors.passwordError.length" class="error">
-              {{ loginData.errors.passwordError }}
+            <span
+              v-if="
+                registerData.password.length &&
+                registerData.errors.passwordError.length
+              "
+              class="error"
+            >
+              La contraseña debe tener al menos 8 caracteres
+            </span>
+            <span
+              v-if="
+                !registerData.errors.passwordError.length &&
+                registerData.errors.passwordError.characters
+              "
+              id="passwordError"
+              class="error"
+            >
+              La contraseña debe tener al menos una letra minúscula, una letra
+              mayúscula, un número y un caracter especial, sin espacios.
             </span>
             <label for="secondPassword">Confirma tu contraseña</label>
             <input
               id="secondPassword"
               type="password"
-              v-model="loginData.passwordConfirmation"
+              v-model="registerData.confirmPassword"
               placeholder="Repite la contraseña"
             />
             <span
-              v-if="loginData.errors.confirmPasswordError.length"
+              v-if="
+                registerData.confirmPassword.length &&
+                registerData.errors.confirmPasswordError
+              "
               id="confirmPasswordError"
               class="error"
             >
-              {{ loginData.errors.confirmPasswordError }}
+              Las contraseñas ingresadas deben coincidir
             </span>
             <button type="submit" id="loginButton" @click="registerUser">
               REGISTRATE
             </button>
-            <span v-if="loginData.errors.registerError.length" class="error">
-              {{ loginData.errors.registerError }}
+            <span
+              v-if="
+                registerData.username.length && registerData.errors.userExists
+              "
+              class="error"
+            >
+              El nombre de usuario elegido ya existe.
             </span>
           </form>
           <button id="goToRegisterButton" @click="toggleLoginModal(1)">
@@ -139,16 +155,16 @@
         </div>
       </div>
     </div>
-    <div v-if="userLoggedLogin && loginModal != 0">
+    <div v-if="getUser && getLoginModal != 0">
       <div class="loginModal">
         <div class="loginModal--container">
           <div class="loginModal--mainContainer">
             <h4>
               !Hola,
-              <span style="font-size: 18px">{{ userLoggedLogin.username }}</span
+              <span style="font-size: 18px">{{ getUser.username }}</span
               >!
             </h4>
-            <button id="closeSessionButton" @click="closeUserSession">
+            <button id="closeSessionButton" @click="closeSession">
               Cerrar sesión
             </button>
           </div>
@@ -164,13 +180,13 @@
         </div>
       </div>
     </div>
-    <div v-if="userLoggedLogin && userLoggedLogin.isAdmin && loginModal != 0">
+    <div v-if="getUser && getUser.isAdmin && getLoginModal != 0">
       <div class="loginModal">
         <div class="loginModal--container">
           <div class="loginModal--mainContainer">
             <h4>
               !Hola,
-              <span style="font-size: 18px">{{ userLoggedLogin.username }}</span
+              <span style="font-size: 18px">{{ getUser.username }}</span
               >!
             </h4>
             <router-link to="/admin">
@@ -196,53 +212,125 @@
 </template>
 
 <script>
-import apiServices from "./services/api.services.js";
+import apiServices from "../services/api.services.js";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "LoginComponent",
   data() {
     return {
-      loginModal: 0,
       loginData: {
         username: "",
         password: "",
-        error: "",
+        error: false,
       },
       registerData: {
         username: "",
         password: "",
-        passwordConfirmation: "",
+        confirmPassword: "",
         errors: {
-          usernameError: { length: "", characters: "" },
-          passwordError: { length: "", characters: "" },
-          confirmPasswordError: "",
-          userExists: false
+          usernameError: false,
+          passwordError: { length: false, characters: false },
+          confirmPasswordError: false,
+          userExists: false,
         },
+        isValid: true,
       },
       validations: {
-        usernameRegex: /^[A-Za-z0-9_-]*$/,
-        passwordRegex: /[\w\[\]`!@#$%\^&*()={}:;<>+'-]*/g,
+        usernameRegex: /^(?!.* )[a-zA-Z\d]{8,12}$/,
+        passwordRegex:
+          /^(?!.* )(?=(.*[a-z]))(?=(.*[A-Z]))(?=(.*[0-9]))(?=(.*[!@#$%^&*()\-__+.]))/,
       },
     };
   },
-  props: {
-    userLoggedLogin: { type: Object },
-  },
   methods: {
-    toggleLoginModal(value) {
-      this.loginModal = value;
-    },
+    ...mapActions("user", ["logUser", "closeUserSession"]),
+    ...mapActions("loginModal", ["toggleLoginModal"]),
     validateUsername() {
-      const users = await apiServices.getUsers();
-      let validUser = users.find(user => user.username === this.loginData.username && user.password === this.loginData.password);
-      if (!validUser) {
-        this.loginData.error = "La combinación de usuario y contraseña ingresados no es válida";
-        return
-      }
+      !this.validations.usernameRegex.test(this.registerData.username)
+        ? (this.registerData.errors.usernameError = true)
+        : (this.registerData.errors.usernameError = false);
     },
     validatePassword() {
-      this.$emit("validate-password", this.loginData);
+      this.registerData.password.length < 8
+        ? (this.registerData.errors.passwordError.length = true)
+        : (this.registerData.errors.passwordError.length = false);
+      !this.validations.passwordRegex.test(this.registerData.password)
+        ? (this.registerData.errors.passwordError.characters = true)
+        : (this.registerData.errors.passwordError.characters = false);
     },
+    async validateLogin() {
+      const users = await apiServices.getUsers();
+      let validUser = users.find(
+        (user) =>
+          user.username === this.loginData.username &&
+          user.password === this.loginData.password
+      );
+      if (!validUser) {
+        this.loginData.error = true;
+        return;
+      }
+      this.logUser(validUser);
+      this.loginData.username = "";
+      this.loginData.password = "";
+    },
+    async validateRegister() {
+      if (
+        !this.registerData.username.length ||
+        !this.registerData.password.length ||
+        !this.registerData.confirmPassword.length
+      )
+        this.registerData.isValid = false;
+      if (
+        this.registerData.errors.usernameError ||
+        this.registerData.errors.passwordError.length ||
+        this.registerData.errors.passwordError.characters ||
+        this.registerData.errors.confirmPasswordError
+      ) {
+        this.registerData.isValid = false;
+      }
+      const users = await apiServices.getUsers();
+      for (let user of users) {
+        if (user.username === this.registerData.username) {
+          this.registerData.errors.userExists = true;
+          this.registerData.isValid = false;
+          this.registerData.password = "";
+          this.registerData.confirmPassword = "";
+        }
+      }
+      if (this.registerData.confirmPassword != this.registerData.password) {
+        this.registerData.errors.confirmPasswordError = true;
+        this.registerData.isValid = false;
+      }
+    },
+    async registerUser() {
+      await this.validateRegister();
+      if (!this.registerData.isValid) {
+        return;
+      }
+      await apiServices.postUser({
+        username: this.registerData.username,
+        password: this.registerData.password,
+      });
+      alert("Usuario registrado. Inicia sesion");
+      this.emptyRegisterData();
+    },
+    closeSession() {
+      this.closeUserSession();
+      this.toggleLoginModal(1);
+    },
+    emptyRegisterData() {
+      this.registerData.username = "";
+      this.registerData.password = "";
+      this.registerData.confirmPassword = "";
+    },
+    emptyUserExistsError() {
+      this.registerData.errors.userExists = false;
+    },
+  },
+  computed: {
+    ...mapGetters("user", ["getUser"]),
+    ...mapGetters("loginModal", ["getLoginModal"]),
   },
 };
 </script>
@@ -313,6 +401,9 @@ export default {
   text-decoration: underline;
   color: #7e0a0a;
   cursor: pointer;
+}
+#loginContainer .loginModal #passwordError {
+  margin: 0 10px 15px;
 }
 #loginContainer .loginModal #closeSessionButton {
   border: 1px solid #7e0a0a;

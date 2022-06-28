@@ -1,15 +1,17 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import userLogged from "./modules/users";
+import user from "./modules/user";
 import products from "./modules/products";
 import cart from "./modules/cart";
+import loginModal from "./modules/loginModal";
 
 Vue.use(Vuex);
 export default new Vuex.Store({
   strict: true,
   modules: {
-    userLogged,
+    user,
     products,
     cart,
+    loginModal
   },
 });

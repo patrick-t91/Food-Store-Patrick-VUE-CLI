@@ -2,12 +2,6 @@
   <div id="app">
     <router-view
       :products="products"
-      :userLoggedHome="userLogged"
-      @validate-username="validateUsername"
-      @validate-password="validatePassword"
-      @login-user="loginUser"
-      @register-user="registerUser"
-      @close-user-session="closeUserSession"
     />
   </div>
 </template>
@@ -19,25 +13,14 @@ export default {
   name: "App",
   data() {
     return {
-      userLogged: null,
       validations: {
         loginRegex: /^[a-zA-Z0-9]+$/,
       },
       products: [],
     };
   },
-  created() {
-    this.getUserLoggedFromStorage();
-    this.getProducts();
-    if (this.cartFromStorage == null && this.totalCartPriceFromStorage == null)
-      return;
-    this.cart = this.cartFromStorage;
-    this.totalCartPrice = this.totalCartPriceFromStorage;
-  },
   methods: {
-    async getProducts() {
-      this.products = await apiServices.getProducts();
-    },
+
     validateUsername(loginData) {
       if (
         loginData.username &&
@@ -103,11 +86,7 @@ export default {
       Object.keys(loginData).forEach((key) => {
         loginData[key] = "";
       });
-    },
-    closeUserSession() {
-      this.userLogged = null;
-      localStorage.removeItem("Usuario Loggeado");
-    },
+    }
   },
 };
 </script>

@@ -6,7 +6,15 @@ export default {
         return state.loginModal;
       },
     },
-    mutations: {},
-    actions: {},
+    mutations: {
+        TOGGLE_LOGIN_MODAL: (state, value) => {
+            state.loginModal = value;
+        }
+    },
+    actions: {
+        toggleLoginModal: ({commit}, value) => {
+            commit("TOGGLE_LOGIN_MODAL", value)
+        }
+    },
   };
   
