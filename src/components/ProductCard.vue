@@ -42,11 +42,8 @@ export default {
     decreaseQuantity() {
       if (this.quantity == 0) return;
       this.quantity -= 1;
-    },
-    async addProductToCart() {
-      this.$emit("add-to-cart", this.product, this.quantity)
     }
-  },
+  }
 };
 </script>
 

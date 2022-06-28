@@ -11,7 +11,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(product, i) in order.cart" :key="i">
+          <tr v-for="(product, i) in order.cart.products" :key="i">
             <td>
               <img
                 :src="product.imgSrc"
@@ -28,7 +28,7 @@
       </table>
     </div>
     <h4 id="orderTotalPrice">
-      Precio total de la orden: $ {{ parseInt(order.totalCartPrice) }}
+      Precio total de la orden: $ {{ parseInt(order.cart.totalCartPrice) }}
     </h4>
   </div>
 </template>

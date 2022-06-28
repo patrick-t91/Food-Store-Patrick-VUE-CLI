@@ -1,7 +1,7 @@
 <template>
   <div id="homeContainer">
     <HeaderComponent />
-    <CarritoComponent />
+    <CartComponent />
     <div>
       <h3>GALERIA DE PRODUCTOS</h3>
       <div class="productsContainer">
@@ -17,7 +17,7 @@
 <script>
 import HeaderComponent from "../../components/HeaderComponent.vue";
 import ProductCard from "../../components/ProductCard.vue";
-import CarritoComponent from "../../components/CarritoComponent.vue";
+import CartComponent from "../../components/CartComponent.vue";
 import FooterComponent from "../../components/FooterComponent.vue";
 import { mapGetters, mapActions } from "vuex";
 
@@ -25,7 +25,7 @@ export default {
   name: "HomeView",
   components: {
     HeaderComponent,
-    CarritoComponent,
+    CartComponent,
     ProductCard,
     FooterComponent,
   },

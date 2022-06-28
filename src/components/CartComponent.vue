@@ -2,7 +2,7 @@
   <div id="CartContainer">
     <div
       v-if="getCart.products.length > 0"
-      @click="toggleCartDropdown"
+      @click="toggleCartDropdown(), toggleBuyAlert(false)"
       id="CartImgContainer"
     >
       <img src="../assets/images/cart.jpg" alt="" />
@@ -34,7 +34,7 @@
             alt="ClearCart"
             height="30"
             width="30"
-            @click="clearCart"
+            @click="emptyCart"
           />
         </div>
       </div>
@@ -45,12 +45,6 @@
         <h4>Gracias por tu compra!</h4>
         <button @click="toggleBuyAlert(false), toggleCartDropdown()">
           Volver a comprar
-        </button>
-      </div>
-      <div v-if="userLogged == null" id="userNotLoggedContainer">
-        <button @click="toggleCartDropdown">
-          Debés estar loggeado para confirmar tu compra. Loggeate o registrate,
-          y volvé que tu carrito estará esperando!
         </button>
       </div>
       <div v-if="getCart.products.length == 0 && !buyAlert" id="emptyCart">
@@ -80,12 +74,6 @@ export default {
     return {
       cartDropdown: false,
       buyAlert: false,
-      userOrder: {
-        cart: this.cart,
-        totalCartPrice: this.totalCartPrice,
-        date: new Date(),
-      },
-      cartActions: { remove: "remove", add: "add" },
     };
   },
   methods: {
@@ -94,21 +82,37 @@ export default {
       this.cartDropdown = !this.cartDropdown;
     },
     async confirmBuy() {
-      this.userLogged = await this.getUserLoggedFromStorage();
-      if (this.userLogged == null) {
-        this.userNotLogged = true;
+      if (!this.getUser) {
+        alert(
+          "Debés estar loggeado para confirmar tu compra. Loggeate o registrate, y volvé que tu carrito estará esperando!"
+        );
         return;
       }
-      if (this.userLogged.isAdmin) {
+      if (this.getUser && this.getUser.isAdmin) {
         alert("No puedes comprar productos como administrador");
         return;
       }
-      this.userOrder.totalCartPrice = this.totalCartPrice;
-      apiServices.postUserOrder(this.userLogged.id, this.userOrder);
+      if (this.getCart.products.length == 0) {
+        alert(
+          "El carrito está vacío, agrega productos para realizar tu compra!"
+        );
+        return;
+      }
+      apiServices.postUserOrder(this.getUser.id, {
+        cart: this.getCart,
+        date: new Date(),
+      });
       this.toggleBuyAlert(true);
-      localStorage.removeItem("Carrito");
-      localStorage.removeItem("Precio Total Carrito");
+      this.emptyCart();
+      localStorage.removeItem("Cart");
+    },
+    emptyCart() {
       this.clearCart();
+      if (this.buyAlert == false) {
+        setTimeout(() => {
+          this.toggleCartDropdown();
+        }, 100);
+      }
     },
     toggleBuyAlert(value) {
       this.buyAlert = value;
@@ -116,6 +120,7 @@ export default {
   },
   computed: {
     ...mapGetters("cart", ["getCart"]),
+    ...mapGetters("user", ["getUser"]),
   },
 };
 </script>

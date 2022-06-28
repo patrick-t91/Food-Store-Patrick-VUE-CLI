@@ -6,7 +6,7 @@
         <router-link to="/">Volver a la home</router-link>
       </div>
     </header>
-    <div v-if="userLogged != null && userLogged.isAdmin" id="adminTable">
+    <div v-if="getUser && getUser.isAdmin" id="adminTable">
       <table>
         <thead>
           <tr>
@@ -87,7 +87,7 @@
           <select
             name="hasDiscount"
             id="hasDiscount"
-            v-model="products[productToEdit].hasDiscount"
+            v-model="getProducts[productToEdit].hasDiscount"
           >
             <option
               v-for="(boolean, i) in discountBooleans"
@@ -101,13 +101,13 @@
           <input
             id="productDiscountAmount"
             type="number"
-            v-model="products[productToEdit].discountAmount"
+            v-model="getProducts[productToEdit].discountAmount"
           />
         </div>
         <button
           id="updateProductButton"
           type="submit"
-          @click="updateProduct(productToEdit + 1, products[productToEdit])"
+          @click="updateProduct(productToEdit + 1, getProducts[productToEdit])"
         >
           Actualizar producto
         </button>
@@ -224,7 +224,6 @@ export default {
   },
   created() {
     this.setProducts();
-    console.log(this.getProducts)
   },
   methods: {
     ...mapActions("products", ["setProducts"]),
@@ -272,6 +271,7 @@ export default {
   },
   computed: {
     ...mapGetters("products", ["getProducts"]),
+    ...mapGetters("user", ["getUser"])
   },
 };
 </script>
