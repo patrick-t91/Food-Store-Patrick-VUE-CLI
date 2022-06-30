@@ -52,7 +52,7 @@
                 alt="remove product icon"
                 width="25"
                 height="20"
-                @click="apiServices.deleteProduct(product.id)"
+                @click="deleteProduct(product.id)"
               />
             </td>
           </tr>
@@ -87,6 +87,7 @@ export default {
     async deleteProduct(productId) {
       await apiServices.deleteProduct(productId);
       alert("Producto eliminado!");
+      this.setProducts()
     },
   },
   computed: {
