@@ -26,23 +26,34 @@ const apiServices = {
       document.write(err);
     }
   },
+  getProductById: async (productId) => {
+    try {
+      const res = await axios.get(`${apiUrl}/Products`);
+      return res.data.find((item) => item.id === productId);
+    } catch (err) {
+      document.write(err);
+    }
+  },
   postProduct: async (newProduct) => {
-      try {
-          const res = await axios.post(`${apiUrl}/Products`, newProduct);
-          return res.data
-      } catch (err) {
-          document.write(err)
-      }
+    try {
+      const res = await axios.post(`${apiUrl}/Products`, newProduct);
+      return res.data;
+    } catch (err) {
+      document.write(err);
+    }
   },
   updateProduct: async (productId, newProduct) => {
     try {
-      const res = await axios.put(`${apiUrl}/Products/${productId}`, newProduct)
-      return res.data
+      const res = await axios.put(
+        `${apiUrl}/Products/${productId}`,
+        newProduct
+      );
+      return res.data;
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   },
-  deleteProduct: async(productId) => {
+  deleteProduct: async (productId) => {
     try {
       await axios.delete(`${apiUrl}/Products/${productId}`);
     } catch (err) {
@@ -50,21 +61,24 @@ const apiServices = {
     }
   },
   getUserOrders: async (userId) => {
-      try {
-          const res = await axios.get(`${apiUrl}/Users/${userId}/Orders`);
-          return res.data
-      } catch (err) {
-          document.write(err)
-      }
+    try {
+      const res = await axios.get(`${apiUrl}/Users/${userId}/Orders`);
+      return res.data;
+    } catch (err) {
+      document.write(err);
+    }
   },
   postUserOrder: async (userId, newOrder) => {
-      try {
-          const res = await axios.post(`${apiUrl}/Users/${userId}/Orders`, newOrder);
-          return res.data
-      } catch(err) {
-          document.write(err)
-      }
-  }
+    try {
+      const res = await axios.post(
+        `${apiUrl}/Users/${userId}/Orders`,
+        newOrder
+      );
+      return res.data;
+    } catch (err) {
+      document.write(err);
+    }
+  },
 };
 
 export default apiServices;

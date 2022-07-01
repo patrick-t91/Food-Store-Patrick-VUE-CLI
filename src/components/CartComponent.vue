@@ -83,9 +83,13 @@ export default {
     },
     async confirmBuy() {
       if (!this.getUser) {
-        alert(
-          "Debés estar loggeado para confirmar tu compra. Loggeate o registrate, y volvé que tu carrito estará esperando!"
-        );
+        this.$swal({
+          title:
+            "Debés estar loggeado para confirmar tu compra. Loggeate o registrate, y volvé que tu carrito estará esperando!",
+          text: "Do you want to continue",
+          icon: "error",
+          confirmButtonText: "Cool",
+        });
         return;
       }
       if (this.getUser && this.getUser.isAdmin) {

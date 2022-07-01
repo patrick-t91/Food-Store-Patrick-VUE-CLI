@@ -67,6 +67,7 @@ export default {
         hasDiscount: false,
         discountAmount: 0,
       },
+      discountBooleans: [true, false],
     };
   },
   methods: {
@@ -119,7 +120,8 @@ header #backLinks a:hover {
   color: #7e0a0a;
   margin-bottom: 2px;
 }
-#inputsContainer input, select {
+#inputsContainer input,
+select {
   margin-bottom: 20px;
   width: 350px;
   max-width: 90%;

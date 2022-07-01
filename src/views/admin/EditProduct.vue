@@ -1,5 +1,5 @@
 <template>
-  <div id="updateProductContainer">
+  <div v-if="productToEdit" id="updateProductContainer">
     <header>
       <h2>Sesión de Administrador</h2>
       <div id="backLinks">
@@ -57,7 +57,7 @@
       <button
         id="updateProductButton"
         type="submit"
-        @click="updateProduct(productToEdit.id, productToEdit)"
+        @click="editProduct(productToEdit)"
       >
         Actualizar producto
       </button>
@@ -72,19 +72,29 @@ import { mapGetters, mapActions } from "vuex";
 export default {
   data() {
     return {
-      productToEdit: { ...this.$route.params.product },
+      productId: this.$route.params.product,
+      productToEdit: null,
       discountBooleans: [true, false],
     };
   },
+  created() {
+    this.getProduct();
+  },
   methods: {
-    ...mapActions("products", ["setProducts"]),
-    async updateProduct(id, productToEdit) {
-      await apiServices.updateProduct(id, productToEdit);
+    ...mapActions("products", ["updateProduct"]),
+    async getProduct() {
+      this.productToEdit = this.getProductById(this.productId);
+      if (!this.productToEdit) {
+        this.productToEdit = await apiServices.getProductById(this.productId);
+      }
+    },
+    async editProduct(productToEdit) {
+      this.updateProduct(productToEdit);
       alert("Producto actualizado!");
     },
   },
   computed: {
-    ...mapGetters("products", ["getProducts"]),
+    ...mapGetters("products", ["getProducts", "getProductById"]),
   },
 };
 </script>
@@ -147,7 +157,8 @@ header #backLinks a:hover {
   color: #7e0a0a;
   margin-bottom: 2px;
 }
-#inputsContainer input, select {
+#inputsContainer input,
+select {
   margin-bottom: 20px;
   width: 350px;
   max-width: 90%;
