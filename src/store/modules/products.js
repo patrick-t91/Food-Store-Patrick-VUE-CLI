@@ -2,14 +2,15 @@ import apiServices from "@/services/api.services.js";
 
 export default {
   namespaced: true,
-  state: { products: [] },
+  state: { products: []},
   getters: {
     getProducts: (state) => {
       return state.products;
     },
-    getProductById: (state, product) => {
-      return state.products.find((item) => item.id === product.id);
-    },
+    getProductById: (state) => (productId) => {
+      return state.products.find((item) => item.id == productId);
+    }
+    
   },
   mutations: {
     SET_PRODUCTS: (state, data) => {
@@ -23,12 +24,19 @@ export default {
         .then((products) => commit("SET_PRODUCTS", products))
         .catch((err) => document.write(err));
     },
-    updateProduct: async ({ commit }, product) => {
+    updateProduct: async ({ commit }, { productId, product }) => {
       apiServices
-        .updateProduct(product.id)
+        .updateProduct(productId, product)
         .then(apiServices.getProducts())
         .then((products) => commit("SET_PRODUCTS", products))
         .catch((err) => document.write(err));
     },
+    postProduct: async ({ commit }, product) => {
+      apiServices
+        .postProduct(product)
+        .then(apiServices.getProducts())
+        .then((products) => commit("SET_PRODUCTS", products))
+        .catch((err) => document.write(err));
+    }
   },
 };

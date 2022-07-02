@@ -46,7 +46,7 @@
           v-model="newProduct.discountAmount"
         />
       </div>
-      <button id="createProductButton" type="submit" @click="createProduct()">
+      <button id="createProductButton" type="submit" @click="createProduct">
         Crear producto
       </button>
     </form>
@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import apiServices from "../../services/api.services.js";
+import {  mapActions } from "vuex";
 
 export default {
   data() {
@@ -71,8 +71,9 @@ export default {
     };
   },
   methods: {
+    ...mapActions("products", ["postProduct"]),
     async createProduct() {
-      await apiServices.postProduct(this.newProduct);
+      this.postProduct(this.newProduct);
       alert("Producto creado!");
     },
   },

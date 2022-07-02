@@ -54,11 +54,7 @@
           v-model="productToEdit.discountAmount"
         />
       </div>
-      <button
-        id="updateProductButton"
-        type="submit"
-        @click="editProduct(productToEdit)"
-      >
+      <button id="updateProductButton" type="submit" @click="editProduct()">
         Actualizar producto
       </button>
     </form>
@@ -66,14 +62,14 @@
 </template>
 
 <script>
-import apiServices from "../../services/api.services.js";
+import apiServices from "../../services/api.services";
 import { mapGetters, mapActions } from "vuex";
 
 export default {
   data() {
     return {
-      productId: this.$route.params.product,
       productToEdit: null,
+      productId: parseInt(this.$route.params.productId),
       discountBooleans: [true, false],
     };
   },
@@ -88,13 +84,16 @@ export default {
         this.productToEdit = await apiServices.getProductById(this.productId);
       }
     },
-    async editProduct(productToEdit) {
-      this.updateProduct(productToEdit);
+    async editProduct() {
+      await this.updateProduct({
+        productId: this.productId,
+        product: this.productToEdit,
+      });
       alert("Producto actualizado!");
-    },
+    }
   },
   computed: {
-    ...mapGetters("products", ["getProducts", "getProductById"]),
+    ...mapGetters("products", ["getProductById"]),
   },
 };
 </script>

@@ -29,7 +29,7 @@ const apiServices = {
   getProductById: async (productId) => {
     try {
       const res = await axios.get(`${apiUrl}/Products`);
-      return res.data.find((item) => item.id === productId);
+      return res.data.find((item) => item.id == productId);
     } catch (err) {
       document.write(err);
     }

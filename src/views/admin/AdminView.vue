@@ -1,5 +1,5 @@
 <template>
-  <div id="adminContainer">
+  <div v-if="getUser && getUser.isAdmin" id="adminContainer">
     <header>
       <h2>Sesión de Administrador</h2>
       <div id="linksContainer">
@@ -7,7 +7,7 @@
         <router-link to="/">Volver a la home</router-link>
       </div>
     </header>
-    <div v-if="getUser && getUser.isAdmin" id="adminTable">
+    <div id="adminTable">
       <table>
         <thead>
           <tr>
@@ -32,7 +32,6 @@
                   name: 'EditProduct',
                   params: {
                     productId: parseInt(product.id),
-                    product,
                   },
                 }"
               >
@@ -87,7 +86,7 @@ export default {
     async deleteProduct(productId) {
       await apiServices.deleteProduct(productId);
       alert("Producto eliminado!");
-      this.setProducts()
+      this.setProducts();
     },
   },
   computed: {
@@ -144,5 +143,4 @@ table tbody td #editIcon {
 table tbody td #removeIcon {
   cursor: pointer;
 }
-
 </style>
