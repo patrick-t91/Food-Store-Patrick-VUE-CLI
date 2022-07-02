@@ -63,7 +63,7 @@
 
 <script>
 import apiServices from "../../services/api.services";
-import { mapGetters, mapActions } from "vuex";
+import { mapActions } from "vuex";
 
 export default {
   data() {
@@ -79,10 +79,7 @@ export default {
   methods: {
     ...mapActions("products", ["updateProduct"]),
     async getProduct() {
-      this.productToEdit = this.getProductById(this.productId);
-      if (!this.productToEdit) {
-        this.productToEdit = await apiServices.getProductById(this.productId);
-      }
+      this.productToEdit = await apiServices.getProductById(this.productId);
     },
     async editProduct() {
       await this.updateProduct({
@@ -90,11 +87,8 @@ export default {
         product: this.productToEdit,
       });
       alert("Producto actualizado!");
-    }
-  },
-  computed: {
-    ...mapGetters("products", ["getProductById"]),
-  },
+    },
+  }
 };
 </script>
 

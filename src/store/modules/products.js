@@ -6,11 +6,7 @@ export default {
   getters: {
     getProducts: (state) => {
       return state.products;
-    },
-    getProductById: (state) => (productId) => {
-      return state.products.find((item) => item.id == productId);
     }
-    
   },
   mutations: {
     SET_PRODUCTS: (state, data) => {
