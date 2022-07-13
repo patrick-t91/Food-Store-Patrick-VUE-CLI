@@ -1,16 +1,22 @@
 <template>
   <footer>
     <div id="footerLinks">
-      <a href="">Tiendas</a>
-      <a href="">Comidas</a>
-      <a href="">Ofertas</a>
-      <a href="">Mis pedidos</a>
-      <a href="">Sugerencias y reclamos</a>
+      <router-link
+        v-if="getUser"
+        :to="{
+          name: 'UserOrders',
+          params: {
+            userId: parseInt(getUser.id),
+          },
+        }"
+        >Mis pedidos</router-link
+      >
     </div>
     <div id="legalFacts">
-      <a href="">Términos y condiciones</a>
-      <a href="">Acerca de nosotros</a>
-      <a href="" id="btnArrepentimiento">BOTÓN DE ARREPENTIMIENTO</a>
+      <router-link to="/legal-terms">Términos y condiciones</router-link>
+      <router-link v-if="getUser" to="/sugerencias-y-reclamos"
+        >Sugerencias y reclamos</router-link
+      >
     </div>
     <img
       src="../assets/images/site-logo.jpg"
@@ -22,8 +28,13 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   name: "header-component",
+  computed: {
+    ...mapGetters("user", ["getUser"]),
+  },
 };
 </script>
 
@@ -66,7 +77,18 @@ export default {
   font-weight: 700;
   padding: 10px;
 }
-
+#app footer #footerLinks {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: space-evenly;
+  -ms-flex-pack: space-evenly;
+  justify-content: space-evenly;
+}
 #app footer #legalFacts {
   display: -webkit-box;
   display: -ms-flexbox;

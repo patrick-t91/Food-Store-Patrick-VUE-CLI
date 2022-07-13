@@ -11,15 +11,21 @@ const routes = [
         props: true
     },
     {
+        path: "/mis-pedidos/:userId",
+        name: "UserOrders",
+        component: () => import('./views/userOrders/UserOrders.vue'),
+        props: true
+    },
+    {
         path: "/sugerencias-y-reclamos",
         name: "SuggestionsForm",
         component: () => import('./views/suggestionsForm/SuggestionsForm.vue'),
         props: true
     },
     {
-        path: "/mis-pedidos/:userId",
-        name: "UserOrders",
-        component: () => import('./views/userOrders/UserOrders.vue'),
+        path: "/legal-terms",
+        name: "LegalTerms",
+        component: () => import('./views/legalTerms/LegalTerms.vue'),
         props: true
     },
     {

@@ -79,6 +79,16 @@ const apiServices = {
       document.write(err);
     }
   },
+  postUserComment: async (formData) => {
+    try {
+      await axios.post(
+        `${apiUrl}/Suggestions-qualifications`,
+        formData
+      );
+    } catch (err) {
+      console.error(err);
+    }
+  }
 };
 
 export default apiServices;

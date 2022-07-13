@@ -1,41 +1,12 @@
 <template>
   <div id="formContainer">
     <h4 id="formTitle">FORMULARIO DE SUGERENCIAS Y RECLAMOS</h4>
+    <h4 id="usernameInSuggestionsForm">
+      Hola, {{ getUser.username }}! Dejanos tu sugerencia o reclamo y te
+      ayudaremos en caso de ser necesario.
+    </h4>
     <form @submit.prevent="emitForm">
       <div id="inputsContainer">
-        <label for="inputNombre">Nombre completo</label>
-        <input
-          type="text"
-          id="inputNombre"
-          placeholder="Ingresa tu nombre completo"
-          v-model.trim="formData.name"
-          @keyup="validateName"
-        />
-        <span v-if="errors.nameError.length > 0" class="error">
-          {{ errors.nameError }}
-        </span>
-        <label for="inputEmail">Ingresa tu email</label>
-        <input
-          type="email"
-          id="inputEmail"
-          placeholder="Ingresa tu email"
-          v-model="formData.email"
-          @keyup="validateEmail"
-        />
-        <span v-if="errors.emailError.length" class="error">
-          {{ errors.emailError }}
-        </span>
-        <label for="inputEdad">Ingresa tu edad</label>
-        <input
-          type="number"
-          id="inputEdad"
-          placeholder="Ingresa tu edad"
-          v-model.number="formData.age"
-          @keyup="validateAge"
-        />
-        <span v-if="errors.ageError.length" class="error">
-          {{ errors.ageError }}
-        </span>
         <div id="qualifyOptions">
           <h4>Califica nuestra aplicacion!</h4>
           <select
@@ -53,15 +24,12 @@
           </select>
           <textarea
             id="inputComentario"
-            placeholder="Dejanos tu sugerencia o reclamo"
-            v-model.trim="userComment"
+            placeholder="Dejanos tus comentarios, sugerencias o un reclamo en caso de necesitarlo"
+            v-model.trim="formData.userComment"
           />
         </div>
-        <button
-          type="submit"
-          id="submitButton"
-          @click="validateName, validateEmail, validateAge"
-        >
+        <div v-if="userDidNotComment">{{ userDidNotComment }}</div>
+        <button type="submit" id="submitButton">
           ENVIAR
         </button>
       </div>
@@ -79,101 +47,50 @@
 </template>
 
 <script>
+import apiServices from "../../services/api.services";
+import { mapGetters } from "vuex";
+
 export default {
   name: "SuggestionsForm",
   data() {
     return {
-      formData: {
-        name: "",
-        email: "",
-        age: 0,
-        userQualification: "",
-      },
-      validations: {
-        nameRegex: /^[a-zA-Z\s]+$/,
-        emailRegex: /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i,
-      },
-      errors: {
-        nameError: "",
-        emailError: "",
-        ageError: "",
-      },
       qualifications: ["Mala", "Regular", "Buena", "Muy buena", "Excelente"],
-      userComment: "",
+      userDidNotComment: "",
+      formData: {
+        user: "",
+        userQualification: "",
+        userComment: "",
+      },
     };
   },
   methods: {
     toggleForm(value) {
       this.openForm = value;
     },
-    validateName() {
+    async emitForm() {
+      this.formData.user = this.getUser.username
+      this.userDidNotComment = "";
       if (
-        this.formData.name &&
-        this.validations.nameRegex.test(this.formData.name)
+        this.formData.userComment.length < 25 ||
+        this.formData.userComment.split(" ").length < 5
       ) {
-        this.errors.nameError = "";
+        this.userDidNotComment =
+          "Debes dejar un comentario, sugerencia o reclamo de al menos 5 palabras y 25 caracteres";
         return;
       }
-      this.errors.nameError = "Ingresa tu nombre completo";
-    },
-    validateEmail() {
-      if (
-        this.formData.email &&
-        this.validations.emailRegex.test(this.formData.email)
-      ) {
-        this.errors.emailError = "";
-        return;
-      }
-      this.errors.emailError = "Ingresa un email valido";
-    },
-    validateAge() {
-      if (this.formData.age && this.formData.age >= 18) {
-        this.errors.ageError = "";
-        return;
-      }
-      this.errors.ageError = "Debes ser mayor de 18";
-    },
-    emitForm() {
-      if (
-        this.formData.name &&
-        this.validations.nameRegex.test(this.formData.name)
-      ) {
-        this.errors.nameError = "";
-      } else {
-        this.errors.nameError = "Ingresa tu nombre completo";
-      }
-
-      if (
-        this.formData.email &&
-        this.validations.emailRegex.test(this.formData.email)
-      ) {
-        this.errors.emailError = "";
-      } else {
-        this.errors.emailError = "Ingresa un email valido";
-      }
-      if (this.formData.age && parseInt(this.formData.age) > 18) {
-        this.errors.ageError = "";
-      } else {
-        this.errors.ageError = "Debes ser mayor de 18";
-      }
-
-      if (
-        this.errors.nameError == "" &&
-        this.errors.emailError == "" &&
-        this.errors.ageError == ""
-      ) {
-        this.$emit("submit-form", this.formData);
-        this.resetFormData();
-        return;
-      }
+      await apiServices.postUserComment(this.formData);
+      alert(
+        "Tu calificación y tus comentarios, sugerencias o reclamo han sido enviados!"
+      );
+      this.resetFormData();
     },
     resetFormData() {
-      this.formData.name = "";
-      this.formData.email = "";
-      this.formData.age = 0;
-      this.formData.comment = "";
       this.formData.userQualification = "";
+      this.formData.userComment = "";
     },
+  },
+  computed: {
+    ...mapGetters("user", ["getUser"]),
   },
 };
 </script>
@@ -246,7 +163,10 @@ export default {
   min-width: 50%;
   margin: auto;
 }
-
+#usernameInSuggestionsForm {
+  color: #7e0a0a;
+  text-align: center;
+}
 #formTitle {
   text-align: center;
   background-color: #7e0a0a;
@@ -283,25 +203,26 @@ form #inputsContainer .error {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 30px;
 }
 #qualifyOptions h4 {
   color: #7e0a0a;
+  margin-bottom: 10px;
 }
-label {
+#qualifyOptions label {
   color: #7e0a0a;
   font-weight: 600;
   margin-top: 15px;
 }
-select {
+#qualifyOptions select {
   border: 2px solid #7e0a0a;
   color: #7e0a0a;
+  margin-bottom: 20px;
 }
-option {
+#qualifyOptions select option {
   color: #7e0a0a;
   font-size: 18px;
 }
-textarea {
+#qualifyOptions textarea {
   color: #7e0a0a;
   min-height: 200px;
   min-width: 500px;

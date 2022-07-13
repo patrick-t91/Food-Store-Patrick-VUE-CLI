@@ -14,8 +14,6 @@
       </div>
       <div id="navLinks">
         <ul>
-          <a>Comidas</a>
-          <router-link to="">Ofertas</router-link>
           <router-link
             v-if="getUser"
             :to="{
@@ -26,35 +24,32 @@
             }"
             >Mis pedidos</router-link
           >
-          <router-link to="/sugerencias-y-reclamos"
+          <router-link v-if="getUser" to="/sugerencias-y-reclamos"
             >Sugerencias y reclamos</router-link
           >
           <LoginComponent />
         </ul>
       </div>
     </nav>
-
-    <div id="banner">
-      <img src="../assets/images/foodBanner.jpg" alt="food banner" />
-    </div>
+    <CategoriesComponent />
   </header>
 </template>
 
 <script>
 import LoginComponent from "./LoginComponent.vue";
+import CategoriesComponent from "./CategoriesComponent.vue";
 import { mapGetters } from "vuex";
 
 export default {
   name: "HeaderComponent",
   components: {
     LoginComponent,
+    CategoriesComponent
   },
-  methods: {
-    
-  },
+  methods: {},
   computed: {
-    ...mapGetters("user", ["getUser"])
-  }
+    ...mapGetters("user", ["getUser"]),
+  },
 };
 </script>
 
@@ -122,9 +117,6 @@ export default {
   align-items: center;
 }
 
-#app #banner img {
-  width: 100%;
-}
 #app #categoriesDropdown {
   position: absolute;
   z-index: 1;

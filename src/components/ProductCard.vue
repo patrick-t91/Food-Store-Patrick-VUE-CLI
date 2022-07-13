@@ -49,7 +49,7 @@ export default {
 
 <style scoped>
 .productContainer {
-  background-color: #7e0a0a;
+  background-color: #656565;
   color: #ffffff;
   width: 180px;
   margin: 10px;

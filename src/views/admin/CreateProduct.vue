@@ -15,7 +15,7 @@
         <label for="productName">Nombre del producto</label>
         <input id="productName" type="text" v-model="newProduct.productName" />
         <label for="productPrice">Precio del producto</label>
-        <input id="productPrice" type="number" v-model="newProduct.price" />
+        <input id="productPrice" type="number" v-model.number="newProduct.price" />
         <label for="productCategory">Categoría del producto</label>
         <input id="productCategory" type="text" v-model="newProduct.category" />
         <label for="imgSrc">Fuente de la imagen del producto</label>
@@ -43,7 +43,7 @@
         <input
           id="productDiscountAmount"
           type="number"
-          v-model="newProduct.discountAmount"
+          v-model.number="newProduct.discountAmount"
         />
       </div>
       <button id="createProductButton" type="submit" @click="createProduct">

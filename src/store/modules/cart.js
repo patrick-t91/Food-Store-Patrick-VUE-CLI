@@ -18,7 +18,6 @@ export default {
         (item) => item.id === product.id
       );
       if (isInCart) {
-        console.log(product);
         product.quantity += quantity;
         state.cart.totalCartPrice = state.cart.products.reduce(
           (acc, product) => {
@@ -28,8 +27,6 @@ export default {
         );
         localStorage.setItem("Cart", JSON.stringify(state.cart));
       } else {
-        console.log(product);
-
         product.quantity = 0;
         product.quantity += quantity;
         state.cart.products.push(product);

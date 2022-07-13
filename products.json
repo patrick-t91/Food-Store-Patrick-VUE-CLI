@@ -1,0 +1,634 @@
+[
+  {
+    "productName": "Classic Burger",
+    "price": "750",
+    "category": "Burgers",
+    "imgSrc": "https://i.imgur.com/9xBzpgG.jpg",
+    "hasDiscount": false,
+    "discountAmount": "10"
+  },
+  {
+    "productName": "Cheese Burger",
+    "price": 700,
+    "category": "Burgers",
+    "imgSrc": "https://i.imgur.com/YweiQmb.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Double Cheese Burger",
+    "price": 900,
+    "category": "Burgers",
+    "imgSrc": "https://i.imgur.com/iKPSjO5.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Bacon and Cheese Burger",
+    "price": 900,
+    "category": "Burgers",
+    "imgSrc": "https://i.imgur.com/YOefSFV.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Doble Bacon and Cheese Burger",
+    "price": 1200,
+    "category": "Burgers",
+    "imgSrc": "https://i.imgur.com/rvUzNTc.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Mexican Burger",
+    "price": 800,
+    "category": "Burgers",
+    "imgSrc": "https://i.imgur.com/6c4fI6P.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Burger con queso azul y cebolla",
+    "price": 700,
+    "category": "Burgers",
+    "imgSrc": "https://i.imgur.com/mt6LXk4.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Burga con pickles y verduras",
+    "price": 700,
+    "category": "Burgers",
+    "imgSrc": "https://i.imgur.com/VENsLxL.png",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Cuadruple Burger",
+    "price": 1200,
+    "category": "Burgers",
+    "imgSrc": "https://i.imgur.com/fOBdjDf.png",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Burger completa",
+    "price": 900,
+    "category": "Burgers",
+    "imgSrc": "https://i.imgur.com/cELwn5o.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Veggie Burger",
+    "price": 900,
+    "category": "Burgers",
+    "imgSrc": "https://i.imgur.com/gtjyZrP.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Papas fritas",
+    "price": 450,
+    "category": "Burgers",
+    "imgSrc": "https://i.imgur.com/hGujbp9.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Pizza muzzarella",
+    "price": 500,
+    "category": "Pizza",
+    "imgSrc": "https://i.imgur.com/GA8OZEs.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Pizza fugazzeta",
+    "price": 650,
+    "category": "Pizza",
+    "imgSrc": "https://i.imgur.com/PJ87BJW.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Pizza napolitana",
+    "price": 500,
+    "category": "Pizza",
+    "imgSrc": "https://i.imgur.com/SCsI3Ai.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Pizza jamon y morrones",
+    "price": 600,
+    "category": "Pizza",
+    "imgSrc": "https://i.imgur.com/dzrrT4h.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Pizza margarita",
+    "price": 650,
+    "category": "Pizza",
+    "imgSrc": "https://i.imgur.com/47USk6v.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Pizza de jamon crudo y rúcula",
+    "price": 700,
+    "category": "Pizza",
+    "imgSrc": "https://i.imgur.com/MHXK81S.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Pizza de cancha",
+    "price": 400,
+    "category": "Pizza",
+    "imgSrc": "https://i.imgur.com/ccbqXqq.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Pizza con pepperoni",
+    "price": 600,
+    "category": "Pizza",
+    "imgSrc": "https://i.imgur.com/GA8OZEs.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Pizza cuatro quesos",
+    "price": 650,
+    "category": "Pizza",
+    "imgSrc": "https://i.imgur.com/zZxCXFI.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Pizza con jamón y huevo",
+    "price": 500,
+    "category": "Pizza",
+    "imgSrc": "https://i.imgur.com/xBlKetF.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Porcion de faina",
+    "price": 100,
+    "category": "Pizza",
+    "imgSrc": "https://i.imgur.com/iR5w3oZ.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Coca Cola",
+    "price": 175,
+    "category": "Bebidas",
+    "imgSrc": "https://i.imgur.com/QnzIVZb.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Sprite",
+    "price": 175,
+    "category": "Bebidas",
+    "imgSrc": "https://i.imgur.com/QnzIVZb.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Fanta",
+    "price": 175,
+    "category": "Bebidas",
+    "imgSrc": "https://i.imgur.com/H5qQn3q.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Levite Pomelo",
+    "price": 175,
+    "category": "Bebidas",
+    "imgSrc": "https://i.imgur.com/Rt4T5Bc.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Levite Manzana",
+    "price": 175,
+    "category": "Bebidas",
+    "imgSrc": "https://i.imgur.com/N6WyFxM.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Limonada",
+    "price": 175,
+    "category": "Bebidas",
+    "imgSrc": "https://i.imgur.com/hmuqh68.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Agua mineral sin gas",
+    "price": 175,
+    "category": "Bebidas",
+    "imgSrc": "https://i.imgur.com/5a8GsPE.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Agua mineral con gas",
+    "price": 175,
+    "category": "Bebidas",
+    "imgSrc": "https://i.imgur.com/6HPm70U.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Cerveza rubia",
+    "price": 450,
+    "category": "Bebidas",
+    "imgSrc": "https://i.imgur.com/pZUcPYw.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Cerveza ipa Imperial",
+    "price": 500,
+    "category": "Bebidas",
+    "imgSrc": "https://i.imgur.com/QnzIVZb.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Cerveza stout",
+    "price": 550,
+    "category": "Bebidas",
+    "imgSrc": "https://i.imgur.com/1oEDuuj.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Cerveza roja",
+    "price": 550,
+    "category": "Bebidas",
+    "imgSrc": "https://i.imgur.com/3LRMa4N.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Vino tinto",
+    "price": 700,
+    "category": "Bebidas",
+    "imgSrc": "https://i.imgur.com/Mpn7oEX.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Vino blanco",
+    "price": 700,
+    "category": "Bebidas",
+    "imgSrc": "https://i.imgur.com/dMfwZwn.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Vino rosado",
+    "price": 700,
+    "category": "Bebidas",
+    "imgSrc": "https://i.imgur.com/3dPpwGq.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Fatay de carne",
+    "price": 250,
+    "category": "Comida árabe",
+    "imgSrc": "https://i.imgur.com/izr6v40.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Fatay de queso",
+    "price": 250,
+    "category": "Comida árabe",
+    "imgSrc": "https://i.imgur.com/LyGDuts.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Shawarma de carne",
+    "price": 800,
+    "category": "Comida árabe",
+    "imgSrc": "https://i.imgur.com/JKRxT2H.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Shawarma de pollo",
+    "price": 800,
+    "category": "Comida árabe",
+    "imgSrc": "https://i.imgur.com/F9abEfm.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Shawarma mixto",
+    "price": 850,
+    "category": "Comida árabe",
+    "imgSrc": "https://i.imgur.com/4q6S9MF.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Hummus",
+    "price": 300,
+    "category": "Comida árabe",
+    "imgSrc": "https://i.imgur.com/Bmlzt9A.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Tabule",
+    "price": 350,
+    "category": "Comida árabe",
+    "imgSrc": "https://i.imgur.com/t7ju2Tb.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Mjadra",
+    "price": 600,
+    "category": "Comida árabe",
+    "imgSrc": "https://i.imgur.com/yrBFHsy.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Faláfel",
+    "price": 220,
+    "category": "Comida árabe",
+    "imgSrc": "https://i.imgur.com/CTbnx8h.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Keppe al horno",
+    "price": 450,
+    "category": "Comida árabe",
+    "imgSrc": "https://i.imgur.com/OEn6WgV.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Keppe crudo",
+    "price": 550,
+    "category": "Comida árabe",
+    "imgSrc": "https://i.imgur.com/4KA1OpP.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Arroz a la persa",
+    "price": 450,
+    "category": "Comida árabe",
+    "imgSrc": "https://i.imgur.com/HwIDMmf.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Hoja de parra (niños envueltos)",
+    "price": 200,
+    "category": "Comida árabe",
+    "imgSrc": "https://i.imgur.com/QmyUcuy.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Baklava",
+    "price": 400,
+    "category": "Comida árabe",
+    "imgSrc": "https://i.imgur.com/sCJBzlJ.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Namura",
+    "price": 400,
+    "category": "Comida árabe",
+    "imgSrc": "https://i.imgur.com/JP5gm7U.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Nachos con guacamole",
+    "price": 400,
+    "category": "Comida mexicana",
+    "imgSrc": "https://i.imgur.com/TseUjyV.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Quesadillas simples x2",
+    "price": 350,
+    "category": "Comida mexicana",
+    "imgSrc": "https://i.imgur.com/gOamP55.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Burrito de carne",
+    "price": 700,
+    "category": "Comida mexicana",
+    "imgSrc": "https://i.imgur.com/OcarMEQ.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Burrito de pollo",
+    "price": 650,
+    "category": "Comida mexicana",
+    "imgSrc": "https://i.imgur.com/NkP9fAJ.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Burrito mixto",
+    "price": 750,
+    "category": "Comida mexicana",
+    "imgSrc": "https://i.imgur.com/c5cD08l.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Burrito vegetariano",
+    "price": 600,
+    "category": "Comida mexicana",
+    "imgSrc": "https://i.imgur.com/7Hm2s8E.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Tacos de carne x3",
+    "price": 1200,
+    "category": "Comida mexicana",
+    "imgSrc": "https://i.imgur.com/xsTbZgV.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Tacos de pollo x3",
+    "price": 1000,
+    "category": "Comida mexicana",
+    "imgSrc": "https://i.imgur.com/UrK1KkS.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Tacos vegetarianos x3",
+    "price": 900,
+    "category": "Comida mexicana",
+    "imgSrc": "https://i.imgur.com/T6ieCX0.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Quesadillas con carne x2",
+    "price": 1000,
+    "category": "Comida mexicana",
+    "imgSrc": "https://i.imgur.com/m7L6dUL.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Quesadillas con pollo x2",
+    "price": 1000,
+    "category": "Comida mexicana",
+    "imgSrc": "https://i.imgur.com/48hVI5i.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Quesadillas vegetarianas x2",
+    "price": 800,
+    "category": "Comida mexicana",
+    "imgSrc": "https://i.imgur.com/7ULBINd.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Empanada de carne suave",
+    "price": 300,
+    "category": "Empanadas",
+    "imgSrc": "https://i.imgur.com/28GNsjf.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Empanada de carne picante",
+    "price": 300,
+    "category": "Empanadas",
+    "imgSrc": "https://i.imgur.com/ed0RUDt.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Empanada de carne cortada a cuchillo",
+    "price": 350,
+    "category": "Empanadas",
+    "imgSrc": "https://i.imgur.com/IBKHaR5.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Empanada de pollo",
+    "price": 275,
+    "category": "Empanadas",
+    "imgSrc": "https://i.imgur.com/WSCiIqM.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Empanada de jamón y queso",
+    "price": 250,
+    "category": "Empanadas",
+    "imgSrc": "https://i.imgur.com/WvVN0Kx.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Empanada de verdura",
+    "price": 280,
+    "category": "Empanadas",
+    "imgSrc": "https://i.imgur.com/mEcy5Bl.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Empanada de panceta, ciruela y queso",
+    "price": 300,
+    "category": "Empanadas",
+    "imgSrc": "https://i.imgur.com/eEFMv6H.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Empanada de cebolla y queso",
+    "price": 230,
+    "category": "Empanadas",
+    "imgSrc": "https://i.imgur.com/BErDCXr.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Empanada de cuatro quesos",
+    "price": 250,
+    "category": "Empanadas",
+    "imgSrc": "https://i.imgur.com/xAqEm9J.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Empanada de atún",
+    "price": 275,
+    "category": "Empanadas",
+    "imgSrc": "https://i.imgur.com/X5JPYR1.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Empanada de humita",
+    "price": 200,
+    "category": "Empanadas",
+    "imgSrc": "https://i.imgur.com/sA9IZzm.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Empanada caprese",
+    "price": 200,
+    "category": "Empanadas",
+    "imgSrc": "https://i.imgur.com/QuFAP8z.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Empanada de cantimpalo",
+    "price": 250,
+    "category": "Empanadas",
+    "imgSrc": "https://i.imgur.com/KVPuwOa.jpg",
+    "hasDiscount": false,
+    "discountAmount": 0
+  },
+  {
+    "productName": "Empanada de bondiola",
+    "price": 300,
+    "category": "Empanadas",
+    "imgSrc": "https://i.imgur.com/TJA45A9.png",
+    "hasDiscount": false,
+    "discountAmount": 0
+  }
+]

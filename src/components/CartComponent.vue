@@ -43,9 +43,21 @@
       </div>
       <div v-if="buyAlert" id="buyFinished">
         <h4>Gracias por tu compra!</h4>
-        <button @click="toggleBuyAlert(false), toggleCartDropdown()">
-          Volver a comprar
-        </button>
+        <div id="buyFinished--buttons">
+          <button @click="toggleBuyAlert(false), toggleCartDropdown()">
+            Volver a comprar
+          </button>
+          <router-link
+            v-if="getUser"
+            :to="{
+              name: 'UserOrders',
+              params: {
+                userId: parseInt(getUser.id),
+              },
+            }"
+            >Mis pedidos</router-link
+          >
+        </div>
       </div>
       <div v-if="getCart.products.length == 0 && !buyAlert" id="emptyCart">
         <button>
@@ -104,7 +116,7 @@ export default {
       }
       apiServices.postUserOrder(this.getUser.id, {
         cart: this.getCart,
-        date: new Date(),
+        date: new Date().toLocaleString(),
       });
       this.toggleBuyAlert(true);
       this.emptyCart();
@@ -254,6 +266,11 @@ export default {
   text-decoration: underline;
   transition: width 3.5s;
 }
+#buyFinished #buyFinished--buttons {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
 #buyFinished button {
   border: 1px solid #7e0a0a;
   border-radius: 32px;
@@ -261,8 +278,26 @@ export default {
   background: #ffffff;
   font-weight: 600;
   cursor: pointer;
+  margin: auto;
 }
 #buyFinished button:hover {
+  background: #7e0a0a;
+  color: #ffffff;
+  border: 1px solid #7e0a0a;
+}
+#buyFinished a {
+    border: 1px solid #7e0a0a;
+    border-radius: 32px;
+    color: #7e0a0a;
+    background: #ffffff;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    margin: auto;
+    padding: 0 13.5px;
+    margin-top: 10px;
+}
+#buyFinished a:hover {
   background: #7e0a0a;
   color: #ffffff;
   border: 1px solid #7e0a0a;

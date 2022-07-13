@@ -19,7 +19,7 @@
           v-model="productToEdit.productName"
         />
         <label for="productPrice">Precio del producto</label>
-        <input id="productPrice" type="number" v-model="productToEdit.price" />
+        <input id="productPrice" type="number" v-model.number="productToEdit.price" />
         <label for="productCategory">Categoría del producto</label>
         <input
           id="productCategory"
@@ -51,7 +51,7 @@
         <input
           id="productDiscountAmount"
           type="number"
-          v-model="productToEdit.discountAmount"
+          v-model.number="productToEdit.discountAmount"
         />
       </div>
       <button id="updateProductButton" type="submit" @click="editProduct()">
