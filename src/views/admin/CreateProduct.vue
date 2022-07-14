@@ -39,11 +39,11 @@
             {{ boolean }}
           </option>
         </select>
-        <label for="productDiscountAmount">Porcentaje del descuento</label>
+        <label for="productDiscountPercentage">Porcentaje del descuento</label>
         <input
-          id="productDiscountAmount"
+          id="productDiscountercentage"
           type="number"
-          v-model.number="newProduct.discountAmount"
+          v-model.number="newProduct.discountPercentage"
         />
       </div>
       <button id="createProductButton" type="submit" @click="createProduct">
@@ -65,7 +65,7 @@ export default {
         category: "",
         imgSrc: "",
         hasDiscount: false,
-        discountAmount: 0,
+        discountPercentage: 0,
       },
       discountBooleans: [true, false],
     };

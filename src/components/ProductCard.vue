@@ -1,19 +1,34 @@
 <template>
   <div class="productContainer">
-    <img :src="product.imgSrc" alt="" height="100" />
+    <div v-if="product.hasDiscount" class="productDiscount">
+      - {{ product.discountPercentage }}%
+    </div>
+    <img :src="product.imgSrc" alt="" height="120" />
     <div class="productCardContainer">
       <div class="productMainInfoContainer">
-        <p>{{ product.productName }}</p>
-        <p>$ {{ product.price }}</p>
+        <p class="productName">{{ product.productName }}</p>
+        <p v-if="!product.hasDiscount" class="productPrice">
+          $ {{ product.price }}
+        </p>
+        <div v-if="product.hasDiscount" class="priceOfProductWithDiscount">
+          <p class="priceOfProductWithDiscount--oldPrice">
+            $ {{ product.price }}
+          </p>
+          <p class="priceOfProductWithDiscount--newPrice">
+            $ {{ (product.price * (100 - product.discountPercentage)) / 100 }}
+          </p>
+        </div>
       </div>
-      <div class="quantityContainer">
-        <button @click="increaseQuantity">+</button>
-        <p>Cantidad: {{ quantity }}</p>
-        <button @click="decreaseQuantity">-</button>
+      <div class="addToCartContainer">
+        <div class="quantityContainer">
+          <button @click="increaseQuantity">+</button>
+          <p>Cantidad: {{ quantity }}</p>
+          <button @click="decreaseQuantity">-</button>
+        </div>
+        <button id="addToCart" @click="addToCart({ product, quantity })">
+          Agregar al carrito
+        </button>
       </div>
-      <button id="addToCart" @click="addToCart({product, quantity})">
-        Agregar al carrito
-      </button>
     </div>
   </div>
 </template>
@@ -32,7 +47,7 @@ export default {
     product: {
       type: Object,
       required: true,
-    }
+    },
   },
   methods: {
     ...mapActions("cart", ["addToCart"]),
@@ -42,8 +57,8 @@ export default {
     decreaseQuantity() {
       if (this.quantity == 0) return;
       this.quantity -= 1;
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -56,28 +71,52 @@ export default {
 }
 .productContainer img {
   width: 100%;
+  margin-bottom: 20px;
+}
+.productContainer .productDiscount {
+  color: #7e0a0a;
+  background: #ffffff;
+  position: absolute;
+  padding: 10px;
+  font-weight: bolder;
+  border-left: 1px solid #000000;
+  border-top: 1px solid #000000;
 }
 .productCardContainer {
   display: flex;
   justify-content: center;
   flex-direction: column;
-  min-height: 160px;
+  height: 200px;
 }
 .productMainInfoContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 70px;
+  height: 160px;
 }
 .productCardContainer p {
   margin: 5px;
-  font-size: 14px;
+  font-size: 17px;
   text-align: center;
+}
+.productCardContainer .productMainInfoContainer .productName {
+  height: 45px;
+}
+.productCardContainer .productMainInfoContainer .productPrice {
+  height: 40px;
+}
+.productCardContainer .productMainInfoContainer .priceOfProductWithDiscount {
+  height: 60px;
+}
+.addToCartContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 .quantityContainer {
   display: flex;
   justify-content: center;
-  padding: 8px 0;
 }
 .quantityContainer button {
   cursor: pointer;
@@ -100,5 +139,10 @@ export default {
 #addToCart:hover {
   background-color: #ffffff;
   color: #7e0a0a;
+}
+.productCardContainer .priceOfProductWithDiscount--oldPrice {
+  text-decoration: line-through;
+  opacity: 0.6;
+  font-size: 14px;
 }
 </style>

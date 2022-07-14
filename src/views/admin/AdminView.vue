@@ -25,7 +25,7 @@
             <td>{{ product.category }}</td>
             <td>{{ product.imgSrc }}</td>
             <td>{{ product.hasDiscount }}</td>
-            <td>{{ product.discountAmount }}</td>
+            <td>{{ product.discountPercentage }}</td>
             <td>
               <router-link
                 :to="{
@@ -79,10 +79,11 @@ export default {
     };
   },
   created() {
+    this.setCategory("")
     this.setProducts();
   },
   methods: {
-    ...mapActions("products", ["setProducts"]),
+    ...mapActions("products", ["setProducts", "setCategory"]),
     async deleteProduct(productId) {
       await apiServices.deleteProduct(productId);
       alert("Producto eliminado!");

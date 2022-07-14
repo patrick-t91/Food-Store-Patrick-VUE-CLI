@@ -47,11 +47,11 @@
             {{ booleanValue }}
           </option>
         </select>
-        <label for="productDiscountAmount">Porcentaje del descuento</label>
+        <label for="productDiscountPercentage">Porcentaje del descuento</label>
         <input
-          id="productDiscountAmount"
+          id="productDiscountPercentage"
           type="number"
-          v-model.number="productToEdit.discountAmount"
+          v-model.number="productToEdit.discountPercentage"
         />
       </div>
       <button id="updateProductButton" type="submit" @click="editProduct()">
@@ -75,6 +75,7 @@ export default {
   },
   created() {
     this.getProduct();
+    console.log(this.productId, typeof this.productId)
   },
   methods: {
     ...mapActions("products", ["updateProduct"]),

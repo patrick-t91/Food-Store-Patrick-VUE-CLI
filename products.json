@@ -1,11 +1,12 @@
 [
   {
+    "id": "1",
     "productName": "Classic Burger",
-    "price": "750",
+    "price": 750,
     "category": "Burgers",
     "imgSrc": "https://i.imgur.com/9xBzpgG.jpg",
     "hasDiscount": false,
-    "discountAmount": "10"
+    "discountPercentage": 10
   },
   {
     "productName": "Cheese Burger",
@@ -13,7 +14,8 @@
     "category": "Burgers",
     "imgSrc": "https://i.imgur.com/YweiQmb.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "2"
   },
   {
     "productName": "Double Cheese Burger",
@@ -21,7 +23,8 @@
     "category": "Burgers",
     "imgSrc": "https://i.imgur.com/iKPSjO5.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "3"
   },
   {
     "productName": "Bacon and Cheese Burger",
@@ -29,7 +32,8 @@
     "category": "Burgers",
     "imgSrc": "https://i.imgur.com/YOefSFV.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "4"
   },
   {
     "productName": "Doble Bacon and Cheese Burger",
@@ -37,15 +41,8 @@
     "category": "Burgers",
     "imgSrc": "https://i.imgur.com/rvUzNTc.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
-  },
-  {
-    "productName": "Mexican Burger",
-    "price": 800,
-    "category": "Burgers",
-    "imgSrc": "https://i.imgur.com/6c4fI6P.jpg",
-    "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "5"
   },
   {
     "productName": "Burger con queso azul y cebolla",
@@ -53,7 +50,8 @@
     "category": "Burgers",
     "imgSrc": "https://i.imgur.com/mt6LXk4.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "6"
   },
   {
     "productName": "Burga con pickles y verduras",
@@ -61,7 +59,8 @@
     "category": "Burgers",
     "imgSrc": "https://i.imgur.com/VENsLxL.png",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "7"
   },
   {
     "productName": "Cuadruple Burger",
@@ -69,7 +68,8 @@
     "category": "Burgers",
     "imgSrc": "https://i.imgur.com/fOBdjDf.png",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "8"
   },
   {
     "productName": "Burger completa",
@@ -77,7 +77,8 @@
     "category": "Burgers",
     "imgSrc": "https://i.imgur.com/cELwn5o.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "9"
   },
   {
     "productName": "Veggie Burger",
@@ -85,7 +86,8 @@
     "category": "Burgers",
     "imgSrc": "https://i.imgur.com/gtjyZrP.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "10"
   },
   {
     "productName": "Papas fritas",
@@ -93,7 +95,8 @@
     "category": "Burgers",
     "imgSrc": "https://i.imgur.com/hGujbp9.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "11"
   },
   {
     "productName": "Pizza muzzarella",
@@ -101,7 +104,8 @@
     "category": "Pizza",
     "imgSrc": "https://i.imgur.com/GA8OZEs.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "12"
   },
   {
     "productName": "Pizza fugazzeta",
@@ -109,7 +113,8 @@
     "category": "Pizza",
     "imgSrc": "https://i.imgur.com/PJ87BJW.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "13"
   },
   {
     "productName": "Pizza napolitana",
@@ -117,7 +122,8 @@
     "category": "Pizza",
     "imgSrc": "https://i.imgur.com/SCsI3Ai.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "14"
   },
   {
     "productName": "Pizza jamon y morrones",
@@ -125,7 +131,8 @@
     "category": "Pizza",
     "imgSrc": "https://i.imgur.com/dzrrT4h.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "15"
   },
   {
     "productName": "Pizza margarita",
@@ -133,7 +140,8 @@
     "category": "Pizza",
     "imgSrc": "https://i.imgur.com/47USk6v.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "16"
   },
   {
     "productName": "Pizza de jamon crudo y rúcula",
@@ -141,7 +149,8 @@
     "category": "Pizza",
     "imgSrc": "https://i.imgur.com/MHXK81S.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "17"
   },
   {
     "productName": "Pizza de cancha",
@@ -149,7 +158,8 @@
     "category": "Pizza",
     "imgSrc": "https://i.imgur.com/ccbqXqq.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "18"
   },
   {
     "productName": "Pizza con pepperoni",
@@ -157,7 +167,8 @@
     "category": "Pizza",
     "imgSrc": "https://i.imgur.com/GA8OZEs.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "19"
   },
   {
     "productName": "Pizza cuatro quesos",
@@ -165,7 +176,8 @@
     "category": "Pizza",
     "imgSrc": "https://i.imgur.com/zZxCXFI.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "20"
   },
   {
     "productName": "Pizza con jamón y huevo",
@@ -173,7 +185,8 @@
     "category": "Pizza",
     "imgSrc": "https://i.imgur.com/xBlKetF.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "21"
   },
   {
     "productName": "Porcion de faina",
@@ -181,7 +194,8 @@
     "category": "Pizza",
     "imgSrc": "https://i.imgur.com/iR5w3oZ.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "22"
   },
   {
     "productName": "Coca Cola",
@@ -189,7 +203,8 @@
     "category": "Bebidas",
     "imgSrc": "https://i.imgur.com/QnzIVZb.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "23"
   },
   {
     "productName": "Sprite",
@@ -197,7 +212,8 @@
     "category": "Bebidas",
     "imgSrc": "https://i.imgur.com/QnzIVZb.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "24"
   },
   {
     "productName": "Fanta",
@@ -205,7 +221,8 @@
     "category": "Bebidas",
     "imgSrc": "https://i.imgur.com/H5qQn3q.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "25"
   },
   {
     "productName": "Levite Pomelo",
@@ -213,7 +230,8 @@
     "category": "Bebidas",
     "imgSrc": "https://i.imgur.com/Rt4T5Bc.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "26"
   },
   {
     "productName": "Levite Manzana",
@@ -221,7 +239,8 @@
     "category": "Bebidas",
     "imgSrc": "https://i.imgur.com/N6WyFxM.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "27"
   },
   {
     "productName": "Limonada",
@@ -229,7 +248,8 @@
     "category": "Bebidas",
     "imgSrc": "https://i.imgur.com/hmuqh68.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "28"
   },
   {
     "productName": "Agua mineral sin gas",
@@ -237,7 +257,8 @@
     "category": "Bebidas",
     "imgSrc": "https://i.imgur.com/5a8GsPE.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "29"
   },
   {
     "productName": "Agua mineral con gas",
@@ -245,7 +266,8 @@
     "category": "Bebidas",
     "imgSrc": "https://i.imgur.com/6HPm70U.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "30"
   },
   {
     "productName": "Cerveza rubia",
@@ -253,7 +275,8 @@
     "category": "Bebidas",
     "imgSrc": "https://i.imgur.com/pZUcPYw.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "31"
   },
   {
     "productName": "Cerveza ipa Imperial",
@@ -261,7 +284,8 @@
     "category": "Bebidas",
     "imgSrc": "https://i.imgur.com/QnzIVZb.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "32"
   },
   {
     "productName": "Cerveza stout",
@@ -269,7 +293,8 @@
     "category": "Bebidas",
     "imgSrc": "https://i.imgur.com/1oEDuuj.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "33"
   },
   {
     "productName": "Cerveza roja",
@@ -277,15 +302,8 @@
     "category": "Bebidas",
     "imgSrc": "https://i.imgur.com/3LRMa4N.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
-  },
-  {
-    "productName": "Vino tinto",
-    "price": 700,
-    "category": "Bebidas",
-    "imgSrc": "https://i.imgur.com/Mpn7oEX.jpg",
-    "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "34"
   },
   {
     "productName": "Vino blanco",
@@ -293,7 +311,8 @@
     "category": "Bebidas",
     "imgSrc": "https://i.imgur.com/dMfwZwn.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "35"
   },
   {
     "productName": "Vino rosado",
@@ -301,7 +320,8 @@
     "category": "Bebidas",
     "imgSrc": "https://i.imgur.com/3dPpwGq.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "36"
   },
   {
     "productName": "Fatay de carne",
@@ -309,7 +329,8 @@
     "category": "Comida árabe",
     "imgSrc": "https://i.imgur.com/izr6v40.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "37"
   },
   {
     "productName": "Fatay de queso",
@@ -317,7 +338,8 @@
     "category": "Comida árabe",
     "imgSrc": "https://i.imgur.com/LyGDuts.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "38"
   },
   {
     "productName": "Shawarma de carne",
@@ -325,7 +347,8 @@
     "category": "Comida árabe",
     "imgSrc": "https://i.imgur.com/JKRxT2H.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "39"
   },
   {
     "productName": "Shawarma de pollo",
@@ -333,7 +356,8 @@
     "category": "Comida árabe",
     "imgSrc": "https://i.imgur.com/F9abEfm.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "40"
   },
   {
     "productName": "Shawarma mixto",
@@ -341,7 +365,8 @@
     "category": "Comida árabe",
     "imgSrc": "https://i.imgur.com/4q6S9MF.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "41"
   },
   {
     "productName": "Hummus",
@@ -349,7 +374,8 @@
     "category": "Comida árabe",
     "imgSrc": "https://i.imgur.com/Bmlzt9A.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "42"
   },
   {
     "productName": "Tabule",
@@ -357,7 +383,8 @@
     "category": "Comida árabe",
     "imgSrc": "https://i.imgur.com/t7ju2Tb.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "43"
   },
   {
     "productName": "Mjadra",
@@ -365,7 +392,8 @@
     "category": "Comida árabe",
     "imgSrc": "https://i.imgur.com/yrBFHsy.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "44"
   },
   {
     "productName": "Faláfel",
@@ -373,7 +401,8 @@
     "category": "Comida árabe",
     "imgSrc": "https://i.imgur.com/CTbnx8h.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "45"
   },
   {
     "productName": "Keppe al horno",
@@ -381,7 +410,8 @@
     "category": "Comida árabe",
     "imgSrc": "https://i.imgur.com/OEn6WgV.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "46"
   },
   {
     "productName": "Keppe crudo",
@@ -389,7 +419,8 @@
     "category": "Comida árabe",
     "imgSrc": "https://i.imgur.com/4KA1OpP.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "47"
   },
   {
     "productName": "Arroz a la persa",
@@ -397,7 +428,8 @@
     "category": "Comida árabe",
     "imgSrc": "https://i.imgur.com/HwIDMmf.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "48"
   },
   {
     "productName": "Hoja de parra (niños envueltos)",
@@ -405,7 +437,8 @@
     "category": "Comida árabe",
     "imgSrc": "https://i.imgur.com/QmyUcuy.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "49"
   },
   {
     "productName": "Baklava",
@@ -413,7 +446,8 @@
     "category": "Comida árabe",
     "imgSrc": "https://i.imgur.com/sCJBzlJ.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "50"
   },
   {
     "productName": "Namura",
@@ -421,7 +455,8 @@
     "category": "Comida árabe",
     "imgSrc": "https://i.imgur.com/JP5gm7U.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "51"
   },
   {
     "productName": "Nachos con guacamole",
@@ -429,7 +464,8 @@
     "category": "Comida mexicana",
     "imgSrc": "https://i.imgur.com/TseUjyV.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "52"
   },
   {
     "productName": "Quesadillas simples x2",
@@ -437,7 +473,8 @@
     "category": "Comida mexicana",
     "imgSrc": "https://i.imgur.com/gOamP55.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "53"
   },
   {
     "productName": "Burrito de carne",
@@ -445,7 +482,8 @@
     "category": "Comida mexicana",
     "imgSrc": "https://i.imgur.com/OcarMEQ.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "54"
   },
   {
     "productName": "Burrito de pollo",
@@ -453,7 +491,8 @@
     "category": "Comida mexicana",
     "imgSrc": "https://i.imgur.com/NkP9fAJ.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "55"
   },
   {
     "productName": "Burrito mixto",
@@ -461,7 +500,8 @@
     "category": "Comida mexicana",
     "imgSrc": "https://i.imgur.com/c5cD08l.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "56"
   },
   {
     "productName": "Burrito vegetariano",
@@ -469,7 +509,8 @@
     "category": "Comida mexicana",
     "imgSrc": "https://i.imgur.com/7Hm2s8E.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "57"
   },
   {
     "productName": "Tacos de carne x3",
@@ -477,7 +518,8 @@
     "category": "Comida mexicana",
     "imgSrc": "https://i.imgur.com/xsTbZgV.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "58"
   },
   {
     "productName": "Tacos de pollo x3",
@@ -485,7 +527,8 @@
     "category": "Comida mexicana",
     "imgSrc": "https://i.imgur.com/UrK1KkS.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "59"
   },
   {
     "productName": "Tacos vegetarianos x3",
@@ -493,7 +536,8 @@
     "category": "Comida mexicana",
     "imgSrc": "https://i.imgur.com/T6ieCX0.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "60"
   },
   {
     "productName": "Quesadillas con carne x2",
@@ -501,7 +545,8 @@
     "category": "Comida mexicana",
     "imgSrc": "https://i.imgur.com/m7L6dUL.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "61"
   },
   {
     "productName": "Quesadillas con pollo x2",
@@ -509,7 +554,8 @@
     "category": "Comida mexicana",
     "imgSrc": "https://i.imgur.com/48hVI5i.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "62"
   },
   {
     "productName": "Quesadillas vegetarianas x2",
@@ -517,7 +563,8 @@
     "category": "Comida mexicana",
     "imgSrc": "https://i.imgur.com/7ULBINd.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "63"
   },
   {
     "productName": "Empanada de carne suave",
@@ -525,7 +572,8 @@
     "category": "Empanadas",
     "imgSrc": "https://i.imgur.com/28GNsjf.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "64"
   },
   {
     "productName": "Empanada de carne picante",
@@ -533,7 +581,8 @@
     "category": "Empanadas",
     "imgSrc": "https://i.imgur.com/ed0RUDt.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "65"
   },
   {
     "productName": "Empanada de carne cortada a cuchillo",
@@ -541,7 +590,8 @@
     "category": "Empanadas",
     "imgSrc": "https://i.imgur.com/IBKHaR5.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "66"
   },
   {
     "productName": "Empanada de pollo",
@@ -549,7 +599,8 @@
     "category": "Empanadas",
     "imgSrc": "https://i.imgur.com/WSCiIqM.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "67"
   },
   {
     "productName": "Empanada de jamón y queso",
@@ -557,7 +608,8 @@
     "category": "Empanadas",
     "imgSrc": "https://i.imgur.com/WvVN0Kx.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "68"
   },
   {
     "productName": "Empanada de verdura",
@@ -565,7 +617,8 @@
     "category": "Empanadas",
     "imgSrc": "https://i.imgur.com/mEcy5Bl.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "69"
   },
   {
     "productName": "Empanada de panceta, ciruela y queso",
@@ -573,7 +626,8 @@
     "category": "Empanadas",
     "imgSrc": "https://i.imgur.com/eEFMv6H.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "70"
   },
   {
     "productName": "Empanada de cebolla y queso",
@@ -581,7 +635,8 @@
     "category": "Empanadas",
     "imgSrc": "https://i.imgur.com/BErDCXr.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "71"
   },
   {
     "productName": "Empanada de cuatro quesos",
@@ -589,7 +644,8 @@
     "category": "Empanadas",
     "imgSrc": "https://i.imgur.com/xAqEm9J.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "72"
   },
   {
     "productName": "Empanada de atún",
@@ -597,7 +653,8 @@
     "category": "Empanadas",
     "imgSrc": "https://i.imgur.com/X5JPYR1.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "73"
   },
   {
     "productName": "Empanada de humita",
@@ -605,7 +662,8 @@
     "category": "Empanadas",
     "imgSrc": "https://i.imgur.com/sA9IZzm.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "74"
   },
   {
     "productName": "Empanada caprese",
@@ -613,7 +671,8 @@
     "category": "Empanadas",
     "imgSrc": "https://i.imgur.com/QuFAP8z.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "75"
   },
   {
     "productName": "Empanada de cantimpalo",
@@ -621,7 +680,8 @@
     "category": "Empanadas",
     "imgSrc": "https://i.imgur.com/KVPuwOa.jpg",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "76"
   },
   {
     "productName": "Empanada de bondiola",
@@ -629,6 +689,25 @@
     "category": "Empanadas",
     "imgSrc": "https://i.imgur.com/TJA45A9.png",
     "hasDiscount": false,
-    "discountAmount": 0
+    "discountPercentage": 0,
+    "id": "77"
+  },
+  {
+    "productName": "Vino tinto",
+    "price": 700,
+    "category": "Bebidas",
+    "imgSrc": "https://i.imgur.com/Mpn7oEX.jpg",
+    "hasDiscount": false,
+    "discountPercentage": 0,
+    "id": "78"
+  },
+  {
+    "productName": "Mexican Burger",
+    "price": 800,
+    "category": "Burgers",
+    "imgSrc": "https://i.imgur.com/6c4fI6P.jpg",
+    "hasDiscount": false,
+    "discountPercentage": 0,
+    "id": "79"
   }
 ]

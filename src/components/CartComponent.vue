@@ -11,7 +11,12 @@
     <div v-if="cartDropdown" id="SubCartContainer">
       <div v-for="(product, i) in getCart.products" :key="i">
         <div class="productCardContainer">
-          <img :src="product.imgSrc" alt="" width="100" height="100" />
+          <img
+            :src="product.imgSrc"
+            alt="product-image"
+            width="100"
+            height="100"
+          />
           <div class="productMainInfoContainer">
             <p>{{ product.productName }}</p>
             <p>{{ product.quantity }} unidades</p>
@@ -21,6 +26,13 @@
           <div class="totalProductPrice">
             $ {{ product.price * product.quantity }}
           </div>
+          <img
+            class="removeProduct"
+            src="../assets/images/removeIcon.png"
+            height="20"
+            width="20"
+            @click="removeFromCart({product, quantity: all})"
+          />
         </div>
       </div>
       <div v-if="!buyAlert" id="totalCartInfo">
@@ -32,8 +44,8 @@
           <img
             src="../assets/images/removeIcon.png"
             alt="ClearCart"
-            height="30"
-            width="30"
+            height="35"
+            width="35"
             @click="emptyCart"
           />
         </div>
@@ -86,6 +98,7 @@ export default {
     return {
       cartDropdown: false,
       buyAlert: false,
+      all: "all"
     };
   },
   methods: {
@@ -204,6 +217,9 @@ export default {
   height: 30px;
   font-size: 20px;
 }
+.productCardContainer .removeProduct {
+  cursor: pointer;
+}
 .productMainInfoContainer {
   width: 35%;
 }
@@ -286,16 +302,16 @@ export default {
   border: 1px solid #7e0a0a;
 }
 #buyFinished a {
-    border: 1px solid #7e0a0a;
-    border-radius: 32px;
-    color: #7e0a0a;
-    background: #ffffff;
-    font-weight: 600;
-    cursor: pointer;
-    text-decoration: none;
-    margin: auto;
-    padding: 0 13.5px;
-    margin-top: 10px;
+  border: 1px solid #7e0a0a;
+  border-radius: 32px;
+  color: #7e0a0a;
+  background: #ffffff;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  margin: auto;
+  padding: 0 13.5px;
+  margin-top: 10px;
 }
 #buyFinished a:hover {
   background: #7e0a0a;
