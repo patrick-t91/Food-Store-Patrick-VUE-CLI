@@ -16,6 +16,9 @@
     <div id="banner">
       <img src="../../assets/images/foodBanner.jpg" alt="food banner" />
     </div>
+    <div id="bannerMobile">
+      <img src="../../assets/images/banner-mobile.jpg" alt="food banner" />
+    </div>
     <FooterComponent />
   </div>
 </template>
@@ -73,12 +76,26 @@ export default {
   margin-left: 32px;
   font-weight: bold;
 }
-#app #homeContainer #banner {
+#app #homeContainer #bannerMobile {
+  display: none;
+}
+@media screen and (max-width: 600px) {
+  #app #homeContainer #banner {
+    display: none;
+  }
+  #app #homeContainer #bannerMobile {
+    display: block;
+  }
+}
+#app #homeContainer #banner, #app #homeContainer #bannerMobile {
   margin-top: 40px;
 }
 #app #homeContainer #banner img {
   width: 100%;
-  height: 600px
+  height: 600px;
 }
-
+#app #homeContainer #bannerMobile img {
+  width: 100%;
+  height: 400px;
+}
 </style>

@@ -24,17 +24,22 @@
               type="text"
               placeholder="Ingresa tu nombre de usuario"
               v-model="loginData.username"
+              @keyup="clearEmptyFieldsError()"
             />
             <label for="inputPassword">Ingresa tu contraseña</label>
             <input
               type="password"
               placeholder="Ingresa tu contraseña"
               v-model="loginData.password"
+              @keyup="clearEmptyFieldsError()"
             />
             <button type="submit" id="loginButton" @click="validateLogin">
               INICIAR SESION
             </button>
-            <span v-if="loginData.error" id="loginError" class="error"
+            <span v-if="loginData.emptyFieldsError" class="login-error error"
+              >Por favor, completa todos los campos.</span
+            >
+            <span v-if="loginData.error" class="login-error error"
               >La combinación de usuario y contraseña ingresados no es
               válida</span
             >
@@ -71,7 +76,7 @@
               type="text"
               placeholder="Crea tu nombre de usuario"
               v-model="registerData.username"
-              @keyup="validateUsername(), emptyUserExistsError()"
+              @keyup="validateUsername(), clearUserExistsError(), clearEmptyFieldsError()"
             />
             <span
               v-if="
@@ -89,7 +94,7 @@
               type="password"
               placeholder="Crea tu contraseña"
               v-model="registerData.password"
-              @keyup="validatePassword"
+              @keyup="validatePassword(), clearEmptyFieldsError()"
             />
             <span
               v-if="
@@ -131,6 +136,9 @@
             <button type="submit" id="loginButton" @click="registerUser">
               REGISTRATE
             </button>
+            <span v-if="registerData.errors.emptyFieldsError" class="error">
+              Por favor, completa todos los campos.
+            </span>
             <span
               v-if="
                 registerData.username.length && registerData.errors.userExists
@@ -222,6 +230,7 @@ export default {
       loginData: {
         username: "",
         password: "",
+        emptyFieldsError: false,
         error: false,
       },
       registerData: {
@@ -229,6 +238,7 @@ export default {
         password: "",
         confirmPassword: "",
         errors: {
+          emptyFieldsError: false,
           usernameError: false,
           passwordError: { length: false, characters: false },
           confirmPasswordError: false,
@@ -246,6 +256,25 @@ export default {
   methods: {
     ...mapActions("user", ["logUser", "closeUserSession"]),
     ...mapActions("loginModal", ["toggleLoginModal"]),
+    validateEmptyFieldsInLogin() {
+      !this.loginData.username
+        ? (this.loginData.emptyFieldsError = true)
+        : (this.loginData.emptyFieldsError = false);
+      !this.loginData.password
+        ? (this.loginData.emptyFieldsError = true)
+        : (this.loginData.emptyFieldsError = false);
+    },
+    validateEmptyFieldsInRegister() {
+      !this.registerData.username
+        ? (this.registerData.errors.emptyFieldsError = true)
+        : (this.registerData.errors.emptyFieldsError = false);
+      !this.registerData.password
+        ? (this.registerData.errors.emptyFieldsError = true)
+        : (this.registerData.errors.emptyFieldsError = false);
+      !this.registerData.confirmPassword
+        ? (this.registerData.errors.emptyFieldsError = true)
+        : (this.registerData.errors.emptyFieldsError = false);
+    },
     validateUsername() {
       !this.validations.usernameRegex.test(this.registerData.username)
         ? (this.registerData.errors.usernameError = true)
@@ -260,6 +289,8 @@ export default {
         : (this.registerData.errors.passwordError.characters = false);
     },
     async validateLogin() {
+      this.validateEmptyFieldsInLogin();
+      if (this.loginData.emptyFieldsError) return;
       const users = await apiServices.getUsers();
       let validUser = users.find(
         (user) =>
@@ -275,11 +306,8 @@ export default {
       this.loginData.password = "";
     },
     async validateRegister() {
-      if (
-        !this.registerData.username.length ||
-        !this.registerData.password.length ||
-        !this.registerData.confirmPassword.length
-      )
+      this.validateEmptyFieldsInRegister();
+      if (this.registerData.errors.emptyFieldsError)
         this.registerData.isValid = false;
       if (
         this.registerData.errors.usernameError ||
@@ -324,9 +352,13 @@ export default {
       this.registerData.password = "";
       this.registerData.confirmPassword = "";
     },
-    emptyUserExistsError() {
+    clearUserExistsError() {
       this.registerData.errors.userExists = false;
     },
+    clearEmptyFieldsError() {
+      this.loginData.emptyFieldsError = false;
+      this.registerData.errors.emptyFieldsError = false;
+    }
   },
   computed: {
     ...mapGetters("user", ["getUser"]),
@@ -336,6 +368,9 @@ export default {
 </script>
 
 <style scoped>
+#loginContainer {
+  width: 40px;
+}
 #loginContainer #loginLogoContainer {
   cursor: pointer;
 }
@@ -437,7 +472,7 @@ export default {
   margin-bottom: 15px;
   color: #7e0a0a;
 }
-#loginContainer .loginModal #loginError {
+#loginContainer .loginModal .login-error {
   width: 75%;
   margin-top: 15px;
 }

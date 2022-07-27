@@ -29,19 +29,11 @@
           />
         </div>
         <div v-if="userDidNotComment">{{ userDidNotComment }}</div>
-        <button type="submit" id="submitButton">
-          ENVIAR
-        </button>
+        <button type="submit" id="submitButton">ENVIAR</button>
       </div>
-      <router-link to="/">
-        <img
-          id="closeForm"
-          src="../../assets/images/closeButton.png"
-          alt="storesDropdown close button"
-          width="100"
-          height="100"
-        />
-      </router-link>
+      <div id="backToHome">
+        <router-link to="/"> Volver a la home </router-link>
+      </div>
     </form>
   </div>
 </template>
@@ -68,7 +60,7 @@ export default {
       this.openForm = value;
     },
     async emitForm() {
-      this.formData.user = this.getUser.username
+      this.formData.user = this.getUser.username;
       this.userDidNotComment = "";
       if (
         this.formData.userComment.length < 25 ||
@@ -160,7 +152,7 @@ export default {
 #formContainer {
   border: 1px solid #7e0a0a;
   width: 800px;
-  min-width: 50%;
+  max-width: 100%;
   margin: auto;
 }
 #usernameInSuggestionsForm {
@@ -225,12 +217,22 @@ form #inputsContainer .error {
 #qualifyOptions textarea {
   color: #7e0a0a;
   min-height: 200px;
-  min-width: 500px;
-  max-width: 90%;
+  width: 500px;
+  height: 500px;
   margin: 10px;
 }
+@media screen and (min-width: 350px) and (max-width: 600px) {
+  #qualifyOptions textarea {
+    width: 300px;
+  }
+}
+@media screen and (max-width: 349px) {
+  #qualifyOptions textarea {
+    width: 230px;
+  }
+}
 #submitButton {
-  margin-top: 50px;
+  margin-top: 20px;
   padding: 15px;
   border: 1px solid #7e0a0a;
   border-radius: 32px;
@@ -241,6 +243,25 @@ form #inputsContainer .error {
   cursor: pointer;
 }
 #submitButton:hover {
+  background: #7e0a0a;
+  color: #ffffff;
+  border: 1px solid #7e0a0a;
+}
+form #backToHome {
+  text-align: center;
+  margin-top: 160px;
+}
+form #backToHome a {
+  border: 1px solid #7e0a0a;
+  border-radius: 32px;
+  color: #7e0a0a;
+  background: #ffffff;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  padding: 10px;
+}
+form #backToHome a:hover {
   background: #7e0a0a;
   color: #ffffff;
   border: 1px solid #7e0a0a;

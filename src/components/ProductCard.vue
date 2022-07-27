@@ -68,6 +68,7 @@ export default {
   color: #ffffff;
   width: 180px;
   margin: 10px;
+  border: 1px solid #7e0a0a;
 }
 .productContainer img {
   width: 100%;
@@ -86,18 +87,21 @@ export default {
   display: flex;
   justify-content: center;
   flex-direction: column;
-  height: 200px;
+  height: 180px;
 }
 .productMainInfoContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 160px;
+  height: 130px;
 }
 .productCardContainer p {
   margin: 5px;
-  font-size: 17px;
   text-align: center;
+}
+.productCardContainer .productMainInfoContainer p {
+  font-size: 14px;
+  font-weight: bold;
 }
 .productCardContainer .productMainInfoContainer .productName {
   height: 45px;
@@ -117,6 +121,7 @@ export default {
 .quantityContainer {
   display: flex;
   justify-content: center;
+  font-size: 14px;
 }
 .quantityContainer button {
   cursor: pointer;
@@ -144,5 +149,15 @@ export default {
   text-decoration: line-through;
   opacity: 0.6;
   font-size: 14px;
+}
+@media screen and (max-width: 767px) {
+  .productContainer img {
+    height: 100px;
+    margin-bottom: 0;
+  }
+  .productCardContainer .productMainInfoContainer .productName {
+    height: 35px;
+    margin-top: 15px;
+  }
 }
 </style>
