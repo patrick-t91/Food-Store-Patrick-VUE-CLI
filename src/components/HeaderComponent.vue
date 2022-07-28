@@ -8,6 +8,7 @@
         <h1>TIENDA DE COMIDAS PATRICK</h1>
       </div>
       <div id="navLinks">
+        <SearchBar />
         <div
           v-if="menuHamburguesaIsActive"
           id="menuHamburguesa"
@@ -39,20 +40,19 @@
         </ul>
       </div>
     </nav>
-    <CategoriesComponent />
   </header>
 </template>
 
 <script>
 import LoginComponent from "./LoginComponent.vue";
-import CategoriesComponent from "./CategoriesComponent.vue";
+import SearchBar from "./SearchBar.vue";
 import { mapGetters } from "vuex";
 
 export default {
   name: "HeaderComponent",
   components: {
     LoginComponent,
-    CategoriesComponent,
+    SearchBar,
   },
   data() {
     return {
@@ -61,7 +61,7 @@ export default {
     };
   },
   created() {
-    if (window.innerWidth < 768) {
+    if (window.innerWidth < 1024) {
       this.navLinksIsActive = false;
       this.menuHamburguesaIsActive = true;
     }
@@ -122,6 +122,8 @@ export default {
 #app nav #navLinks {
   margin: auto;
   padding-right: 60px;
+  display: flex;
+  align-items: center;
 }
 
 #app #navLinks #menuHamburguesa {
@@ -193,7 +195,52 @@ export default {
 #app #categoriesDropdown- .storeLink {
   cursor: pointer;
 }
-@media screen and (max-width: 767px) {
+
+@media screen and (max-width: 400px) {
+  #app nav #siteLogoAndName {
+    display: flex;
+    flex-direction: column;
+    margin: 0 10px;
+    text-align: center;
+  }
+  #app nav #siteLogoAndName h1 {
+    margin-top: 0;
+  }
+  #app nav #navLinks {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+  }
+  #app #navLinks #menuHamburguesa {
+    margin-top: 20px;
+  }
+}
+@media screen and (max-width: 600px) {
+  #app header nav {
+    height: 120px;
+  }
+  #app nav #siteLogoAndName img {
+    width: 40px;
+    height: 40px;
+    padding: 6px;
+  }
+  #app nav #siteLogoAndName h1 {
+    font-size: 12px;
+  }
+  #app #navLinks #menuHamburguesa {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+@media screen and (min-width: 426px) and (max-width: 767px) {
+  #app nav #navLinks {
+    padding-right: 20px;
+  }
+}
+
+@media screen and (min-width: 601px) and (max-width: 767px) {
   #app nav #siteLogoAndName img {
     width: 50px;
     height: 50px;
@@ -202,9 +249,17 @@ export default {
   #app nav #siteLogoAndName h1 {
     font-size: 13px;
   }
+}
+
+@media screen and (max-width: 767px) {
+  #app header nav {
+    height: 120px;
+  }
+}
+@media screen and (max-width: 1023px) {
   #app nav #navLinks ul {
     position: absolute;
-    top: 72px;
+    top: 100px;
     flex-direction: column;
     background: #7e0a0a;
     width: 100vw;
@@ -223,21 +278,13 @@ export default {
     margin: 0;
     padding: 0;
   }
-  #app nav #navLinks ul:nth-child(3) {
-    width: 40px;
-  }
   #app nav #navLinks ul a:hover {
     padding: 14px 0;
   }
 }
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 1024px) {
   #app #navLinks #menuHamburguesa {
     display: none;
-  }
-}
-@media screen and (max-width: 425px) {
-  #app #navLinks #menuHamburguesa {
-    margin-left: 30%;
   }
 }
 </style>

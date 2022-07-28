@@ -394,7 +394,7 @@ export default {
   background: #ffffff;
   text-align: center;
   border-radius: 20px;
-  top: 133px;
+  top: 116px;
   right: 8px;
 }
 #loginContainer .loginModal--mainContainer form {

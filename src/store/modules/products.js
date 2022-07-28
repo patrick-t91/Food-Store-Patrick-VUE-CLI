@@ -2,12 +2,17 @@ import apiServices from "@/services/api.services.js";
 
 export default {
   namespaced: true,
-  state: { products: [], selectedCategory: "" },
+  state: { products: [], selectedCategory: "", filteredResult: "" },
   getters: {
     getProducts: (state) => {
       if (state.selectedCategory) {
         return state.products.filter(
           (product) => product.category === state.selectedCategory
+        );
+      }
+      if (state.filteredResult) {
+        return state.products.filter((product) =>
+          product.productName.toLowerCase().includes(state.filteredResult.toLowerCase())
         );
       }
       return state.products;
@@ -22,6 +27,9 @@ export default {
     },
     SET_CATEGORY: (state, category) => {
       state.selectedCategory = category;
+    },
+    SET_FILTERED_RESULT: (state, filteredResult) => {
+      state.filteredResult = filteredResult;
     },
   },
   actions: {
@@ -47,6 +55,9 @@ export default {
     },
     setCategory: ({ commit }, category) => {
       commit("SET_CATEGORY", category);
+    },
+    setFilteredResult: ({ commit }, filteredResult) => {
+      commit("SET_FILTERED_RESULT", filteredResult);
     },
   },
 };

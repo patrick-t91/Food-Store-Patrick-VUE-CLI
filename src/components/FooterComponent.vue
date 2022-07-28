@@ -1,27 +1,31 @@
 <template>
   <footer>
-    <div id="footerLinks">
-      <router-link
-        v-if="getUser"
-        :to="{
-          name: 'UserOrders',
-          params: {
-            userId: parseInt(getUser.id),
-          },
-        }"
-        >Mis pedidos</router-link
-      >
-      <router-link to="/legal-terms">Términos y condiciones</router-link>
-      <router-link v-if="getUser" to="/sugerencias-y-reclamos"
-        >Sugerencias y reclamos</router-link
-      >
+    <div id="mainContainer">
+      <div id="footerLinks">
+        <router-link
+          v-if="getUser"
+          :to="{
+            name: 'UserOrders',
+            params: {
+              userId: parseInt(getUser.id),
+            },
+          }"
+          >Mis pedidos</router-link
+        >
+        <router-link to="/legal-terms">Términos y condiciones</router-link>
+        <router-link v-if="getUser" to="/sugerencias-y-reclamos"
+          >Sugerencias y reclamos</router-link
+        >
+      </div>
+      <router-link to="/">
+        <img
+          src="../assets/images/site-logo.jpg"
+          alt="site logo"
+          width="90"
+          height="90"
+      /></router-link>
     </div>
-    <img
-      src="../assets/images/site-logo.jpg"
-      alt="site logo"
-      width="90"
-      height="90"
-    />
+    <div id="developedBy"><p>Desarrollado por Patricio Toribio ©</p></div>
   </footer>
 </template>
 
@@ -38,29 +42,16 @@ export default {
 
 <style scoped>
 #app footer {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
   background-color: #7e0a0a;
   color: #ffffff;
-  padding: 20px 0 20px;
+  padding: 20px 0 1px;
 }
 
-#app footer #footerLinks {
-  display: -webkit-box;
-  display: -ms-flexbox;
+#app footer #mainContainer {
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
+  justify-content: space-between;
+}
+#app footer #footerLinks {
   padding-left: 40px;
 }
 
@@ -87,6 +78,14 @@ export default {
   -ms-flex-pack: space-evenly;
   justify-content: space-evenly;
 }
+#app footer #developedBy {
+  color: #ffffff;
+  font-style: italic;
+  font-weight: bold;
+  font-size: 12px;
+  text-align: center;
+  margin: 20px 0 0;
+}
 #app footer img {
   width: 80px;
   height: 80px;
@@ -95,7 +94,7 @@ export default {
 @media screen and (max-width: 767px) {
   #app footer #footerLinks {
     padding-left: 5%;
-    font-size: 14px
+    font-size: 14px;
   }
   #app footer img {
     width: 50px;

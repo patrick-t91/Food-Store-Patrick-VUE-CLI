@@ -2,6 +2,7 @@
   <div id="homeContainer">
     <HeaderComponent />
     <CartComponent />
+    <CategoriesComponent />
     <div>
       <h3>GALERIA DE PRODUCTOS</h3>
       <div id="categoryIndicator">
@@ -27,6 +28,7 @@
 import HeaderComponent from "../../components/HeaderComponent.vue";
 import ProductCard from "../../components/ProductCard.vue";
 import CartComponent from "../../components/CartComponent.vue";
+import CategoriesComponent from "../../components/CategoriesComponent.vue";
 import FooterComponent from "../../components/FooterComponent.vue";
 import { mapGetters, mapActions } from "vuex";
 
@@ -36,6 +38,7 @@ export default {
     HeaderComponent,
     CartComponent,
     ProductCard,
+    CategoriesComponent,
     FooterComponent,
   },
   created() {
